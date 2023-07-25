@@ -1,0 +1,26 @@
+import 'package:flutter_fic_ecommerce_warung_comicon/core/errors/exceptions.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/core/errors/failure.dart';
+
+import '../../domain/entities/product_item.dart';
+import '../../domain/repos/product_repo.dart';
+import '../data_source/product_remote_data_source.dart';
+
+class ProductRepoImpl implements ProductRepo {
+  final ProductRemoteDataSource productRemoteDataSource;
+  const ProductRepoImpl(this.productRemoteDataSource);
+
+  @override
+  Future<List<ProductItem>> getProductFromApi() async {
+    try {
+      final getProductList = await productRemoteDataSource.getProducts();  
+      final getValue = getProductList.map((e) => ProductItem(productName: e.attributes.name)).toList();
+      return getValue;
+    } on HttpException catch(e) {
+      throw ProductFailure(e.message);
+    } on UnknownException catch(e) {
+      throw UnknownFailure(e.message);
+    } catch (e) {
+      throw UnknownFailure('Occure in Product Repo : ${e.toString()}');
+    }
+  }
+} 
