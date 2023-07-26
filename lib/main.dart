@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/result_handler/no_params.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/domain/entities/login_user_request.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/locator.dart';
 
+import 'core/register_bloc/register_bloc.dart';
 import 'feature/authentication/domain/use_cases/request_user_login.dart';
 import 'feature/product/domain/use_cases/get_product_remote.dart';
+import 'feature/product/presentation/bloc/product_bloc.dart';
 
 
 void main() {
@@ -17,12 +20,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: registerBloc,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -41,6 +47,20 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() {
     setState(() {
     });
+  }
+
+  Future<void> accessBloc() async {
+    final accessBloc = context.read<ProductBloc>();
+    accessBloc.loadProduct();
+
+    final state = accessBloc.state;
+    if (state is ProductStateError){
+      debugPrint('Value By bloc (Error) : ${state.message}');
+    }
+
+    if (state is ProductStateLoaded){
+      debugPrint('Value By bloc : ${state.listProduct.map((e) => e.productName).toList()}');
+    }
   }
 
   @override
