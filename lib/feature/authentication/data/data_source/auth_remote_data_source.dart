@@ -7,6 +7,7 @@ import '../modal/login_request_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<AuthModel> login(LoginRequestModel loginRequest);
+  Future<User> verifyMe();
 }
 
 class AuthRemoteDataSourceImpl extends RemoteDataRequest
@@ -29,6 +30,23 @@ class AuthRemoteDataSourceImpl extends RemoteDataRequest
     } catch (e) {
       throw UnknownException(
         'Occure in Auth Remote Data Source(login) : ${e.toString()}',
+      );
+    }
+  }
+
+  @override
+  Future<User> verifyMe() async {
+    try {
+      final verifyResult = await getRequest<User>(
+        '/api/users/me',
+        fromMap: User.fromJson,
+      );
+      return verifyResult;
+    } on HttpException {
+      rethrow;
+    } catch (e) {
+      throw UnknownException(
+        'Occure in Auth Remote Data Source(verivy) : ${e.toString()}',
       );
     }
   }

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/result_handler/no_params.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/domain/entities/login_user_request.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/locator.dart';
 
 import 'core/register_bloc/register_bloc.dart';
+import 'feature/authentication/domain/entities/login_user_request.dart';
 import 'feature/authentication/domain/use_cases/request_user_login.dart';
+import 'feature/authentication/domain/use_cases/verify_user_token.dart';
 import 'feature/product/domain/use_cases/get_product_remote.dart';
 import 'feature/product/presentation/bloc/product_bloc.dart';
+import 'feature/product/presentation/page/product_view.dart';
 
 
 void main() {
@@ -77,6 +79,18 @@ class _MyHomePageState extends State<MyHomePage> {
         return false;
       });
 
+      // getIt<VerifyUserToken>())
+
+      // final verifyTokenCases = getIt<VerifyUserToken>();
+      // final getVerify = await verifyTokenCases(NoParams());
+      // final isGetVerify = getVerify.when<bool>(ok: (ok) {
+      //   debugPrint('Value Result : ${ok.toString()}');
+      //   return true;
+      // }, err: (err) {
+      //   debugPrint('Value Result Err: ${err.message}');
+      //   return false;
+      // });
+
       if (!isGetAccessLogin) {
         return;
       }
@@ -88,6 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
       }, err: (err) {
         debugPrint('Value Result Err: ${err.message}');
       });
+
+      // await accessBloc();
     });
     super.initState();
   }
@@ -98,12 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <String>['dynamic', 'static'].map(Text.new).toList(),
-        ),
-      ),
+      body: const ProductView(),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

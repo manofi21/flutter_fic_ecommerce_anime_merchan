@@ -49,7 +49,7 @@ class User {
         required this.updatedAt,
     });
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+    static User fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         username: json["username"],
         email: json["email"],
