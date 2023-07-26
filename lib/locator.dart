@@ -6,7 +6,6 @@ import 'package:get_it/get_it.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 
 import 'core/http_request/http_request_interceptor.dart';
-import 'core/http_request/remote_data_request.dart';
 import 'feature/authentication/data/data_source/auth_remote_data_source.dart';
 import 'feature/authentication/domain/use_cases/request_user_login.dart';
 import 'feature/product/data/data_source/product_remote_data_source.dart';
@@ -27,16 +26,16 @@ void configureDependencies() {
           HttpRequestInterceptor(getIt<AuthStorage>()),
       ]));
   
-  // Registering HTTP request
-  getIt.registerLazySingleton<RemoteDataRequest>(() => RemoteDataRequest(getIt<InterceptedHttp>()));
+  // Registering HTTP request (Removed because been declare as abstract class)
+  // getIt.registerLazySingleton<RemoteDataRequest>(() => RemoteDataRequest(getIt<InterceptedHttp>()));
 
   // Registring Product DataSource, Repo, and Use Cases 
-  getIt.registerSingleton<ProductRemoteDataSource>(ProductRemoteDataSourceImpl(getIt<RemoteDataRequest>()));
+  getIt.registerSingleton<ProductRemoteDataSource>(ProductRemoteDataSourceImpl(http: getIt<InterceptedHttp>()));
   getIt.registerSingleton<ProductRepo>(ProductRepoImpl(getIt<ProductRemoteDataSource>()));
   getIt.registerFactory<GetProductRemote>(() => GetProductRemote(getIt<ProductRepo>()));
 
   // Registring Auth DataSource, Repo, and Use Cases 
-  getIt.registerSingleton<AuthRemoteDataSource>(AuthRemoteDataSourceImpl(getIt<RemoteDataRequest>()));
+  getIt.registerSingleton<AuthRemoteDataSource>(AuthRemoteDataSourceImpl(http: getIt<InterceptedHttp>()));
   getIt.registerSingleton<AuthRepo>(AuthRepoImpl(getIt<AuthRemoteDataSource>(), getIt<AuthStorage>()));
   getIt.registerFactory<RequestUserLogin>(() => RequestUserLogin(getIt<AuthRepo>()));
 } 

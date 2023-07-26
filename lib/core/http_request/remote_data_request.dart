@@ -6,9 +6,9 @@ import 'package:http_interceptor/http_interceptor.dart';
 import '../constant/constant.dart';
 import '../errors/exceptions.dart';
 
-class RemoteDataRequest {
+abstract class RemoteDataRequest {
   final InterceptedHttp http;
-  RemoteDataRequest(this.http);
+  RemoteDataRequest({required this.http});
   
   Uri baseUri(String path, [Map<String, dynamic>? queryParameters]) =>
       Uri.http(baseUrl, path, queryParameters);
