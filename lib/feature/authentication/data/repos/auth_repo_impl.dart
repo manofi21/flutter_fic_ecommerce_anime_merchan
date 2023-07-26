@@ -5,14 +5,14 @@ import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/doma
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
-import '../../../product/domain/auth_storage/auth_storage.dart';
 import '../../domain/repos/auth_repo.dart';
+import '../data_source/auth_local_data_source.dart';
 import '../data_source/auth_remote_data_source.dart';
 
 class AuthRepoImpl implements AuthRepo {
   final AuthRemoteDataSource authRemoteDataSource;
-  final AuthStorage authStorage;
-  const AuthRepoImpl(this.authRemoteDataSource, this.authStorage);
+  final AuthLocalDataSource authLocalDataSource;
+  const AuthRepoImpl(this.authRemoteDataSource, this.authLocalDataSource);
 
   @override
   Future<LoginUserResult> userLogin(LoginUserRequest userRequest) async {
@@ -22,7 +22,7 @@ class AuthRepoImpl implements AuthRepo {
         password: userRequest.password,
       );
       final loginResult = await authRemoteDataSource.login(requestLogin);
-      await authStorage.saveAccessToken(loginResult.jwt);
+      await authLocalDataSource.saveAccessToken(loginResult.jwt);
       final resultLogin = LoginUserResult(
           username: loginResult.user.username, email: loginResult.user.email);
       return resultLogin;

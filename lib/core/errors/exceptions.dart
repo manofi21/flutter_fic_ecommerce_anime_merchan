@@ -12,7 +12,3 @@ class UnknownException implements Exception {
   final String message;
   const UnknownException(this.message);
 }
-
-class AuthStorageException extends UnknownException {
-  AuthStorageException(String value) : super('Occure in AuthStorage$value');
-}

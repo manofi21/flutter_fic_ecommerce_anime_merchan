@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:http_interceptor/http_interceptor.dart';
 
-import '../../feature/product/domain/auth_storage/auth_storage.dart';
+import '../../feature/authentication/data/data_source/auth_local_data_source.dart';
 
 class HttpRequestInterceptor implements InterceptorContract {
-  final AuthStorage authStorage;
+  final AuthLocalDataSource authStorage;
   HttpRequestInterceptor(this.authStorage);
 
   @override

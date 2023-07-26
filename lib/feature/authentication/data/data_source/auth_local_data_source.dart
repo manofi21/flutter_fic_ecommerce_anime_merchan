@@ -1,12 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../exception/auth_local_exception.dart';
 
-import '../../../../core/errors/exceptions.dart';
-
-class AuthStorage {
+class AuthLocalDataSource extends FlutterSecureStorage{
   static const _accessToken = "access_token";
 
-  final FlutterSecureStorage secureStorage;
-  AuthStorage(this.secureStorage);
+  AuthLocalDataSource(secureStorage);
 
   AndroidOptions get _androidOptions => const AndroidOptions(
         encryptedSharedPreferences: true,
@@ -14,24 +13,25 @@ class AuthStorage {
 
   Future<String?> getAccessToken() async {
     try {
-      return secureStorage.read(
+      return read(
         key: _accessToken,
         aOptions: _androidOptions,
       ); 
     } catch (e) {
-      throw AuthStorageException('(getAccessToken) : ${e.toString()}');
+      throw AuthLocalDataSourceException('(getAccessToken) : ${e.toString()}');
     }
   }
 
   Future<void> saveAccessToken(String? token) async {
     try {
-      return secureStorage.write(
+      debugPrint('Value Result : $token');
+      return write(
         key: _accessToken,
         value: token,
         aOptions: _androidOptions,
       ); 
     } catch (e) {
-      throw AuthStorageException('(saveAccessToken) : ${e.toString()}');
+      throw AuthLocalDataSourceException('(saveAccessToken) : ${e.toString()}');
     }
   }
 }
