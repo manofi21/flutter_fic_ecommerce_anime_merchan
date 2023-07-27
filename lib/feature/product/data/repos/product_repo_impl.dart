@@ -12,15 +12,25 @@ class ProductRepoImpl implements ProductRepo {
   @override
   Future<List<ProductItem>> getProductFromApi() async {
     try {
-      final getProductList = await productRemoteDataSource.getProducts();  
-      final getValue = getProductList.map((e) => ProductItem(productName: e.attributes.name)).toList();
+      final getProductList = await productRemoteDataSource.getProducts();
+      final getValue = getProductList
+          .map(
+            (e) => ProductItem(
+              productName: e.attributes.name,
+              productPrice: e.attributes.price,
+              urlImages: e.attributes.images.data
+                  .map((e) => e.attributes.url)
+                  .toList(),
+            ),
+          )
+          .toList();
       return getValue;
-    } on HttpException catch(e) {
+    } on HttpException catch (e) {
       throw ProductFailure(e.message);
-    } on UnknownException catch(e) {
+    } on UnknownException catch (e) {
       throw UnknownFailure(e.message);
     } catch (e) {
       throw UnknownFailure('Occure in Product Repo : ${e.toString()}');
     }
   }
-} 
+}
