@@ -1,8 +1,8 @@
-class LoginUserRequest {
+class LoginRequestUser {
   final String usernameOrEmail;
   final String password;
 
-  const LoginUserRequest({
+  const LoginRequestUser({
     required this.usernameOrEmail,
     required this.password,
   });

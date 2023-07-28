@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:http_interceptor/http_interceptor.dart';
 
 import '../../feature/authentication/data/data_source/auth_local_data_source.dart';
+import 'status_code_handler.dart';
 
 class HttpRequestInterceptor implements InterceptorContract {
   final AuthLocalDataSource authStorage;
@@ -18,5 +19,12 @@ class HttpRequestInterceptor implements InterceptorContract {
   }
 
   @override
-  Future<ResponseData> interceptResponse({required ResponseData data}) async =>  data;
+  Future<ResponseData> interceptResponse({required ResponseData data}) async {
+      final exception = statusCodeHandler(data.statusCode);
+      if (exception != null) {
+        throw exception;
+      }
+    
+    return data;
+  }
 }

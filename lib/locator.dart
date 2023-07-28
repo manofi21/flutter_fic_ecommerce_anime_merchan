@@ -8,8 +8,8 @@ import 'package:http_interceptor/http_interceptor.dart';
 import 'core/http_request/http_request_interceptor.dart';
 import 'feature/authentication/data/data_source/auth_local_data_source.dart';
 import 'feature/authentication/data/data_source/auth_remote_data_source.dart';
-import 'feature/authentication/domain/use_cases/request_user_login.dart';
-import 'feature/authentication/domain/use_cases/verify_user_token.dart';
+import 'feature/authentication/domain/use_cases/login_user_cases.dart';
+import 'feature/authentication/domain/use_cases/verify_user_token_cases.dart';
 import 'feature/product/data/data_source/product_remote_data_source.dart';
 import 'feature/product/data/repos/product_repo_impl.dart';
 import 'feature/product/domain/repos/product_repo.dart';
@@ -39,6 +39,6 @@ void configureDependencies() {
   // Registring Auth DataSource, Repo, and Use Cases 
   getIt.registerSingleton<AuthRemoteDataSource>(AuthRemoteDataSourceImpl(http: getIt<InterceptedHttp>()));
   getIt.registerSingleton<AuthRepo>(AuthRepoImpl(getIt<AuthRemoteDataSource>(), getIt<AuthLocalDataSource>()));
-  getIt.registerFactory<RequestUserLogin>(() => RequestUserLogin(getIt<AuthRepo>()));
-  getIt.registerFactory<VerifyUserToken>(() => VerifyUserToken(getIt<AuthRepo>()));
+  getIt.registerFactory<LoginUserCases>(() => LoginUserCases(getIt<AuthRepo>()));
+  getIt.registerFactory<VerifyUserTokenCases>(() => VerifyUserTokenCases(getIt<AuthRepo>()));
 } 

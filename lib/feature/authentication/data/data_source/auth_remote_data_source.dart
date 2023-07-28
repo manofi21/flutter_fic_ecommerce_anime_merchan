@@ -4,10 +4,12 @@ import '../../../../core/errors/exceptions.dart';
 import '../../../../core/http_request/remote_data_request.dart';
 import '../modal/auth_model.dart';
 import '../modal/login_request_model.dart';
+import '../modal/regist_request_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<AuthModel> login(LoginRequestModel loginRequest);
   Future<User> verifyMe();
+  Future<AuthModel> regist(RegistRequestModel registRequest);
 }
 
 class AuthRemoteDataSourceImpl extends RemoteDataRequest
@@ -47,6 +49,24 @@ class AuthRemoteDataSourceImpl extends RemoteDataRequest
     } catch (e) {
       throw UnknownException(
         'Occure in Auth Remote Data Source(verivy) : ${e.toString()}',
+      );
+    }
+  }
+  
+  @override
+  Future<AuthModel> regist(RegistRequestModel registRequest) async {
+    try {
+      final verifyResult = await postRequest<AuthModel>(
+        '/api/auth/local/register',
+        fromMap: AuthModel.fromJson,
+        bodyParameter: registRequest.toJson()
+      );
+      return verifyResult;
+    } on HttpException {
+      rethrow;
+    } catch (e) {
+      throw UnknownException(
+        'Occure in Auth Remote Data Source(regist) : ${e.toString()}',
       );
     }
   }

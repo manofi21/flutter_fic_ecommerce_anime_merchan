@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/result_handler/no_params.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/locator.dart';
+import 'package:sizer/sizer.dart';
 
 import 'core/register_bloc/register_bloc.dart';
-import 'feature/authentication/domain/entities/login_user_request.dart';
-import 'feature/authentication/domain/use_cases/request_user_login.dart';
-import 'feature/authentication/domain/use_cases/verify_user_token.dart';
+import 'feature/authentication/domain/entities/login_request_user.dart';
+import 'feature/authentication/domain/use_cases/login_user_cases.dart';
 import 'feature/product/domain/use_cases/get_product_remote.dart';
 import 'feature/product/presentation/bloc/product_bloc.dart';
 import 'feature/product/presentation/page/product_view.dart';
@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: Sizer(builder: (context, orientation, deviceType) {
+          return const MyHomePage(title: 'Flutter Demo Home Page');
+        }),
       ),
     );
   }
@@ -68,8 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      final requestLogin = getIt<RequestUserLogin>();
-      const requestLoginValue = LoginUserRequest(usernameOrEmail: 'Ollie2@gmail.com', password: 'Ollie1872');
+      final requestLogin = getIt<LoginUserCases>();
+      const requestLoginValue = LoginRequestUser(usernameOrEmail: 'Ollie2@gmail.com', password: 'Ollie1872');
       final getLoginCases = await requestLogin(requestLoginValue);
       final isGetAccessLogin = getLoginCases.when<bool>(ok: (ok) {
         debugPrint('Value Result : ${ok.toString()}');
@@ -79,9 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
         return false;
       });
 
-      // getIt<VerifyUserToken>())
+      // getIt<VerifyUserTokenCases>())
 
-      // final verifyTokenCases = getIt<VerifyUserToken>();
+      // final verifyTokenCases = getIt<VerifyUserTokenCases>();
       // final getVerify = await verifyTokenCases(NoParams());
       // final isGetVerify = getVerify.when<bool>(ok: (ok) {
       //   debugPrint('Value Result : ${ok.toString()}');
