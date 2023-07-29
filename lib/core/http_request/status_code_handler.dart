@@ -3,44 +3,44 @@ import 'http_exception.dart';
 
 HttpException? statusCodeHandler(int statusCode) {
   if (statusCode == 400) {
-    return BadRequestException();
+    return const BadRequestException();
   }
 
   if (statusCode == 401) {
-    return UnauthorizedException();
+    return const UnauthorizedException();
   }
 
   // Don't Have Access
   if (statusCode == 403) {
-    return ForbiddenException();
+    return const ForbiddenException();
   }
 
   if (statusCode == 404) {
-    return NotFoundException();
+    return const NotFoundException();
   }
 
   if (statusCode == 500) {
-    return InternalServerErrorException();
+    return const InternalServerErrorException();
   }
 
   if (statusCode == 503) {
-    return ServiceUnavailableException();
+    return const ServiceUnavailableException();
   }
 
   if (statusCode == 504) {
-    return GatewayTimeoutException();
+    return const GatewayTimeoutException();
   }
 
   if (statusCode == 429) {
-    return TooManyRequestsException();
+    return const TooManyRequestsException();
   }
 
   if (statusCode == 4001) {
-    return TokenExpiredException();
+    return const TokenExpiredException();
   }
 
   if (statusCode == 4100) {
-    return MissingParametersException();
+    return const MissingParametersException();
   }
 
   return null;
