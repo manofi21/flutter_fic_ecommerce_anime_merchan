@@ -8,7 +8,11 @@ class BaseExceptions extends Equatable implements Exception {
   String toString() => message;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
+}
+
+class CastingErrorException extends BaseExceptions {
+  const CastingErrorException({required String className, required List<String> listCasting}) : super('Field that have null values is $listCasting in class $className');
 }
 
 class HttpException extends BaseExceptions {
