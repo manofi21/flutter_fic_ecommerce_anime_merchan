@@ -1,15 +1,15 @@
 class Product {
     final int id;
-    final Attributes attributes;
+    final ProductAttributes attributes;
 
     Product({
         required this.id,
         required this.attributes,
     });
 
-    static Product fromJson(dynamic json) => Product(
+    factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
-        attributes: Attributes.fromJson(json["attributes"]),
+        attributes: ProductAttributes.fromJson(json["attributes"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -18,26 +18,24 @@ class Product {
     };
 }
 
-class Attributes {
+class ProductAttributes {
     final String name;
     final String description;
     final int quantity;
     final int price;
     final bool inStock;
-    final String image;
     final String distributor;
     final DateTime createdAt;
     final DateTime updatedAt;
     final DateTime publishedAt;
     final Images images;
 
-    Attributes({
+    ProductAttributes({
         required this.name,
         required this.description,
         required this.quantity,
         required this.price,
         required this.inStock,
-        required this.image,
         required this.distributor,
         required this.createdAt,
         required this.updatedAt,
@@ -45,13 +43,12 @@ class Attributes {
         required this.images,
     });
 
-    factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
+    factory ProductAttributes.fromJson(Map<String, dynamic> json) => ProductAttributes(
         name: json["name"],
         description: json["description"],
         quantity: json["quantity"],
         price: json["price"],
         inStock: json["inStock"],
-        image: json["image"],
         distributor: json["distributor"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
@@ -65,7 +62,6 @@ class Attributes {
         "quantity": quantity,
         "price": price,
         "inStock": inStock,
-        "image": image,
         "distributor": distributor,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
@@ -78,11 +74,11 @@ class Images {
     final List<Datum> data;
 
     Images({
-        this.data = const [],
+        required this.data,
     });
 
     factory Images.fromJson(Map<String, dynamic> json) => Images(
-        data: json["data"] != null ? List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))) : [],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -92,7 +88,7 @@ class Images {
 
 class Datum {
     final int id;
-    final AttributesImages attributes;
+    final DatumAttributes attributes;
 
     Datum({
         required this.id,
@@ -101,7 +97,7 @@ class Datum {
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
-        attributes: AttributesImages.fromJson(json["attributes"]),
+        attributes: DatumAttributes.fromJson(json["attributes"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -110,9 +106,9 @@ class Datum {
     };
 }
 
-class AttributesImages {
+class DatumAttributes {
     final String name;
-    final dynamic alternativeText;
+    final String alternativeText;
     final dynamic caption;
     final int width;
     final int height;
@@ -128,9 +124,9 @@ class AttributesImages {
     final DateTime createdAt;
     final DateTime updatedAt;
 
-    AttributesImages({
+    DatumAttributes({
         required this.name,
-        this.alternativeText,
+        required this.alternativeText,
         this.caption,
         required this.width,
         required this.height,
@@ -147,9 +143,8 @@ class AttributesImages {
         required this.updatedAt,
     });
 
-    factory AttributesImages.fromJson(Map<String, dynamic> json) => AttributesImages(
+    factory DatumAttributes.fromJson(Map<String, dynamic> json) => DatumAttributes(
         name: json["name"],
-
         alternativeText: json["alternativeText"],
         caption: json["caption"],
         width: json["width"],
@@ -188,30 +183,26 @@ class AttributesImages {
 }
 
 class Formats {
-    final Medium thumbnail;
-    final Medium small;
-    final Medium medium;
+    final Small thumbnail;
+    final Small small;
 
     Formats({
         required this.thumbnail,
         required this.small,
-        required this.medium,
     });
 
     factory Formats.fromJson(Map<String, dynamic> json) => Formats(
-        thumbnail: Medium.fromJson(json["thumbnail"]),
-        small: Medium.fromJson(json["small"]),
-        medium: Medium.fromJson(json["medium"]),
+        thumbnail: Small.fromJson(json["thumbnail"]),
+        small: Small.fromJson(json["small"]),
     );
 
     Map<String, dynamic> toJson() => {
         "thumbnail": thumbnail.toJson(),
         "small": small.toJson(),
-        "medium": medium.toJson(),
     };
 }
 
-class Medium {
+class Small {
     final String name;
     final String hash;
     final String ext;
@@ -222,7 +213,7 @@ class Medium {
     final double size;
     final String url;
 
-    Medium({
+    Small({
         required this.name,
         required this.hash,
         required this.ext,
@@ -234,7 +225,7 @@ class Medium {
         required this.url,
     });
 
-    factory Medium.fromJson(Map<String, dynamic> json) => Medium(
+    factory Small.fromJson(Map<String, dynamic> json) => Small(
         name: json["name"],
         hash: json["hash"],
         ext: json["ext"],
