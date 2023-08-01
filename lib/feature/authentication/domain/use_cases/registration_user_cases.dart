@@ -17,9 +17,9 @@ class RegistrationUserCases extends FutureOptionUseCase<RegisterRequestUser> {
         return None();
       }
 
-      return Some(const UnknownFailure('message'));
+      return Error(const UnknownFailure('message'));
     } on Failure catch (err) {
-      return Some(err);
+      return Error(err);
     } catch (e) {
       throw UnknownFailure('Occure in Verify User Token Use Cases : ${e.toString()}');
     }

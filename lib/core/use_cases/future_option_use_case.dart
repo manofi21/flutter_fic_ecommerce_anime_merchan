@@ -9,15 +9,15 @@ abstract class FutureOptionUseCase<ParameterType> {
       final result = await processCall(params);
       return result.when(
         none: () => None(),
-        some: (failure) {
-          return Some(failure);
+        error: (failure) {
+          return Error(failure);
         },
       );
     } catch (e) {
       if (e is PlatformException) {
-        return Some(UnknownFailure(e.message ?? e.details));
+        return Error(UnknownFailure(e.message ?? e.details));
       }
-      return Some(UnknownFailure(e.toString()));
+      return Error(UnknownFailure(e.toString()));
     }
   }
 

@@ -4,6 +4,6 @@ part 'option.freezed.dart';
 
 @freezed
 class Option<T> with _$Option<T> {
-  factory Option.some(T value) = Some<T>;
+  factory Option.error(T value) = Error<T>;
   factory Option.none() = None<T>;
 }

@@ -18,38 +18,38 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Option<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(T value) some,
+    required TResult Function(T value) error,
     required TResult Function() none,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(T value)? some,
+    TResult? Function(T value)? error,
     TResult? Function()? none,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T value)? some,
+    TResult Function(T value)? error,
     TResult Function()? none,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Some<T> value) some,
+    required TResult Function(Error<T> value) error,
     required TResult Function(None<T> value) none,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Some<T> value)? some,
+    TResult? Function(Error<T> value)? error,
     TResult? Function(None<T> value)? none,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Some<T> value)? some,
+    TResult Function(Error<T> value)? error,
     TResult Function(None<T> value)? none,
     required TResult orElse(),
   }) =>
@@ -74,18 +74,18 @@ class _$OptionCopyWithImpl<T, $Res, $Val extends Option<T>>
 }
 
 /// @nodoc
-abstract class _$$SomeCopyWith<T, $Res> {
-  factory _$$SomeCopyWith(_$Some<T> value, $Res Function(_$Some<T>) then) =
-      __$$SomeCopyWithImpl<T, $Res>;
+abstract class _$$ErrorCopyWith<T, $Res> {
+  factory _$$ErrorCopyWith(_$Error<T> value, $Res Function(_$Error<T>) then) =
+      __$$ErrorCopyWithImpl<T, $Res>;
   @useResult
   $Res call({T value});
 }
 
 /// @nodoc
-class __$$SomeCopyWithImpl<T, $Res>
-    extends _$OptionCopyWithImpl<T, $Res, _$Some<T>>
-    implements _$$SomeCopyWith<T, $Res> {
-  __$$SomeCopyWithImpl(_$Some<T> _value, $Res Function(_$Some<T>) _then)
+class __$$ErrorCopyWithImpl<T, $Res>
+    extends _$OptionCopyWithImpl<T, $Res, _$Error<T>>
+    implements _$$ErrorCopyWith<T, $Res> {
+  __$$ErrorCopyWithImpl(_$Error<T> _value, $Res Function(_$Error<T>) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,7 +93,7 @@ class __$$SomeCopyWithImpl<T, $Res>
   $Res call({
     Object? value = freezed,
   }) {
-    return _then(_$Some<T>(
+    return _then(_$Error<T>(
       freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -104,22 +104,22 @@ class __$$SomeCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$Some<T> implements Some<T> {
-  _$Some(this.value);
+class _$Error<T> implements Error<T> {
+  _$Error(this.value);
 
   @override
   final T value;
 
   @override
   String toString() {
-    return 'Option<$T>.some(value: $value)';
+    return 'Option<$T>.error(value: $value)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Some<T> &&
+            other is _$Error<T> &&
             const DeepCollectionEquality().equals(other.value, value));
   }
 
@@ -130,36 +130,36 @@ class _$Some<T> implements Some<T> {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SomeCopyWith<T, _$Some<T>> get copyWith =>
-      __$$SomeCopyWithImpl<T, _$Some<T>>(this, _$identity);
+  _$$ErrorCopyWith<T, _$Error<T>> get copyWith =>
+      __$$ErrorCopyWithImpl<T, _$Error<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(T value) some,
+    required TResult Function(T value) error,
     required TResult Function() none,
   }) {
-    return some(value);
+    return error(value);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(T value)? some,
+    TResult? Function(T value)? error,
     TResult? Function()? none,
   }) {
-    return some?.call(value);
+    return error?.call(value);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T value)? some,
+    TResult Function(T value)? error,
     TResult Function()? none,
     required TResult orElse(),
   }) {
-    if (some != null) {
-      return some(value);
+    if (error != null) {
+      return error(value);
     }
     return orElse();
   }
@@ -167,41 +167,41 @@ class _$Some<T> implements Some<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Some<T> value) some,
+    required TResult Function(Error<T> value) error,
     required TResult Function(None<T> value) none,
   }) {
-    return some(this);
+    return error(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Some<T> value)? some,
+    TResult? Function(Error<T> value)? error,
     TResult? Function(None<T> value)? none,
   }) {
-    return some?.call(this);
+    return error?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Some<T> value)? some,
+    TResult Function(Error<T> value)? error,
     TResult Function(None<T> value)? none,
     required TResult orElse(),
   }) {
-    if (some != null) {
-      return some(this);
+    if (error != null) {
+      return error(this);
     }
     return orElse();
   }
 }
 
-abstract class Some<T> implements Option<T> {
-  factory Some(final T value) = _$Some<T>;
+abstract class Error<T> implements Option<T> {
+  factory Error(final T value) = _$Error<T>;
 
   T get value;
   @JsonKey(ignore: true)
-  _$$SomeCopyWith<T, _$Some<T>> get copyWith =>
+  _$$ErrorCopyWith<T, _$Error<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -241,7 +241,7 @@ class _$None<T> implements None<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(T value) some,
+    required TResult Function(T value) error,
     required TResult Function() none,
   }) {
     return none();
@@ -250,7 +250,7 @@ class _$None<T> implements None<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(T value)? some,
+    TResult? Function(T value)? error,
     TResult? Function()? none,
   }) {
     return none?.call();
@@ -259,7 +259,7 @@ class _$None<T> implements None<T> {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(T value)? some,
+    TResult Function(T value)? error,
     TResult Function()? none,
     required TResult orElse(),
   }) {
@@ -272,7 +272,7 @@ class _$None<T> implements None<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Some<T> value) some,
+    required TResult Function(Error<T> value) error,
     required TResult Function(None<T> value) none,
   }) {
     return none(this);
@@ -281,7 +281,7 @@ class _$None<T> implements None<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Some<T> value)? some,
+    TResult? Function(Error<T> value)? error,
     TResult? Function(None<T> value)? none,
   }) {
     return none?.call(this);
@@ -290,7 +290,7 @@ class _$None<T> implements None<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Some<T> value)? some,
+    TResult Function(Error<T> value)? error,
     TResult Function(None<T> value)? none,
     required TResult orElse(),
   }) {
