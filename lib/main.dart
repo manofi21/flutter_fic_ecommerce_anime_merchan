@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/core/result_handler/no_params.dart';
+// import 'package:flutter_fic_ecommerce_warung_comicon/core/result_handler/no_params.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/locator.dart';
 import 'package:sizer/sizer.dart';
 
 import 'core/register_bloc/register_bloc.dart';
-import 'feature/authentication/domain/entities/login_request_user.dart';
-import 'feature/authentication/domain/use_cases/login_user_cases.dart';
-import 'feature/product/domain/use_cases/get_product_remote.dart';
+// import 'feature/authentication/domain/entities/login_request_user.dart';
+// import 'feature/authentication/domain/use_cases/login_user_cases.dart';
+import 'feature/authentication/presentation/page/register_page.dart';
+// import 'feature/product/domain/use_cases/get_product_remote.dart';
 import 'feature/product/presentation/bloc/product_bloc.dart';
 import 'feature/product/presentation/page/product_view.dart';
 
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: Sizer(builder: (context, orientation, deviceType) {
-          return const MyHomePage(title: 'Flutter Demo Home Page');
+          // return const MyHomePage(title: 'Flutter Demo Home Page');
+          return const RegisterPage();
         }),
       ),
     );
@@ -70,16 +72,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      final requestLogin = getIt<LoginUserCases>();
-      const requestLoginValue = LoginRequestUser(usernameOrEmail: 'Ollie2@gmail.com', password: 'Ollie1872');
-      final getLoginCases = await requestLogin(requestLoginValue);
-      final isGetAccessLogin = getLoginCases.when<bool>(ok: (ok) {
-        debugPrint('Value Result : ${ok.toString()}');
-        return true;
-      }, err: (err) {
-        debugPrint('Value Result Err: ${err.message}');
-        return false;
-      });
+      // final requestLogin = getIt<LoginUserCases>();
+      // const requestLoginValue = LoginRequestUser(usernameOrEmail: 'Ollie2@gmail.com', password: 'Ollie1872');
+      // final getLoginCases = await requestLogin(requestLoginValue);
+      // final isGetAccessLogin = getLoginCases.when<bool>(ok: (ok) {
+      //   debugPrint('Value Result : ${ok.toString()}');
+      //   return true;
+      // }, err: (err) {
+      //   debugPrint('Value Result Err: ${err.message}');
+      //   return false;
+      // });
 
       // getIt<VerifyUserTokenCases>())
 
@@ -93,17 +95,17 @@ class _MyHomePageState extends State<MyHomePage> {
       //   return false;
       // });
 
-      if (!isGetAccessLogin) {
-        return;
-      }
+      // if (!isGetAccessLogin) {
+      //   return;
+      // }
 
-      final getProduct = getIt<GetProductRemote>();
-      final getProductValue = await getProduct(NoParams());
-      getProductValue.when(ok: (ok) {
-        debugPrint('Value Result : ${ok.toString()}');
-      }, err: (err) {
-        debugPrint('Value Result Err: ${err.message}');
-      });
+      // final getProduct = getIt<GetProductRemote>();
+      // final getProductValue = await getProduct(NoParams());
+      // getProductValue.when(ok: (ok) {
+      //   debugPrint('Value Result : ${ok.toString()}');
+      // }, err: (err) {
+      //   debugPrint('Value Result Err: ${err.message}');
+      // });
 
       // await accessBloc();
     });
