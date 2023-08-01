@@ -15,11 +15,10 @@ class GetProductRemote extends FutureResultUseCase<List<ProductItem>, NoParams> 
     try {
       final getListProduct = await productRepo.getProductFromApi();
       return Ok(getListProduct);
-    } on ProductFailure {
-      rethrow;
-    } on UnknownFailure {
+    } on Failure {
       rethrow;
     } catch (e) {
+      // Mau di return Err atau langsung throw pun juga bisa
       throw UnknownFailure('Occure in Get Product Remote Use Cases : ${e.toString()}');
     }
   }
