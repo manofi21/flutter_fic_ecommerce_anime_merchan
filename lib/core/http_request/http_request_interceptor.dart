@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:http_interceptor/http_interceptor.dart';
@@ -20,6 +21,23 @@ class HttpRequestInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
+      final response = data.body != null ? jsonDecode(data.body!) : {};
+      final errorMessage = response['error'];
+      if (errorMessage != null) {
+        var resultError = errorMessage['message'];
+
+        /// If "details" == null set "errors" Empty
+        errorMessage["details"] ??= {"errors" : []};
+        final getDetailErros = errorMessage["details"]["errors"];
+        if (getDetailErros is List && getDetailErros.isNotEmpty) {
+          for (Map msg in getDetailErros) {
+            resultError += '\n - ${msg["message"]}';
+          }
+        }
+
+        throw resultError;
+      }
+
       final exception = statusCodeHandler(data.statusCode);
       if (exception != null) {
         throw exception;
