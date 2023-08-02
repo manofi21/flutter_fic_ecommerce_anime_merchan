@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/bloc/product_bloc.dart';
 
-class ProductView extends StatefulWidget {
-  const ProductView({super.key});
+class ProductPage extends StatefulWidget {
+  const ProductPage({super.key});
 
   @override
-  State<ProductView> createState() => _ProductViewState();
+  State<ProductPage> createState() => _ProductPageState();
 }
 
-class _ProductViewState extends State<ProductView> {
+class _ProductPageState extends State<ProductPage> {
   @override
   void didChangeDependencies() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
