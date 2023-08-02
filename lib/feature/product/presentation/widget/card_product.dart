@@ -2,9 +2,11 @@
 
 import 'package:currency_formatter/currency_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/constant/constant.dart';
+import '../../../cart/presentation/bloc/cart_bloc.dart';
 import '../../domain/entities/product_item.dart';
 
 class CardProduct extends StatefulWidget {
@@ -27,66 +29,105 @@ class _CardProductState extends State<CardProduct> {
         ),
       ),
       elevation: 5,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        physics: const NeverScrollableScrollPhysics(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Stack(
-            children: [
-              if (listItem.isNotEmpty) ...{
-                AspectRatio(
-                  aspectRatio: 16 / 17,
-                  child: Image.network(
-                    'http://$baseUrl${listItem.first}',
-                    fit: BoxFit.fill,
-                    width: double.infinity,
-                    height: 20.w,
-                  ),
-                )
-              } else ...{
-                const Text('Image Not Found')
-              },
-              const Align(
-                alignment: AlignmentDirectional.topStart,
-                child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Icon(Icons.accessibility_outlined)
-                    // Image.network(
-                    //   product.customStickerImage!,
-                    //   width: 8.w,
-                    //   height: 8.w,
-                    //   fit: BoxFit.cover,
-                    // ),
-                    ),
-              ),
-              const Align(
-                alignment: AlignmentDirectional.topEnd,
-                child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Icon(Icons.accessibility_outlined)),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
               children: [
-                Text(
-                  widget.productItem.productName,
-                  style: TextStyle(
-                      fontSize: 9.sp,
-                      color: Colors.black45,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
+                Stack(
+                  children: [
+                    if (listItem.isNotEmpty) ...{
+                      AspectRatio(
+                        aspectRatio: 16 / 17,
+                        child: Image.network(
+                          'http://$baseUrl${listItem.first}',
+                          fit: BoxFit.fill,
+                          width: double.infinity,
+                          height: 20.w,
+                        ),
+                      )
+                    } else ...{
+                      const Text('Image Not Found')
+                    },
+                    // const Align(
+                    //   alignment: AlignmentDirectional.topStart,
+                    //   child: Padding(
+                    //     padding: EdgeInsets.all(8),
+                    //     child: Icon(Icons.accessibility_outlined),
+                    //   ),
+                    // ),
+                    // const Align(
+                    //   alignment: AlignmentDirectional.topEnd,
+                    //   child: Padding(
+                    //       padding: EdgeInsets.all(8),
+                    //       child: Icon(Icons.accessibility_outlined)),
+                    // )
+                  ],
                 ),
-                const SizedBox(
-                  height: 2,
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.productItem.productName,
+                        style: TextStyle(
+                            fontSize: 9.sp,
+                            color: Colors.black45,
+                            fontWeight: FontWeight.w600),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      buildPriceWidget(widget.productItem.productPrice),
+                    ],
+                  ),
                 ),
-                buildPriceWidget(widget.productItem.productPrice),
               ],
             ),
+          ),
+          BlocBuilder<CartBloc, CartState>(
+            builder: (context, state) {
+              final cartBloc = context.watch<CartBloc>();
+              Widget? buttonWidget;
+
+              if (cartBloc.isProductExit(widget.productItem.productId)) {
+                buttonWidget = OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    // foregroundColor: Colors.blueGrey,
+                    side: const BorderSide(
+                      color: Colors.blueGrey,
+                    ),
+                  ),
+                  onPressed: () {
+                    cartBloc.discardProduct(
+                      productId: widget.productItem.productId,
+                    );
+                  },
+                  child: const Text("Hapus Dari Keranjang"),
+                );
+              }
+
+              buttonWidget ??= ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  cartBloc.addProduct(
+                    productItem: widget.productItem,
+                  );
+                },
+                child: const Text("Ke Keranjang"),
+              );
+
+              return SizedBox(width: double.infinity, child: buttonWidget);
+            },
           )
         ],
       ),
@@ -111,17 +152,6 @@ Widget buildPriceWidget(int price) {
         style: TextStyle(
             color: Colors.black12, fontSize: 9.sp, fontWeight: FontWeight.w600),
       ),
-      // const SizedBox(
-      //   width: 9,
-      // ),
-      // Text(
-      //   'Rp 2.000.000',
-      //   style: TextStyle(
-      //       color: Colors.black26,
-      //       decoration: TextDecoration.lineThrough,
-      //       decorationColor: Colors.black,
-      //       fontSize: 9.sp),
-      // ),
     ],
   );
 }

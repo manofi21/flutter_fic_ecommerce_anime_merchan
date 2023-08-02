@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/authentication/presentation/bloc/authentication_bloc.dart';
 import '../../feature/authentication/presentation/page_state_cubit/authentication_page_cubit.dart';
+import '../../feature/cart/presentation/bloc/cart_bloc.dart';
 import '../../feature/product/presentation/bloc/product_bloc.dart';
 import '../../locator.dart';
 
@@ -15,4 +16,5 @@ final registerBloc = [
       authBloc: context.read<AuthenticationBloc>(),
     ),
   ),
+  BlocProvider<CartBloc>(create: (_) => CartBloc()),
 ];

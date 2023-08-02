@@ -1,3 +1,4 @@
+import 'package:flutter_fic_ecommerce_warung_comicon/core/use_cases/exception_to_failure.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/data/modal/login_request_model.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/data/modal/regist_request_model.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/domain/entities/login_result_user.dart';
@@ -40,12 +41,12 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future<LoginResultUser> verifyUserTokenCases() async {
     try {
-      final loginResult = await authRemoteDataSource.verifyMe();
-      final resultLogin = LoginResultUser(
-        email: loginResult.email,
-        username: loginResult.username,
+      final verivyToken = await authRemoteDataSource.verifyMe();
+      final verivyResult = LoginResultUser(
+        email: verivyToken.email,
+        username: verivyToken.username,
       );
-      return resultLogin;
+      return verivyResult;
     } on HttpException catch (e) {
       throw AuthenticationFailure(e.message);
     } on UnknownException catch (e) {
@@ -64,12 +65,14 @@ class AuthRepoImpl implements AuthRepo {
         email: registerRequest.email,
         username: registerRequest.username,
       );
-      final loginResult = await authRemoteDataSource.regist(registerParam);
-      return loginResult.jwt.isNotEmpty;
-    } on HttpException catch (e) {
-      throw AuthenticationFailure(e.message);
-    } on UnknownException catch (e) {
-      throw UnknownFailure(e.message);
+      final registResult = await authRemoteDataSource.regist(registerParam);
+      await authLocalDataSource.saveAccessToken(registResult.jwt);
+      return registResult.jwt.isNotEmpty;
+    } on Exception catch (e) {
+      throw exceptionToFailure<AuthenticationFailure>(
+        e,
+        AuthenticationFailure.new,
+      );
     } catch (e) {
       throw UnknownFailure('Occure in Auth Repo : ${e.toString()}');
     }

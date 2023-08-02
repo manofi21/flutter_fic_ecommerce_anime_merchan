@@ -10,7 +10,7 @@ class BaseGridView extends StatelessWidget {
     return GridView.builder(
         padding: EdgeInsets.zero,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 2/3,
+          childAspectRatio: 2/3.2,
           crossAxisCount: 2,
           mainAxisSpacing: 6,
           crossAxisSpacing: 6,
