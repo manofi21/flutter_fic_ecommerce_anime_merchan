@@ -26,14 +26,14 @@ class AuthenticationBloc
     /// Verify prosses
     on<OnVerifyTokenEvent>(
       (event, emit) async {
-        emit(const AuthenticationLoginLoading());
+        emit(const AuthenticationVerifyTokenLoading());
         final accessCases = await verivyTokenCases(NoParams());
         accessCases.when(
           err: (error) {
-            emit(AuthenticationLoginError(error.message));
+            emit(AuthenticationVerifyTokenError(error.message));
           },
           ok: (ok) {
-            emit(const AuthenticationLoginComplete());
+            emit(const AuthenticationVerifyTokenComplete());
           },
         );
       },
