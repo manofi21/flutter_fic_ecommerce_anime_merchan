@@ -16,6 +16,7 @@ class ProductRepoImpl implements ProductRepo {
       final getValue = getProductList
           .map(
             (e) => ProductItem(
+              productId: e.id,
               productName: e.attributes.name,
               productPrice: e.attributes.price,
               urlImages: e.attributes.images.data

@@ -2,11 +2,12 @@
 import 'package:equatable/equatable.dart';
 
 class ProductItem extends Equatable {
+  final int productId;
   final String productName;
   final int productPrice; 
   final List<String> urlImages;
 
-  const ProductItem({required this.productName, required this.productPrice, this.urlImages = const []});
+  const ProductItem({required this.productId, required this.productName, required this.productPrice, this.urlImages = const []});
 
   ProductItem copyWith({
     String? productName,
@@ -14,6 +15,7 @@ class ProductItem extends Equatable {
     List<String>? urlImages,
   }) {
     return ProductItem(
+      productId: productId,
       productName: productName ?? this.productName,
       productPrice: productPrice ?? this.productPrice,
       urlImages: urlImages ?? this.urlImages,
@@ -22,6 +24,7 @@ class ProductItem extends Equatable {
   
   @override
   List<Object?> get props => [
+    productId,
     productName,
     productPrice,
     urlImages
