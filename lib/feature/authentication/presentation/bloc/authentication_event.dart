@@ -18,7 +18,8 @@ class OnRegistrationEvent extends AuthenticationEvent {
 
 class OnLoginEvent extends AuthenticationEvent {
   final LoginRequestUser loginModel;
-  const OnLoginEvent({required this.loginModel});
+  final void Function() onSuccess;
+  const OnLoginEvent({required this.loginModel, required this.onSuccess});
 }
 
 class OnVerifyTokenEvent extends AuthenticationEvent {

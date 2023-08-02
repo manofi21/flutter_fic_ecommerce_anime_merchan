@@ -60,6 +60,28 @@ class AuthenticationBloc
         );
       },
     );
+
+    /// Login prosses
+    on<OnLoginEvent>(
+      (event, emit) async {
+        emit(const AuthenticationLoginLoading());
+        final accessCases = await loginCases(event.loginModel);
+        accessCases.when(
+          err: (error) {
+            var message = error.message;
+            debugPrint('Error : $message');
+            if (error.message.contains(':')) {
+              message = error.message.split(':').last;
+            }
+            emit(AuthenticationLoginError(message));
+          },
+          ok: (result) {
+            emit(const AuthenticationLoginComplete());
+            event.onSuccess();
+          },
+        );
+      },
+    );
   }
 
   void onRegisting({
@@ -76,6 +98,22 @@ class AuthenticationBloc
           password: password,
           email: email,
           username: username,
+        ),
+        onSuccess: onSuccess,
+      ),
+    );
+  }
+
+  void onLogin({
+    required String usernameOrEmail,
+    required String password,
+    required void Function() onSuccess,
+  }) {
+    add(
+      OnLoginEvent(
+        loginModel: LoginRequestUser(
+          usernameOrEmail: usernameOrEmail,
+          password: password,
         ),
         onSuccess: onSuccess,
       ),

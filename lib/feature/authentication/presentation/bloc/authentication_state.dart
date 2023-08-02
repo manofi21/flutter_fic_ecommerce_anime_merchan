@@ -36,3 +36,19 @@ class AuthenticationLoginComplete extends AuthenticationState {
   const AuthenticationLoginComplete() : super('');
 }
 
+class AuthenticationVerifyTokenLoading extends AuthenticationState {
+  const AuthenticationVerifyTokenLoading() : super('');
+}
+
+class AuthenticationVerifyTokenError extends AuthenticationState {
+  const AuthenticationVerifyTokenError(String message) : super(message);
+}
+
+class AuthenticationVerifyTokenComplete extends AuthenticationState {
+  const AuthenticationVerifyTokenComplete() : super('');
+}
+
+class AuthenticationVerifyTokenRefresh extends AuthenticationState {
+  const AuthenticationVerifyTokenRefresh() : super('');
+}
+
