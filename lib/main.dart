@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/presentation/widget/auth_loading_overlay.dart';
 // import 'package:flutter_fic_ecommerce_warung_comicon/core/result_handler/no_params.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/locator.dart';
 import 'package:sizer/sizer.dart';
@@ -10,9 +11,8 @@ import 'core/register_bloc/register_bloc.dart';
 // import 'feature/authentication/domain/use_cases/login_user_cases.dart';
 import 'feature/authentication/presentation/page/auth_page.dart';
 // import 'feature/product/domain/use_cases/get_product_remote.dart';
-import 'feature/product/presentation/bloc/product_bloc.dart';
-import 'feature/product/presentation/page/product_page.dart';
-
+// import 'feature/product/presentation/bloc/product_bloc.dart';
+// import 'feature/product/presentation/page/product_page.dart';
 
 void main() {
   configureDependencies();
@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         home: Sizer(builder: (context, orientation, deviceType) {
           // return const MyHomePage(title: 'Flutter Demo Home Page');
-          return const AuthPage();
+          return const AuthLoadingOverlay(
+            authPage: AuthPage(),
+          );
         }),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:currency_formatter/currency_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../core/constant/constant.dart';
 import '../../domain/entities/product_item.dart';
 
 class CardProduct extends StatefulWidget {
@@ -34,9 +35,9 @@ class _CardProductState extends State<CardProduct> {
             children: [
               if (listItem.isNotEmpty) ...{
                 AspectRatio(
-                  aspectRatio: 16 / 9,
+                  aspectRatio: 16 / 17,
                   child: Image.network(
-                    listItem.first,
+                    'http://$baseUrl${listItem.first}',
                     fit: BoxFit.fill,
                     width: double.infinity,
                     height: 20.w,
