@@ -32,4 +32,15 @@ class AuthLocalDataSource extends FlutterSecureStorage{
       throw AuthLocalDataSourceException('(saveAccessToken) : ${e.toString()}');
     }
   }
+
+  Future<void> clearToken() async {
+    try {
+      return deleteAll(
+        aOptions: _androidOptions
+      );
+    } catch (e) {
+      throw AuthLocalDataSourceException('(clearToken) : ${e.toString()}');
+    }
+  }
+
 }

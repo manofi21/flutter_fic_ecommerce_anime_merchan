@@ -51,6 +51,8 @@ class HttpRequestInterceptor implements InterceptorContract {
       final context = navigatorKey.currentContext!;
       await showErrorDialog(context: context, message: exception.message).then(
         (value) {
+          authStorage.clearToken();
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
