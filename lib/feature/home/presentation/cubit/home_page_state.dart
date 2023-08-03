@@ -1,0 +1,1 @@
+typedef HomePageState = int;

@@ -3,7 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../product/domain/entities/product_item.dart';
-import '../../domain/cart_product.dart';
+import '../../domain/entities/cart_product.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
@@ -49,8 +49,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           final addingCountItem = convertToProductItem.productItemCount + 1;
 
           // Update Product
-          final updatePriceProduct = addingCountItem *
-              convertToProductItem.productItem.productPrice.toDouble();
+            final updatePriceProduct =
+                convertToProductItem.priceAfterCalculated + convertToProductItem.productItem.productPrice;
+
           final updateProduct = convertToProductItem.copyWith(
               productItemCount: addingCountItem,
               priceAfterCalculated: updatePriceProduct);
@@ -88,9 +89,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           if (addingCountItem > 0) {
             // Update Product
             final updatePriceProduct =
-                convertToProductItem.priceAfterCalculated -
-                    (convertToProductItem.productItem.productPrice *
-                        addingCountItem);
+                convertToProductItem.priceAfterCalculated - convertToProductItem.productItem.productPrice;
             final updateProduct = convertToProductItem.copyWith(
                 productItemCount: addingCountItem,
                 priceAfterCalculated: updatePriceProduct);
