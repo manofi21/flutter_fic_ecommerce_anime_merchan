@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/base_widget/wcon_loading_widget.dart';
 
-import '../../../product/presentation/page/product_page.dart';
+import '../../../home/presentation/page/home_page.dart';
+// import '../../../product/presentation/page/product_page.dart';
 import '../bloc/authentication_bloc.dart';
 
 class AuthLoadingOverlay extends StatefulWidget {
@@ -25,10 +26,10 @@ class _AuthLoadingOverlayState extends State<AuthLoadingOverlay> {
         authStream.listen(
           (state) {
             if (state is AuthenticationVerifyTokenComplete) {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const ProductPage(),
+                  builder: (_) => const HomePage(),
                 ),
               );
             }
