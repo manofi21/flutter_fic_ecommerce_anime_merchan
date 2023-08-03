@@ -12,7 +12,7 @@ class CountProductInCartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width / 2;
+    // final width = MediaQuery.of(context).size.width / 2;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -24,22 +24,22 @@ class CountProductInCartWidget extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           InkWell(
             onTap: onAdd,
-            child: SizedBox(
-              width: width / 2.5,
-              child: const Icon(Icons.add),
+            child: const SizedBox(
+              width: 50,
+              child: Icon(Icons.add),
             ),
           ),
           // Text(countProduct.toString()),
           countProductWidget,
           InkWell(
             onTap: onSubtract,
-            child: SizedBox(
-              width: width / 2.5,
-              child: const Icon(Icons.remove),
+            child: const SizedBox(
+              width: 50,
+              child: Icon(Icons.remove),
             ),
           ),
         ],
