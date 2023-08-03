@@ -54,6 +54,8 @@ dependencies:
 
   currency_formatter: ^2.0.1
 
+  collection: any
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

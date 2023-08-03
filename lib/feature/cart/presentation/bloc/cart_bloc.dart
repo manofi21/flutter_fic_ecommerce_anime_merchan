@@ -125,8 +125,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   void discardProduct({required int productId}) {
     add(CartDiscardProduct(productId));
   }
+  // CartIncrementProduct
+
+  void incrementProduct({required int productId}) {
+    add(CartIncrementProduct(productId));
+  }
+
+  void decrementProduct({required int productId}) {
+    add(CartDecrementProduct(productId));
+  }
 
   bool isProductExit(int productId) {
     return state.any((e) => e.productItem.productId == productId);
+  }
+
+  int countProductInCart(int productId) {
+    return state
+            .firstWhereOrNull((e) => e.productItem.productId == productId)
+            ?.productItemCount ??
+        0;
   }
 }

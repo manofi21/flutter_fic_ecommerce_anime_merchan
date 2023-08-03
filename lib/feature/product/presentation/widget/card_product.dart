@@ -3,6 +3,7 @@
 import 'package:currency_formatter/currency_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/cart/presentation/widget/count_product_in_cart_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/constant/constant.dart';
@@ -95,10 +96,22 @@ class _CardProductState extends State<CardProduct> {
           BlocBuilder<CartBloc, CartState>(
             builder: (context, state) {
               final cartBloc = context.watch<CartBloc>();
+              final productId = widget.productItem.productId;
               Widget? buttonWidget;
 
-              if (cartBloc.isProductExit(widget.productItem.productId)) {
-                buttonWidget = OutlinedButton(
+              if (cartBloc.isProductExit(productId)) {
+                final productInCart = cartBloc.countProductInCart(productId);
+                buttonWidget = CountProductInCartWidget(
+                  countProductWidget: Text(productInCart.toString()),
+                  onAdd: () {
+                    cartBloc.incrementProduct(productId: productId);
+                  },
+                  onSubtract: () {
+                    cartBloc.decrementProduct(productId: productId);
+                  },
+                );
+                
+                OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     // foregroundColor: Colors.blueGrey,
                     side: const BorderSide(
