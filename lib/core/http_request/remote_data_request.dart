@@ -22,7 +22,7 @@ abstract class RemoteDataRequest {
       final resultDecode = jsonDecode(response.body);
       final mapValue = fromMap(resultDecode);
       return mapValue;
-    } on HttpException {
+    } on BaseExceptions {
       rethrow;
     } catch (e) {
       throw HttpException('Occure in Remote Date Requst(Get) : ${e.toString()}');
@@ -46,7 +46,7 @@ abstract class RemoteDataRequest {
       final resultDecode = jsonDecode(response.body);
       final mapValue = fromMap(resultDecode);
       return mapValue;
-    } on HttpException {
+    } on BaseExceptions {
       rethrow;
     } catch (e) {
       throw HttpException('Occure in Remote Date Requst(Post) : ${e.toString()}');

@@ -7,6 +7,10 @@ class LoginResultUser extends Equatable {
 
   const LoginResultUser({required this.username,required this.email});
 
+  static LoginResultUser empty() {
+    return const LoginResultUser(username: '', email: '');
+  }
+
   LoginResultUser copyWith({
     String? username,
     String? email,

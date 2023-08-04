@@ -48,6 +48,10 @@ class AuthenticationVerifyTokenComplete extends AuthenticationState {
   const AuthenticationVerifyTokenComplete() : super('');
 }
 
+class AuthenticationNoTokenSaved extends AuthenticationState {
+  const AuthenticationNoTokenSaved() : super('');
+}
+
 class AuthenticationVerifyTokenRefresh extends AuthenticationState {
   const AuthenticationVerifyTokenRefresh() : super('');
 }

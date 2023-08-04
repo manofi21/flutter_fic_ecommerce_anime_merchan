@@ -44,7 +44,7 @@ class AuthRemoteDataSourceImpl extends RemoteDataRequest
         fromMap: User.fromJson,
       );
       return verifyResult;
-    } on HttpException {
+    } on BaseExceptions {
       rethrow;
     } catch (e) {
       throw UnknownException(

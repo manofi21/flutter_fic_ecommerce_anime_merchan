@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/domain/entities/login_result_user.dart';
 
 import '../../../../core/result_handler/no_params.dart';
 import '../../domain/entities/login_request_user.dart';
@@ -28,14 +29,20 @@ class AuthenticationBloc
       (event, emit) async {
         emit(const AuthenticationVerifyTokenLoading());
         final accessCases = await verivyTokenCases(NoParams());
-        accessCases.when(
+        final returnState = accessCases.when<AuthenticationState>(
           err: (error) {
-            emit(AuthenticationVerifyTokenError(error.message));
+            return AuthenticationVerifyTokenError(error.message);
           },
           ok: (ok) {
-            emit(const AuthenticationVerifyTokenComplete());
+            if (ok == LoginResultUser.empty()) {
+              return const AuthenticationNoTokenSaved();
+            }
+
+            return const AuthenticationVerifyTokenComplete();
           },
         );
+
+        emit(returnState);
       },
     );
 

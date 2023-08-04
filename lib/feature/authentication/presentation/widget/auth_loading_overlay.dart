@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/base_widget/wcon_loading_widget.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_confirm_dialog.dart';
 
 import '../../../home/presentation/page/home_page.dart';
 // import '../../../product/presentation/page/product_page.dart';
@@ -21,10 +22,10 @@ class _AuthLoadingOverlayState extends State<AuthLoadingOverlay> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-        final authBloc = context.read<AuthenticationBloc>(); 
-        authStream = context.read<AuthenticationBloc>().stream;
+        final authBloc = context.read<AuthenticationBloc>();
+        authStream = authBloc.stream;
         authStream.listen(
-          (state) {
+          (state) async {
             if (state is AuthenticationVerifyTokenComplete) {
               Navigator.pushReplacement(
                 context,
@@ -32,16 +33,26 @@ class _AuthLoadingOverlayState extends State<AuthLoadingOverlay> {
                   builder: (_) => const HomePage(),
                 ),
               );
+              return;
+            }
+
+            if (state is AuthenticationNoTokenSaved) {
+              await showConfirmDialog(
+                context: context,
+                message: "Silahkan Melakukan Login/Registrasi terlebih dahulu",
+                trueFalseOption: false,
+                ok: () {},
+              );
+              return;
             }
           },
         );
-        
+
         authBloc.add(const OnVerifyTokenEvent());
       },
     );
     super.initState();
   }
-
 
 
   @override

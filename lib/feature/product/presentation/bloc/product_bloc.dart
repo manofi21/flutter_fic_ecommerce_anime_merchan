@@ -21,20 +21,24 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         emit(ProductStateLoading());
 
         final listProductCases = await getProductRemote(NoParams());
-        listProductCases.when(ok: (ok) {
-          emit(ProductStateLoaded(ok));
-        }, err: (err) {
-          if (err is UnknownFailure) {
-            final errMsg = err.message.split(' : ');
-            if (errMsg.isNotEmpty) {
-              emit(ProductStateError(errMsg.last));
+        try {
+          listProductCases.when(ok: (ok) {
+            emit(ProductStateLoaded(ok));
+          }, err: (err) {
+            if (err is UnknownFailure) {
+              final errMsg = err.message.split(' : ');
+              if (errMsg.isNotEmpty) {
+                emit(ProductStateError(errMsg.last));
+              }
             }
-          }
 
-          if (err is ProductFailure) {
-            emit(ProductStateError(err.message));
-          }
-        });
+            if (err is ProductFailure) {
+              emit(ProductStateError(err.message));
+            }
+          });
+        } catch (err) {
+          emit(ProductStateError(err.toString()));
+        }
       },
     );
   }

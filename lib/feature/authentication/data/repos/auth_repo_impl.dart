@@ -47,6 +47,8 @@ class AuthRepoImpl implements AuthRepo {
         username: verivyToken.username,
       );
       return verivyResult;
+    } on NoTokenSaved {
+      return LoginResultUser.empty();
     } on HttpException catch (e) {
       throw AuthenticationFailure(e.message);
     } on UnknownException catch (e) {
@@ -68,7 +70,7 @@ class AuthRepoImpl implements AuthRepo {
       final registResult = await authRemoteDataSource.regist(registerParam);
       await authLocalDataSource.saveAccessToken(registResult.jwt);
       return registResult.jwt.isNotEmpty;
-    } on Exception catch (e) {
+    } on BaseExceptions catch (e) {
       throw exceptionToFailure<AuthenticationFailure>(
         e,
         AuthenticationFailure.new,

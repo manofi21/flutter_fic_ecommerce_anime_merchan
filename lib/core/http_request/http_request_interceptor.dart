@@ -8,6 +8,7 @@ import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/pres
 import 'package:http_interceptor/http_interceptor.dart';
 
 import '../../feature/authentication/data/data_source/auth_local_data_source.dart';
+import '../errors/exceptions.dart';
 import '../navigator/navigator.dart';
 import 'status_code_handler.dart';
 
@@ -17,8 +18,16 @@ class HttpRequestInterceptor implements InterceptorContract {
 
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
+    final getToken = await authStorage.getAccessToken();
+    final currentRequest = data.url;
+    final apiWithoutCheckAPI = ['/api/auth/local', '/api/auth/local/register'];
+
+    if ((getToken ?? '').isEmpty &&
+        !apiWithoutCheckAPI.any((e) => currentRequest.contains(e))) {
+      throw const NoTokenSaved();
+    }
+
     if (data.method == Method.GET) {
-      final getToken = await authStorage.getAccessToken();
       data.headers[HttpHeaders.authorizationHeader] = "Bearer $getToken";
     }
     return data;
@@ -30,6 +39,7 @@ class HttpRequestInterceptor implements InterceptorContract {
     final errorMessage = response['error'];
 
     final isExpired = isTokenExpired(data.statusCode);
+    print('errorMessage : $errorMessage');
     if (errorMessage != null && !isExpired) {
       var resultError = errorMessage['message'];
 

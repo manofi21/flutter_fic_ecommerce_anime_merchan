@@ -22,3 +22,7 @@ class HttpException extends BaseExceptions {
 class UnknownException extends BaseExceptions {
   const UnknownException(String message) : super(message);
 }
+
+class NoTokenSaved extends BaseExceptions {
+  const NoTokenSaved() : super('');
+}
