@@ -9,7 +9,7 @@ abstract class RemoteDataRequest {
   RemoteDataRequest({required this.http});
   
   Uri baseUri(String path, [Map<String, dynamic>? queryParameters]) =>
-      Uri.http(baseUrl, path, queryParameters);
+      Uri.https(baseUrl, path, queryParameters);
 
   Future<T> getRequest<T>(
     String path, {
