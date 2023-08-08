@@ -17,7 +17,7 @@ class ProductRepoImpl implements ProductRepo {
           .map(
             (e) => ProductItem(
               productId: e.id,
-              productName: e.attributes.name,
+              productName: e.attributes.productName,
               productPrice: e.attributes.price,
               urlImages: e.attributes.images.data
                   .map((e) => e.attributes.url)
