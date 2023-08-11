@@ -19,7 +19,11 @@ class ProductRemoteDataSourceImpl extends RemoteDataRequest
     try {
       final getProductResult = await getRequest<List<ProductModelDatum>>(
         '/api/products',
-        queryParameters: {'populate': '*'},
+        queryParameters: {
+          'populate[sub_item_type][populate]': '*',
+          'populate[source_item]': '*',
+          'populate[images]': '*',
+        },
         fromMap: (e) {
           final getData = e['data'];
           if (getData is List) {
@@ -33,7 +37,7 @@ class ProductRemoteDataSourceImpl extends RemoteDataRequest
       return getProductResult;
     } on HttpException {
       rethrow;
-    } catch (e) {
+    } catch (e) { 
       throw UnknownException(
           'Occure in Product Remote Data Source : ${e.toString()}');
     }

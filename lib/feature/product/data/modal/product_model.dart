@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // To parse this JSON data, do
 //
 //     final productModel = productModelFromJson(jsonString);
@@ -59,7 +60,7 @@ class ProductAttributes {
     final DateTime updatedAt;
     final DateTime publishedAt;
     final Images images;
-    final SubSourceItem subItemType;
+    final SubItemType subItemType;
     final SourceItem sourceItem;
 
     ProductAttributes({
@@ -88,7 +89,7 @@ class ProductAttributes {
         updatedAt: DateTime.parse(json["updatedAt"]),
         publishedAt: DateTime.parse(json["publishedAt"]),
         images: Images.fromJson(json["images"]),
-        subItemType: SubSourceItem.fromJson(json["sub_item_type"]),
+        subItemType: SubItemType.fromJson(json["sub_item_type"]),
         sourceItem: SourceItem.fromJson(json["source_item"]),
     );
 
@@ -312,23 +313,27 @@ class SourceItem {
     };
 }
 
-class SubSourceItem  {
+class SubItemType {
     final int id;
-    final String subSourceItem;
+    final String subItemType;
+    final String itemType;
 
-    SubSourceItem({
-        required this.id,
-        required this.subSourceItem,        
-    });
+  SubItemType({
+    required this.id,
+    required this.subItemType,
+    required this.itemType,
+  });
 
-    factory SubSourceItem.fromJson(Map<String, dynamic> json) => SubSourceItem(
+    factory SubItemType.fromJson(Map<String, dynamic> json) => SubItemType(
         id: json['data']['id'],
-        subSourceItem: json['data']['attributes']['sub_item_type']
+        subItemType: json['data']['attributes']['sub_item_type'],
+        itemType: json['data']['attributes']['item_type']['data']['attributes']['item_type'],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "sub_item_type": subSourceItem,
+        "sub_item_type": subItemType,
+        "item_type": itemType,
     };
 }
 

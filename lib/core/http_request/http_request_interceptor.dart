@@ -39,7 +39,6 @@ class HttpRequestInterceptor implements InterceptorContract {
     final errorMessage = response['error'];
 
     final isExpired = isTokenExpired(data.statusCode);
-    print('errorMessage : $errorMessage');
     if (errorMessage != null && !isExpired) {
       var resultError = errorMessage['message'];
 
