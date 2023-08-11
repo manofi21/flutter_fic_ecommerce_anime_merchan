@@ -31,9 +31,6 @@ class _CarouselImageProductPreviewState
     lengthImage = widget.urlImages.length;
     if (lengthImage > 1) {
       timerPageController = Timer.periodic(const Duration(seconds: 4), (timer) {
-        setState(() {
-          currentIndex = (currentIndex + 1) % lengthImage;
-        });
         widget.pageController.nextPage(
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOutCubic,
@@ -55,6 +52,11 @@ class _CarouselImageProductPreviewState
       children: [
         PageView.builder(
           controller: widget.pageController,
+          onPageChanged: (value) {
+            setState(() {
+              currentIndex = value % lengthImage;
+            });
+          },
           itemBuilder: (context, index) {
             return Image.network(
               'http://$baseUrl${widget.urlImages[index % lengthImage]}',
