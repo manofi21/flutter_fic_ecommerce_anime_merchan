@@ -48,34 +48,37 @@ class _ProductPageState extends State<ProductPage> {
             child: const Text('Product'),
           ),
         ),
-        body: BlocBuilder<ProductBloc, ProductState>(
-          builder: (context, state) {
-            if (state is ProductStateLoaded) {
-              final listProduct = state.listProduct;
-              return gridProductPage(
-                context,
-                listProduct: listProduct,
-              );
-            }
-
-            if (state is ProductStateLoading) {
-              return const Center(
-                child: SizedBox(
-                  height: 60,
-                  width: 60,
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-
-            if (state is ProductStateError) {
-              return Center(
-                child: Text(state.message),
-              );
-            }
-
-            return Container();
-          },
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height - 125,
+          child: BlocBuilder<ProductBloc, ProductState>(
+            builder: (context, state) {
+              if (state is ProductStateLoaded) {
+                final listProduct = state.listProduct;
+                return gridProductPage(
+                  context,
+                  listProduct: listProduct,
+                );
+              }
+        
+              if (state is ProductStateLoading) {
+                return const Center(
+                  child: SizedBox(
+                    height: 60,
+                    width: 60,
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+        
+              if (state is ProductStateError) {
+                return Center(
+                  child: Text(state.message),
+                );
+              }
+        
+              return Container();
+            },
+          ),
         ),
       ),
     );

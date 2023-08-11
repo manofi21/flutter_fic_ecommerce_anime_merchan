@@ -80,7 +80,7 @@ class _CartPageState extends State<CartPage> {
                     const SizedBox(height: 10),
                     SizedBox(
                       height: 25,
-                      width: 110,
+                      width: 120,
                       child: CountProductInCartWidget(
                         countProductWidget: Text(productInCart.toString()),
                         onAdd: () {

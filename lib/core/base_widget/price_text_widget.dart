@@ -22,9 +22,9 @@ class PriceTextWidget extends StatelessWidget {
         Text(
           stringCurrency,
           style: TextStyle(
-              color: Colors.black12,
-              fontSize: 9.sp,
-              fontWeight: FontWeight.w600),
+              color: Colors.black,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.bold),
         ),
       ],
     );
