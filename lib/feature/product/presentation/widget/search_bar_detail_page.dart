@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/cart/presentation/page/cart_page.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/widget/icon_detail_bar.dart';
 
 import 'button_to_search_page.dart';
@@ -77,8 +78,20 @@ class _SearchBarDetailPageState extends State<SearchBarDetailPage>
           Row(
             children: [
               iconDetailBar(opacity: _opacity, icon: Icons.share_outlined),
-              iconDetailBar(
-                  opacity: _opacity, icon: Icons.shopping_basket_outlined),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const CartPage(),
+                    ),
+                  );
+                },
+                child: iconDetailBar(
+                  opacity: _opacity,
+                  icon: Icons.shopping_basket_outlined,
+                ),
+              ),
               iconDetailBar(opacity: _opacity, icon: Icons.menu)
             ],
           )
