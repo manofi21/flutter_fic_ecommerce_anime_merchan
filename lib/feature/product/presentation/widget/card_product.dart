@@ -1,12 +1,9 @@
-import 'package:currency_formatter/currency_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/feature/cart/presentation/widget/count_product_in_cart_widget.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/page/detail_product_page.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../core/base_widget/price_text_widget.dart';
 import '../../../../core/constant/constant.dart';
-import '../../../cart/presentation/bloc/cart_bloc.dart';
 import '../../domain/entities/product_item.dart';
 
 class CardProduct extends StatefulWidget {
@@ -52,13 +49,6 @@ class _CardProductState extends State<CardProduct> {
                     } else ...{
                       const Text('Image Not Found')
                     },
-                    // const Align(
-                    //   alignment: AlignmentDirectional.topStart,
-                    //   child: Padding(
-                    //     padding: EdgeInsets.all(8),
-                    //     child: Icon(Icons.accessibility_outlined),
-                    //   ),
-                    // ),
                     const Align(
                       alignment: AlignmentDirectional.topEnd,
                       child: Padding(
@@ -76,9 +66,10 @@ class _CardProductState extends State<CardProduct> {
                       Text(
                         widget.productItem.productName,
                         style: TextStyle(
-                            fontSize: 9.sp,
-                            color: Colors.black45,
-                            fontWeight: FontWeight.w600),
+                          fontSize: 9.sp,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600,
+                        ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -94,39 +85,24 @@ class _CardProductState extends State<CardProduct> {
               ],
             ),
           ),
-          BlocBuilder<CartBloc, CartState>(
-            builder: (context, state) {
-              final cartBloc = context.watch<CartBloc>();
-              final productId = widget.productItem.productId;
-              Widget? buttonWidget;
-
-              if (cartBloc.isProductExit(productId)) {
-                final productInCart = cartBloc.countProductInCart(productId);
-                buttonWidget = CountProductInCartWidget(
-                  countProductWidget: Text(productInCart.toString()),
-                  onAdd: () {
-                    cartBloc.incrementProduct(productId: productId);
-                  },
-                  onSubtract: () {
-                    cartBloc.decrementProduct(productId: productId);
-                  },
+          SizedBox(
+            height: 40,
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        DetailProductPage(productItem: widget.productItem),
+                  ),
                 );
-              }
-
-              buttonWidget ??= ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueGrey,
-                ),
-                onPressed: () {
-                  cartBloc.addProduct(
-                    productItem: widget.productItem,
-                  );
-                },
-                child: const Text("Ke Keranjang"),
-              );
-
-              return SizedBox(width: double.infinity, child: buttonWidget);
-            },
+              },
+              child: const Text("Lihat Detail"),
+            ),
           )
         ],
       ),
