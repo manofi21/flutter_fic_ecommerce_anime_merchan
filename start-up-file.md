@@ -1,4 +1,4 @@
-Start Up Strapi:
+# Start Up Strapi:
 [ ] Buka DBeaver
 
 [ ] Click Kanan DATABASES -> Pilih `Create New Database` -> Isikan database name
@@ -14,11 +14,14 @@ Contoh: `yarn create strapi-app new-ecommerce-database`
 
 [ ] Karena ada error: Jalankan `cd D:\new_daily_april_2022\full_stack_flutter_practice\new-ecommerce-database && yarn install`
 
-[ ] Jalankan `yarn develop`
+[ ] Jalankan `yarn develop` (atau `d: && cd D:\new_daily_april_2022\full_stack_flutter_practice\new-ecommerce-database && yarn develop`)
 
 [ ] Lakukan registrasi sampai masuk dashboard
 
+### Imput table dan mengisi table static (SubItemType, SourceItem, ItemType)
+
 -------------------------------------------------------
+
 [ ] click `Content-Type Builder` dan click  `Create new collection type` dan isi Design table seperti berikut:
 1. ItemType 
 Column => item_type | Text
@@ -53,6 +56,7 @@ Column => item_type | Text
             2. sub_item_type | Text 
 
 [ ] Isi beberapa table dengan data berikut
+
 ItemType: Book, Cassette, Display, Other
 
 SourceItem : Anime/Cartoon, Manga/Comic, Games, Light Novel, Vtuber
@@ -120,3 +124,31 @@ Cassette
 
  Post Card
 Other 
+
+### Install Ngrok untuk melakukan public localhost melalui device 
+
+------------------------------------
+
+~~[ ] Install Nginx dari [Link ini](https://nginx.org/en/docs/windows.html)~~
+
+[ ] Install Ngrok dari [Link ini](https://ngrok.com/) 
+
+[ ] Ikuti tutorial installasi melalui [Link ini](https://medium.com/@skzulka/cara-install-ngrok-di-windows-b9b32855f38e?source=list-ff7f780fed4e--------6-------predefined%3Aff7f780fed4e%3AREADING_LIST---------------------)
+
+[ ] Setelah sudah, jalankan `ngrok http 1337`
+
+---------------------------------------------
+
+### Menambahkan Permission untuk bisa mengakses file dari Starpi
+
+[ ] Kembali ke [dashboard strapi](http://localhost:1337)
+
+[ ] Click `setting` dibagian kiri.
+
+[ ] Pilih `Roles` pada `USERS & PERMISSIONS PLUGIN`
+
+[ ] Pilih `Authenticated` dan di bagian `Permissions` pilih `Product`
+
+[ ] Centang pada `find` dan `findOne` lalu save
+
+[ ] Lakukan juga di `SourceItem`, `ItemType`,`SubItemType`, 

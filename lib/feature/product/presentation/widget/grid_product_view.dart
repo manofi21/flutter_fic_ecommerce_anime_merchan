@@ -6,7 +6,7 @@ import 'card_product.dart';
 
 Widget gridProductPage(BuildContext context, {List<ProductItem> listProduct = const []}) {
   return BaseGridView(
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       children: listProduct.map((e) => CardProduct(productItem: e)).toList(),
     );
 }
