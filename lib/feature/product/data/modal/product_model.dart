@@ -223,7 +223,7 @@ class ImagesAttributes {
 
 class Formats {
     final Small thumbnail;
-    final Small small;
+    final Small? small;
     final Small? medium;
 
     Formats({
@@ -234,13 +234,13 @@ class Formats {
 
     factory Formats.fromJson(Map<String, dynamic> json) => Formats(
         thumbnail: Small.fromJson(json["thumbnail"]),
-        small: Small.fromJson(json["small"]),
+        small: json["small"] == null ? null :Small.fromJson(json["small"]),
         medium: json["medium"] == null ? null : Small.fromJson(json["medium"]),
     );
 
     Map<String, dynamic> toJson() => {
         "thumbnail": thumbnail.toJson(),
-        "small": small.toJson(),
+        "small": small?.toJson(),
         "medium": medium?.toJson(),
     };
 }
