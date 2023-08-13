@@ -1,6 +1,6 @@
-
-import '../entites/order_request_model.dart';
+import '../entities/order_request_entities.dart';
+import '../entities/order_result_entities.dart';
 
 abstract class OrderRepo {
-  Future<void> orderProduct(OrderRequestEntities orderRequest);
+  Future<OrderResultEntities> orderProduct(OrderRequestEntities orderRequest);
 }
