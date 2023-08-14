@@ -20,7 +20,10 @@ class HttpException extends BaseExceptions {
 }
 
 class UnknownException extends BaseExceptions {
-  const UnknownException(String message) : super(message);
+  final StackTrace stackTrace;
+  UnknownException(String message, this.stackTrace) : super(message) {
+    print(stackTrace);
+  }
 }
 
 class NoTokenSaved extends BaseExceptions {
