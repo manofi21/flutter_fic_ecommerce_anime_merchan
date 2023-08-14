@@ -7,7 +7,7 @@ import '../errors/exceptions.dart';
 abstract class RemoteDataRequest {
   final InterceptedHttp http;
   RemoteDataRequest({required this.http});
-  
+
   Uri baseUri(String path, [Map<String, dynamic>? queryParameters]) =>
       Uri.https(baseUrl, path, queryParameters);
 
@@ -25,12 +25,14 @@ abstract class RemoteDataRequest {
     } on BaseExceptions {
       rethrow;
     } catch (e) {
-      throw HttpException('Occure in Remote Date Requst(Get) : ${e.toString()}');
+      throw HttpException(
+          'Occure in Remote Date Requst(Get) : ${e.toString()}');
     }
   }
 
   Future<T> postRequest<T>(
     String path, {
+    bool useEncode = false,
     Map<String, dynamic>? bodyParameter,
     Map<String, String>? headerParameter,
     required T Function(Map<String, dynamic> map) fromMap,
@@ -39,7 +41,7 @@ abstract class RemoteDataRequest {
       final urlRequest = baseUri(path);
       final response = await http.post(
         urlRequest,
-        body: bodyParameter,
+        body: useEncode ? json.encode(bodyParameter) : bodyParameter,
         headers: headerParameter,
       );
 
@@ -49,7 +51,8 @@ abstract class RemoteDataRequest {
     } on BaseExceptions {
       rethrow;
     } catch (e) {
-      throw HttpException('Occure in Remote Date Requst(Post) : ${e.toString()}');
+      throw HttpException(
+          'Occure in Remote Date Requst(Post) : ${e.toString()}');
     }
   }
 }

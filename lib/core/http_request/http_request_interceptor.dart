@@ -27,9 +27,11 @@ class HttpRequestInterceptor implements InterceptorContract {
       throw const NoTokenSaved();
     }
 
-    if (data.method == Method.GET) {
+    if (data.method == Method.GET || (data.method == Method.POST && !apiWithoutCheckAPI.any((e) => currentRequest.contains(e)))) {
       data.headers[HttpHeaders.authorizationHeader] = "Bearer $getToken";
     }
+
+    data.headers[HttpHeaders.contentTypeHeader] = "application/json";
     return data;
   }
 
