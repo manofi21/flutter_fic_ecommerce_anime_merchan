@@ -31,10 +31,10 @@ class AuthRepoImpl implements AuthRepo {
       return resultLogin;
     } on HttpException catch (e) {
       throw AuthenticationFailure(e.message);
-    } on UnknownException catch (e) {
-      throw UnknownFailure(e.message);
-    } catch (e) {
-      throw UnknownFailure('Occure in Auth Repo : ${e.toString()}');
+    } on UnknownException catch (e, stackTrace) {
+      throw UnknownFailure(e.message, stackTrace);
+    } catch (e, stackTrace) {
+      throw UnknownFailure('Occure in Auth Repo : ${e.toString()}', stackTrace);
     }
   }
 
@@ -51,10 +51,10 @@ class AuthRepoImpl implements AuthRepo {
       return LoginResultUser.empty();
     } on HttpException catch (e) {
       throw AuthenticationFailure(e.message);
-    } on UnknownException catch (e) {
-      throw UnknownFailure(e.message);
-    } catch (e) {
-      throw UnknownFailure('Occure in Auth Repo : ${e.toString()}');
+    } on UnknownException catch (e, stackTrace) {
+      throw UnknownFailure(e.message, stackTrace);
+    } catch (e, stackTrace) {
+      throw UnknownFailure('Occure in Auth Repo : ${e.toString()}', stackTrace);
     }
   }
 
@@ -75,8 +75,8 @@ class AuthRepoImpl implements AuthRepo {
         e,
         AuthenticationFailure.new,
       );
-    } catch (e) {
-      throw UnknownFailure('Occure in Auth Repo : ${e.toString()}');
+    } catch (e, stackTrace) {
+      throw UnknownFailure('Occure in Auth Repo : ${e.toString()}', stackTrace);
     }
   }
 }

@@ -44,6 +44,7 @@ class AuthRemoteDataSourceImpl extends RemoteDataRequest
         '/api/users/me',
         fromMap: User.fromJson,
       );
+      // dynamic result = 'string';
       return verifyResult;
     } on BaseExceptions {
       rethrow;

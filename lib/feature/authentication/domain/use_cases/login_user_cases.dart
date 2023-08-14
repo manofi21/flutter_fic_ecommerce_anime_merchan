@@ -21,8 +21,8 @@ class LoginUserCases extends FutureResultUseCase<LoginResultUser, LoginRequestUs
       rethrow;
     } on UnknownFailure {
       rethrow;
-    } catch (e) {
-      throw UnknownFailure('Occure in Request User Login Use Cases : ${e.toString()}');
+    } catch (e, stackTrace) {
+      throw UnknownFailure('Occure in Request User Login Use Cases : ${e.toString()}', stackTrace);
     }
   }
 

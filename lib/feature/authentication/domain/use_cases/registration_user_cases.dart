@@ -17,11 +17,11 @@ class RegistrationUserCases extends FutureOptionUseCase<RegisterRequestUser> {
         return None();
       }
 
-      return Error(const UnknownFailure('message'));
+      return Error(UnknownFailure('Somethings Wrong in getUserAfterLogin return false', StackTrace.current));
     } on Failure catch (err) {
       return Error(err);
-    } catch (e) {
-      throw UnknownFailure('Occure in Verify User Token Use Cases : ${e.toString()}');
+    } catch (e, stackTrace) {
+      throw UnknownFailure('Occure in Verify User Token Use Cases : ${e.toString()}', stackTrace);
     }
   }
 

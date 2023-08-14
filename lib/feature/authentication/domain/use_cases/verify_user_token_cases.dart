@@ -18,8 +18,8 @@ class VerifyUserTokenCases extends FutureResultUseCase<LoginResultUser, NoParams
       return Ok(getUserAfterLogin);
     } on Failure catch(error) {
       return Err(error);
-    } catch (e) {
-      return Err(UnknownFailure('Occure in Verify User Token Use Cases : ${e.toString()}'));
+    } catch (e, stackTrace) {
+      return Err(UnknownFailure('Occure in Verify User Token Use Cases : ${e.toString()}', stackTrace));
     }
   }
 

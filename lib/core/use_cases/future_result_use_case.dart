@@ -13,11 +13,11 @@ abstract class FutureResultUseCase<ReturnType, ParameterType> {
           return Err(failure);
         },
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
       if (e is PlatformException) {
-        return Err(UnknownFailure(e.message ?? e.details));
+        return Err(UnknownFailure(e.message ?? e.details, stackTrace));
       }
-      return Err(UnknownFailure(e.toString()));
+      return Err(UnknownFailure(e.toString(), stackTrace));
     }
   }
 

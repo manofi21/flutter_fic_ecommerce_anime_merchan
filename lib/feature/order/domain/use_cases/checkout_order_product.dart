@@ -16,9 +16,9 @@ class CheckoutOrderProduct extends FutureResultUseCase<OrderResultModel, OrderRe
       return Ok(getListProduct);
     } on Failure {
       rethrow;
-    } catch (e) {
+    } catch (e, stackTrace) {
       // Mau di return Err atau langsung throw pun juga bisa
-      throw UnknownFailure('Occure in Checkout Order Product : ${e.toString()}');
+      throw UnknownFailure('Occure in Checkout Order Product : ${e.toString()}', stackTrace);
     }
   }
 } 

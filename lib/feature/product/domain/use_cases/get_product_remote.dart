@@ -17,9 +17,9 @@ class GetProductRemote extends FutureResultUseCase<List<ProductItem>, NoParams> 
       return Ok(getListProduct);
     } on Failure {
       rethrow;
-    } catch (e) {
+    } catch (e, stackTrace) {
       // Mau di return Err atau langsung throw pun juga bisa
-      throw UnknownFailure('Occure in Get Product Remote Use Cases : ${e.toString()}');
+      throw UnknownFailure('Occure in Get Product Remote Use Cases : ${e.toString()}', stackTrace);
     }
   }
 } 

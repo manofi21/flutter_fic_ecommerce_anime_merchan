@@ -35,9 +35,10 @@ class ProductRepoImpl implements ProductRepo {
     } on HttpException catch (e) { 
       throw ProductFailure(e.message);
     } on UnknownException catch (e) { 
-      throw UnknownFailure(e.message);
-    } catch (e) { 
-      throw UnknownFailure('Occure in Product Repo : ${e.toString()}');
+      // throw UnknownFailure(e.message, stackTrace);
+      throw ProductFailure(e.message);
+    } catch (e, stackTrace) { 
+      throw UnknownFailure('Occure in Product Repo : ${e.toString()}', stackTrace);
     }
   }
 }

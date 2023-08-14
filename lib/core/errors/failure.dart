@@ -16,7 +16,10 @@ class NoMessageFailure extends Failure {
 }
 
 class UnknownFailure extends Failure {
-  const UnknownFailure(String message) : super(message);
+  final StackTrace stackTrace;
+  UnknownFailure(String message, this.stackTrace) : super(message) {
+    print(stackTrace);
+  }
 }
 
 class ProductFailure extends Failure {
