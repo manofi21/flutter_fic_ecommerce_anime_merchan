@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_confirm_dialog.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_error_dialog.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/order/presentation/widget/button_order_user_product.dart';
 
 import '../../../../core/base_widget/price_text_widget.dart';
 import '../../../../core/constant/constant.dart';
@@ -17,6 +19,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
+    final cartBloc = context.watch<CartBloc>();
     return Scaffold(
       appBar: AppBar(
         title: Title(
@@ -25,6 +28,8 @@ class _CartPageState extends State<CartPage> {
           child: const Text('Cart'),
         ),
       ),
+      bottomNavigationBar:
+          ButtonOrderUserProduct(listCartProduct: cartBloc.state),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           final cartBloc = context.watch<CartBloc>();
@@ -84,7 +89,12 @@ class _CartPageState extends State<CartPage> {
                       child: CountProductInCartWidget(
                         countProductWidget: Text(productInCart.toString()),
                         onAdd: () {
-                          cartBloc.incrementProduct(productId: productId);
+                          cartBloc.incrementProduct(
+                            productId: productId,
+                            onHitLimitQuality: () {
+                              showErrorDialog(context: context, message: 'Product yang di input tidak bisa lebih banyak lagi karena sudah menyentuh limit');
+                            }
+                          );
                         },
                         onSubtract: () {
                           if (productInCart == 1) {
