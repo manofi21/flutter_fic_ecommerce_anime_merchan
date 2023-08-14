@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 Future<void> showConfirmDialog({
   required BuildContext context,
   required String message,
-  required void Function() ok,
+  void Function()? ok,
   bool trueFalseOption = true,
 }) {
+
+  if (trueFalseOption) {
+    assert(trueFalseOption && ok != null, 'ok parameter cannot null if trueFalseOption true');
+  }
+
   return showDialog(
     context: context,
     builder: (context) {
@@ -34,7 +39,7 @@ Future<void> showConfirmDialog({
                     backgroundColor: Colors.blueGrey,
                   ),
                   onPressed: () {
-                    ok();
+                    if (ok != null) ok();
                     Navigator.pop(context);
                   },
                   child: const Text("Yes"),
@@ -46,7 +51,7 @@ Future<void> showConfirmDialog({
                     backgroundColor: Colors.blueGrey,
                   ),
                   onPressed: () {
-                    ok();
+                    if (ok != null) ok();
                     Navigator.pop(context);
                   },
                   child: const Text("Ok"),
