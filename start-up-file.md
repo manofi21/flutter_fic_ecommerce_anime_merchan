@@ -152,3 +152,105 @@ Other
 [ ] Centang pada `find` dan `findOne` lalu save
 
 [ ] Lakukan juga di `SourceItem`, `ItemType`,`SubItemType`, 
+
+### Buat akun mitrands
+
+[ ] Regis dengan [Mintrands registration](https://dashboard.midtrans.com/register)
+
+[ ] Isikan: 
+- Bussiness Name ()
+- Full Name (MM Arial)
+- Bussiness email untuk regist buatstrapimitrands@gmail.com
+- Bussiness Phone Number (Yang belum di registrasi sama sekali di mitrands)
+
+[ ] Setelah sign up akan berpindah ke login page. Kembali ke gmail untuk melakukan konfirmasi email
+
+[ ] Lakukan login dan dari Environtment pindah ke SandBox
+
+[ ] Pindah ke [Halaman Access Key](https://dashboard.sandbox.midtrans.com/settings/config_info)
+
+### Integrasi Strapi dan Mitrands
+
+[ ] jalankan `npm install --save midtrans-client` di Directory strapi dan tunggu
+
+[ ] Pindah ke src/api/order/controller/order.js dan isi seperti berikut:
+```javascript
+
+module.exports = createCoreController('api::order.order', ({ strapi }) => ({
+    async create(ctx) {
+        const midtransClient = require('midtrans-client');
+        let serverKey ='-';
+        let clienKey = '--';
+        const result = await super.create(ctx);
+        
+        // Function jika menggunakan mitrans Snap
+        // let response = await midtransSnapFunction(serverKey, clienKey, midtransClient, result);
+
+        // Function jika menggunakan mitrans Core
+        let response = midtransCoreFunction(serverKey, clienKey, midtransClient, result);
+    
+        return response;
+    }
+}));
+
+// Function untuk memanggil result menggunakan midtrans Snap
+async function midtransSnapFunction(serverKey, clienKey, midtransClient, result) {
+
+    // Create Snap API instance
+    let snap = new midtransClient.Snap({
+            isProduction : false,
+            serverKey : serverKey,
+            clientKey : clienKey
+        });
+    
+    let parameter = {
+        "transaction_details": {
+            "order_id": result.data.id,
+            "gross_amount": result.data.attributes.totalPrice,
+        }, "credit_card":{
+            "secure" : true
+        }
+    };
+    
+    return snap.createTransaction(parameter);
+}
+
+// Function untuk memanggil result menggunakan midtrans Snap
+async function midtransCoreFunction(serverKey, clienKey, midtransClient, result) {
+    // Create Core API instance
+    let core = new midtransClient.CoreApi({
+        isProduction : false,
+        serverKey : serverKey,
+        clientKey : clienKey
+    });
+
+    let parameter = {
+        "payment_type": "gopay",
+        "transaction_details": {
+            "order_id": result.data.id,
+            "gross_amount": result.data.attributes.totalPrice,
+        },
+        "credit_card":{
+            "token_id": 'CREDIT_CARD_TOKEN', // change with your card token
+            "authentication": true
+        }
+    };
+
+    // charge transaction
+    return core.charge(parameter);
+}
+```
+
+[ ] Jangan lupa untuk mengganti serverKey, dan clienKey sesuai midtrands
+
+[ ] Setelah itu jalankan `yarn install` untuk memunculkan midtrands di lockfile
+
+[ ] Kembali ke Dashboard
+
+[ ] Click `setting` dibagian kiri.
+
+[ ] Pilih `Roles` pada `USERS & PERMISSIONS PLUGIN`
+
+[ ] Pilih `Authenticated` dan di bagian `Permissions` pilih `Order`
+
+[ ] Centang pada `Create` dan save
