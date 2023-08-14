@@ -29,9 +29,10 @@ class AuthRemoteDataSourceImpl extends RemoteDataRequest
       return authResult;
     } on HttpException {
       rethrow;
-    } catch (e) {
+    } catch (e, stackTrace) {
       throw UnknownException(
         'Occure in Auth Remote Data Source(login) : ${e.toString()}',
+        stackTrace,
       );
     }
   }
@@ -46,27 +47,28 @@ class AuthRemoteDataSourceImpl extends RemoteDataRequest
       return verifyResult;
     } on BaseExceptions {
       rethrow;
-    } catch (e) {
+    } catch (e, stackTrace) {
       throw UnknownException(
         'Occure in Auth Remote Data Source(verivy) : ${e.toString()}',
+        stackTrace,
       );
     }
   }
-  
+
   @override
   Future<AuthModel> regist(RegistRequestModel registRequest) async {
     try {
       final verifyResult = await postRequest<AuthModel>(
-        '/api/auth/local/register',
-        fromMap: AuthModel.fromJson,
-        bodyParameter: registRequest.toJson()
-      );
+          '/api/auth/local/register',
+          fromMap: AuthModel.fromJson,
+          bodyParameter: registRequest.toJson());
       return verifyResult;
     } on HttpException {
       rethrow;
-    } catch (e) {
+    } catch (e, stackTrace) {
       throw UnknownException(
         'Occure in Auth Remote Data Source(regist) : ${e.toString()}',
+        stackTrace,
       );
     }
   }

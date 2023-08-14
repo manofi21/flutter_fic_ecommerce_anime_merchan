@@ -1,7 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../exception/auth_local_exception.dart';
 
-class AuthLocalDataSource extends FlutterSecureStorage{
+class AuthLocalDataSource extends FlutterSecureStorage {
   static const _accessToken = "access_token";
 
   AuthLocalDataSource(secureStorage);
@@ -15,9 +15,12 @@ class AuthLocalDataSource extends FlutterSecureStorage{
       return read(
         key: _accessToken,
         aOptions: _androidOptions,
-      ); 
-    } catch (e) {
-      throw AuthLocalDataSourceException('(getAccessToken) : ${e.toString()}');
+      );
+    } catch (e, stackTrace) {
+      throw AuthLocalDataSourceException(
+        '(getAccessToken) : ${e.toString()}',
+        stackTrace,
+      );
     }
   }
 
@@ -27,20 +30,23 @@ class AuthLocalDataSource extends FlutterSecureStorage{
         key: _accessToken,
         value: token,
         aOptions: _androidOptions,
-      ); 
-    } catch (e) {
-      throw AuthLocalDataSourceException('(saveAccessToken) : ${e.toString()}');
+      );
+    } catch (e, stackTrace) {
+      throw AuthLocalDataSourceException(
+        '(saveAccessToken) : ${e.toString()}',
+        stackTrace,
+      );
     }
   }
 
   Future<void> clearToken() async {
     try {
-      return deleteAll(
-        aOptions: _androidOptions
+      return deleteAll(aOptions: _androidOptions);
+    } catch (e, stackTrace) {
+      throw AuthLocalDataSourceException(
+        '(clearToken) : ${e.toString()}',
+        stackTrace,
       );
-    } catch (e) {
-      throw AuthLocalDataSourceException('(clearToken) : ${e.toString()}');
     }
   }
-
 }

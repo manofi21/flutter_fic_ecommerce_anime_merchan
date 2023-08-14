@@ -29,9 +29,10 @@ class OrderRemoteDataSourceImpl extends RemoteDataRequest
       return orderResult;
     } on HttpException {
       rethrow;
-    } catch (e) {
+    } catch (e, stackTrace) {
       throw UnknownException(
         'Occure in Order Remote Data Source(createOrder) : ${e.toString()}',
+        stackTrace,
       );
     }
   }

@@ -37,9 +37,11 @@ class ProductRemoteDataSourceImpl extends RemoteDataRequest
       return getProductResult;
     } on HttpException {
       rethrow;
-    } catch (e) { 
+    } catch (e, stackTrace) {
       throw UnknownException(
-          'Occure in Product Remote Data Source : ${e.toString()}');
+        'Occure in Product Remote Data Source : ${e.toString()}',
+        stackTrace,
+      );
     }
   }
 }
