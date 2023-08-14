@@ -5,9 +5,9 @@ import '../../data/model/order_result_model.dart';
 import '../entities/order_request_entities.dart';
 import '../repos/order_repo.dart';
 
-class ChecoutOrderProduct extends FutureResultUseCase<OrderResultModel, OrderRequestEntities> {
+class CheckoutOrderProduct extends FutureResultUseCase<OrderResultModel, OrderRequestEntities> {
   final OrderRepo orderRepo;
-  ChecoutOrderProduct(this.orderRepo);
+  CheckoutOrderProduct(this.orderRepo);
 
   @override
   Future<Result<OrderResultModel, Failure>> processCall(OrderRequestEntities params) async {
@@ -18,7 +18,7 @@ class ChecoutOrderProduct extends FutureResultUseCase<OrderResultModel, OrderReq
       rethrow;
     } catch (e) {
       // Mau di return Err atau langsung throw pun juga bisa
-      throw UnknownFailure('Occure in Get Product Remote Use Cases : ${e.toString()}');
+      throw UnknownFailure('Occure in Checkout Order Product : ${e.toString()}');
     }
   }
 } 

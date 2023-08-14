@@ -6,14 +6,15 @@ import '../../domain/use_cases/checkout_order_product.dart';
 part 'order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
-  final ChecoutOrderProduct checkoutOrder;
+  final CheckoutOrderProduct checkoutOrder;
   OrderCubit(this.checkoutOrder) : super(OrderState.initial);
 
   var message = '';
   var orderLink = '';
 
-  Future<void> onCheckoutUserProduct(
-      {List<CartProduct> listCartProduct = const []}) async {
+  Future<void> onCheckoutUserProduct({
+    List<CartProduct> listCartProduct = const [],
+  }) async {
     emit(OrderState.loading);
     final getCheckout = await checkoutOrder(
       OrderRequestEntities(
@@ -24,10 +25,13 @@ class OrderCubit extends Cubit<OrderState> {
       ),
     );
 
+    orderLink = '';
+    message = '';
+
     final getOrderState = getCheckout.when<OrderState>(
       ok: (ok) {
         orderLink = ok.redirectUrl;
-        message = 'Segerap Proses Pembayaran';
+        message = 'Segera Proses Pembayaran.';
         return OrderState.ordered;
       },
       err: (err) {
@@ -35,6 +39,8 @@ class OrderCubit extends Cubit<OrderState> {
         return OrderState.error;
       },
     );
+    print('object : $getOrderState');
+    print('object : $message');
 
     emit(getOrderState);
   }

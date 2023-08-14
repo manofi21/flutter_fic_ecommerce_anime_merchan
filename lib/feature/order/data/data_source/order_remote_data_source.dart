@@ -18,19 +18,20 @@ class OrderRemoteDataSourceImpl extends RemoteDataRequest
   @override
   Future<OrderResultModel> createOrder(OrderRequestModel orderRequest) async {
     try {
-      final authResult = await postRequest<OrderResultModel>(
+      final orderResult = await postRequest<OrderResultModel>(
         '/api/orders',
+        useEncode: true,
         fromMap: OrderResultModel.fromJson,
         bodyParameter: {
-          'data': orderRequest.toJson(),
+          "data": orderRequest.toJson(),
         },
       );
-      return authResult;
+      return orderResult;
     } on HttpException {
       rethrow;
     } catch (e) {
       throw UnknownException(
-        'Occure in Order Remote Data Source(login) : ${e.toString()}',
+        'Occure in Order Remote Data Source(createOrder) : ${e.toString()}',
       );
     }
   }
