@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/order/presentation/cubit/order_cubit.dart';
 
 import '../../feature/authentication/presentation/bloc/authentication_bloc.dart';
 import '../../feature/authentication/presentation/page_state_cubit/authentication_page_cubit.dart';
@@ -17,4 +18,5 @@ final registerBloc = [
     ),
   ),
   BlocProvider<CartBloc>(create: (_) => CartBloc()),
+  BlocProvider<OrderCubit>(create: (_) => getIt<OrderCubit>()),
 ];
