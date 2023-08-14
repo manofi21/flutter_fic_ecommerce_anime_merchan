@@ -14,7 +14,8 @@ class CartAddProduct extends CartEvent{
 
 class CartIncrementProduct extends CartEvent{
   final int productId;
-  const CartIncrementProduct(this.productId);
+  final void Function() onHitLimitQuality;
+  const CartIncrementProduct(this.productId, this.onHitLimitQuality);
 }
 
 class CartDecrementProduct extends CartEvent{

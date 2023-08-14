@@ -48,15 +48,23 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           // Adding Product
           final addingCountItem = convertToProductItem.productItemCount + 1;
 
-          // Update Product
-            final updatePriceProduct =
-                convertToProductItem.priceAfterCalculated + convertToProductItem.productItem.productPrice;
+          if (addingCountItem > convertToProductItem.productItem.quantity) {
+            event.onHitLimitQuality();
+            emit(currentListState);
+          }
 
-          final updateProduct = convertToProductItem.copyWith(
-              productItemCount: addingCountItem,
-              priceAfterCalculated: updatePriceProduct);
-          currentListState[index] = updateProduct;
-          emit(currentListState);
+          if (addingCountItem <= convertToProductItem.productItem.quantity) {
+            // Update Product
+            final updatePriceProduct =
+                convertToProductItem.priceAfterCalculated +
+                    convertToProductItem.productItem.productPrice;
+
+            final updateProduct = convertToProductItem.copyWith(
+                productItemCount: addingCountItem,
+                priceAfterCalculated: updatePriceProduct);
+            currentListState[index] = updateProduct;
+            emit(currentListState);
+          }
         }
       },
     );
@@ -89,7 +97,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           if (addingCountItem > 0) {
             // Update Product
             final updatePriceProduct =
-                convertToProductItem.priceAfterCalculated - convertToProductItem.productItem.productPrice;
+                convertToProductItem.priceAfterCalculated -
+                    convertToProductItem.productItem.productPrice;
             final updateProduct = convertToProductItem.copyWith(
                 productItemCount: addingCountItem,
                 priceAfterCalculated: updatePriceProduct);
@@ -126,8 +135,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
   // CartIncrementProduct
 
-  void incrementProduct({required int productId}) {
-    add(CartIncrementProduct(productId));
+  void incrementProduct(
+      {required int productId, required void Function() onHitLimitQuality}) {
+    add(CartIncrementProduct(productId, onHitLimitQuality));
   }
 
   void decrementProduct({required int productId}) {

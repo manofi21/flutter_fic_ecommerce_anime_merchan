@@ -11,6 +11,7 @@ class ProductItem extends Equatable {
   final String sourceItem;
   final String subTypeItem;
   final String typeItem;
+  final int quantity;
 
   const ProductItem({
     required this.productId,
@@ -22,6 +23,7 @@ class ProductItem extends Equatable {
     required this.sourceItem,
     required this.subTypeItem,
     required this.typeItem,
+    required this.quantity,
   });
 
   ProductItem copyWith({
@@ -34,6 +36,7 @@ class ProductItem extends Equatable {
     String? sourceItem,
     String? subTypeItem,
     String? typeItem,
+    int? quantity
   }) {
     return ProductItem(
       productId: productId ?? this.productId,
@@ -45,6 +48,7 @@ class ProductItem extends Equatable {
       sourceItem: sourceItem ?? this.sourceItem,
       subTypeItem: subTypeItem ?? this.subTypeItem,
       typeItem: typeItem ?? this.typeItem,
+      quantity: quantity ?? this.quantity,
     );
   }
 
@@ -58,6 +62,7 @@ class ProductItem extends Equatable {
         typeItem,
         productName,
         productPrice,
-        urlImages
+        urlImages,
+        quantity,
       ];
 }

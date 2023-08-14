@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/show_dialog/show_error_dialog.dart';
 import '../../../cart/presentation/bloc/cart_bloc.dart';
 import '../../domain/entities/product_item.dart';
 import 'bottom_sheet_to_cart.dart';
@@ -19,15 +20,27 @@ class ButtonAddProductToCart extends StatelessWidget {
         final productId = productItem.productId;
         return InkWell(
           onTap: () {
+            if (cartBloc.isProductExit(productId)) {
+              cartBloc.incrementProduct(
+                productId: productId,
+                onHitLimitQuality: () {
+                  showErrorDialog(
+                    context: context,
+                    message: 'Product yang di input tidak bisa lebih banyak '
+                        'lagi karena sudah menyentuh limit',
+                  );
+                },
+              );
+            }
+
+            if (!cartBloc.isProductExit(productId)) {
+              cartBloc.addProduct(
+                productItem: productItem,
+              );
+            }
+
             bottomSheetToCart(
               context: context,
-              productItem: productItem,
-            );
-            if (cartBloc.isProductExit(productId)) {
-              cartBloc.incrementProduct(productId: productId);
-              return;
-            }
-            cartBloc.addProduct(
               productItem: productItem,
             );
           },
