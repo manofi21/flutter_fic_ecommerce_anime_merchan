@@ -25,7 +25,7 @@ class ProductRepoImpl implements ProductRepo {
               subTypeItem: e.attributes.subItemType.subItemType,
               typeItem: e.attributes.subItemType.itemType,
               quantity: e.attributes.quantity,
-              urlImages: e.attributes.images.data
+              urlImages: e.attributes.images.data.reversed
                   .map((e) => e.attributes.url)
                   .toList(),
             ),

@@ -19,28 +19,37 @@ class ButtonOrderUserProduct extends StatefulWidget {
 class _ButtonOrderUserProductState extends State<ButtonOrderUserProduct> {
   @override
   Widget build(BuildContext context) {
-      final oderBloc = context.read<OrderCubit>();
+    final oderBloc = context.read<OrderCubit>();
     return BlocConsumer<OrderCubit, OrderState>(
       listener: (context, state) {
         if (state == OrderState.ordered) {
-          showConfirmDialog(context: context,trueFalseOption: false, message: oderBloc.message);
+          showConfirmDialog(
+              context: context,
+              trueFalseOption: false,
+              message: oderBloc.message);
         }
       },
       builder: (context, state) {
-        return ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueGrey,
+        return SizedBox(
+          height: 60,
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blueGrey,
+            ),
+            onPressed: state == OrderState.loading
+                ? null
+                : () {
+                    oderBloc.onCheckoutUserProduct(
+                      listCartProduct: widget.listCartProduct,
+                    );
+                  },
+            child: state == OrderState.loading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : const Text("Checkout Product"),
           ),
-          onPressed: state == OrderState.loading
-              ? null
-              : () {
-                  oderBloc.onCheckoutUserProduct(listCartProduct: widget.listCartProduct);
-                },
-          child: state == OrderState.loading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : const Text("Checkout Product"),
         );
       },
     );
