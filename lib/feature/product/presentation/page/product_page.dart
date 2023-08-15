@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/bloc/product_bloc.dart';
 
 import '../../../cart/presentation/page/cart_page.dart';
+import '../../../cart/presentation/widget/cart_badges.dart';
 import '../widget/grid_product_view.dart';
+import 'package:badges/badges.dart' as badges;
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -27,19 +29,13 @@ class _ProductPageState extends State<ProductPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          actions: [
-            InkWell(
-              child: const SizedBox(
+          actions: const [
+            CartBadges(
+              badgesEnd: 10,
+              child: SizedBox(
                 width: 60,
-                child: Icon(Icons.shopping_cart_rounded)),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const CartPage(),
-                  ),
-                );
-              },
+                child: Icon(Icons.shopping_cart_rounded),
+              ),
             ),
           ],
           title: Title(
@@ -59,7 +55,7 @@ class _ProductPageState extends State<ProductPage> {
                   listProduct: listProduct,
                 );
               }
-        
+
               if (state is ProductStateLoading) {
                 return const Center(
                   child: SizedBox(
@@ -69,13 +65,13 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 );
               }
-        
+
               if (state is ProductStateError) {
                 return Center(
                   child: Text(state.message),
                 );
               }
-        
+
               return Container();
             },
           ),

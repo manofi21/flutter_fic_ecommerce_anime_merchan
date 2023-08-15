@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/cart/presentation/page/cart_page.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/widget/icon_detail_bar.dart';
 
+import '../../../cart/presentation/widget/cart_badges.dart';
 import 'button_to_search_page.dart';
 
 class SearchBarDetailPage extends StatefulWidget {
@@ -78,20 +79,28 @@ class _SearchBarDetailPageState extends State<SearchBarDetailPage>
           Row(
             children: [
               iconDetailBar(opacity: _opacity, icon: Icons.share_outlined),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const CartPage(),
-                    ),
-                  );
-                },
+              CartBadges(
+                badgesEnd: 3,
                 child: iconDetailBar(
                   opacity: _opacity,
-                  icon: Icons.shopping_basket_outlined,
+                  icon: Icons.shopping_cart_rounded,
                 ),
               ),
+              // InkWell(
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (_) => const CartPage(),
+              //       ),
+              //     );
+              //   },
+              //   child: iconDetailBar(
+              //     opacity: _opacity,
+              //     icon: Icons.shopping_cart_rounded,
+              //     // icon: Icons.shopping_basket_outlined,
+              //   ),
+              // ),
               iconDetailBar(opacity: _opacity, icon: Icons.menu)
             ],
           )
