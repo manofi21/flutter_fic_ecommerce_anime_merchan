@@ -124,6 +124,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         emit(currentListState);
       },
     );
+
+    on<CartCleanProduct>((_, emit) => emit([]));
   }
 
   void addProduct({required ProductItem productItem}) {
@@ -154,4 +156,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             ?.productItemCount ??
         0;
   }
+
+  void clearCartList() => add(CartCleanProduct());
 }
