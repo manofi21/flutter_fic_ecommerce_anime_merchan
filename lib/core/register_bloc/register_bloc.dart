@@ -18,5 +18,10 @@ final registerBloc = [
     ),
   ),
   BlocProvider<CartBloc>(create: (_) => CartBloc()),
-  BlocProvider<OrderCubit>(create: (_) => getIt<OrderCubit>()),
+  BlocProvider<OrderCubit>(
+    create: (context) => getIt<OrderCubit>(
+      // param1: null,
+      param2: context.read<CartBloc>(),
+    ),
+  ),
 ];

@@ -2,12 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/order/domain/entities/order_request_entities.dart';
 
 import '../../../cart/domain/entities/cart_product.dart';
+import '../../../cart/presentation/bloc/cart_bloc.dart';
 import '../../domain/use_cases/checkout_order_product.dart';
 part 'order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
   final CheckoutOrderProduct checkoutOrder;
-  OrderCubit(this.checkoutOrder) : super(OrderState.initial);
+  final CartBloc? cartBloc;
+  OrderCubit(this.checkoutOrder, {this.cartBloc}) : super(OrderState.initial);
 
   var message = '';
   var orderLink = '';
@@ -41,6 +43,8 @@ class OrderCubit extends Cubit<OrderState> {
     );
     print('object : $getOrderState');
     print('object : $message');
+
+    cartBloc?.clearCartList();
 
     emit(getOrderState);
   }
