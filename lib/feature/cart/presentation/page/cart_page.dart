@@ -1,9 +1,9 @@
-import 'package:currency_formatter/currency_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_confirm_dialog.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_error_dialog.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/order/presentation/widget/button_order_user_product.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/widget/checkbox_cart.dart';
 
 import '../../../../core/base_widget/price_text_widget.dart';
 import '../../../../core/constant/constant.dart';
@@ -78,37 +78,57 @@ class _CartPageState extends State<CartPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ListTile(
-                      leading: Container(
-                        constraints:
-                            const BoxConstraints(maxHeight: 80, maxWidth: 80),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              'http://$baseUrl${listItem.first}',
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 20),
+                        SizedBox(
+                          width: 10,
+                          child: CheckboxCart(
+                              onValueChecked: cartBloc.getCheckValueById(productId),
+                              onChanged: (clicked) {
+                                cartBloc.onChangeCheckValueById(
+                                  productId,
+                                  clicked,
+                                );
+                              },
+                            ),
+                          ),
+                        Expanded(
+                          child: ListTile(
+                            leading: Container(
+                              constraints: const BoxConstraints(
+                                  maxHeight: 80, maxWidth: 80),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    'http://$baseUrl${listItem.first}',
+                                  ),
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              productName,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                            subtitle: PriceTextWidget(price: productCartPrice),
+                            trailing: InkWell(
+                              onTap: () {
+                                showConfirmDialog(
+                                  context: context,
+                                  message: "Apakah anda yakin ingin "
+                                      "menghapus dari keranjang?",
+                                  ok: () {
+                                    cartBloc.discardProduct(productId: productId);
+                                  },
+                                );
+                              },
+                              child: const Icon(Icons.delete),
                             ),
                           ),
                         ),
-                      ),
-                      title: Text(
-                        productName,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
-                      subtitle: PriceTextWidget(price: productCartPrice),
-                      trailing: InkWell(
-                        onTap: () {
-                          showConfirmDialog(
-                            context: context,
-                            message: "Apakah anda yakin ingin "
-                                "menghapus dari keranjang?",
-                            ok: () {
-                              cartBloc.discardProduct(productId: productId);
-                            },
-                          );
-                        },
-                        child: const Icon(Icons.delete),
-                      ),
+                      ],
                     ),
                     const SizedBox(height: 10),
                     SizedBox(

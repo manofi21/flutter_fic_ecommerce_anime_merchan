@@ -126,6 +126,31 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       },
     );
 
+    on<CartClickCheckbox>(
+      (event, emit) {
+        final currentListState = state;
+        emit([]);
+
+        final productId = event.productId;
+
+        final convertToProductItem = currentListState
+            .firstWhereOrNull((e) => e.productItem.productId == productId);
+
+        if (convertToProductItem != null) {
+          final changeCheckedValue = convertToProductItem.copyWith(
+            isChecked: event.afterClicked,
+          );
+
+          final index = currentListState.indexWhere(
+            (e) => e.productItem.productId == productId,
+          );
+
+          currentListState[index] = changeCheckedValue;
+          emit(currentListState);
+        }
+      },
+    );
+
     on<CartCleanProduct>((_, emit) => emit([]));
   }
 
@@ -161,9 +186,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   void clearCartList() => add(CartCleanProduct());
 
   String getAllTotalCheckPriceProduct() {
-    final listAllItem = state.map((e) => e.priceAfterCalculated).toList();
+    final listWhereValueChecked = state.where((e) => e.isChecked).toList();
+    final listAllItem = listWhereValueChecked.map((e) => e.priceAfterCalculated).toList();
     final reduceValueItem =
-        listAllItem.isEmpty ? 0 : listAllItem.reduce((v, e) => v + e);
+        listAllItem.isEmpty ? 0.0 : listAllItem.reduce((v, e) => v + e);
+
+    if (reduceValueItem == 0) {
+      return 'Rp -';
+    }
 
     final idrFormatter = CurrencyFormatterSettings(
       symbol: 'Rp',
@@ -176,5 +206,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       decimal: 0,
     );
     return stringCurrency;
+  }
+
+  bool getCheckValueById(int productId) {
+    final convertToProductItem =
+        state.firstWhereOrNull((e) => e.productItem.productId == productId);
+    return convertToProductItem?.isChecked ?? false;
+  }
+
+  void onChangeCheckValueById(int productId, bool clicked) {
+    add(CartClickCheckbox(productId, clicked));
   }
 }
