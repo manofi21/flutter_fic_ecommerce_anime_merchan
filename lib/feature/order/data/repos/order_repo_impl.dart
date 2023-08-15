@@ -20,7 +20,7 @@ class OrderRepoImpl implements OrderRepo {
       final modelCreateOrder = OrderRequestModel(
         items: listProduct
             .map((e) => Item(
-                id: 0,
+                id: e.productItem.productId,
                 productName: e.productItem.productName,
                 price: e.productItem.productPrice,
                 qty: e.productItemCount))

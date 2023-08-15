@@ -13,6 +13,7 @@ import 'feature/authentication/domain/use_cases/login_user_cases.dart';
 import 'feature/authentication/domain/use_cases/registration_user_cases.dart';
 import 'feature/authentication/domain/use_cases/verify_user_token_cases.dart';
 import 'feature/authentication/presentation/bloc/authentication_bloc.dart';
+import 'feature/cart/presentation/bloc/cart_bloc.dart';
 import 'feature/order/data/data_source/order_remote_data_source.dart';
 import 'feature/order/domain/repos/order_repo.dart';
 import 'feature/order/domain/use_cases/checkout_order_product.dart';
@@ -67,8 +68,16 @@ void configureDependencies() {
       getIt<LoginUserCases>()));
 
   // Order DataSource, Repo, and Use Cases
-  getIt.registerSingleton<OrderRemoteDataSource>(OrderRemoteDataSourceImpl(http: getIt<InterceptedHttp>()));
-  getIt.registerSingleton<OrderRepo>(OrderRepoImpl(getIt<OrderRemoteDataSource>()));
-  getIt.registerFactory<CheckoutOrderProduct>(() => CheckoutOrderProduct(getIt<OrderRepo>()));
-  getIt.registerFactory<OrderCubit>(() => OrderCubit(getIt<CheckoutOrderProduct>()));
+  getIt.registerSingleton<OrderRemoteDataSource>(
+      OrderRemoteDataSourceImpl(http: getIt<InterceptedHttp>()));
+  getIt.registerSingleton<OrderRepo>(
+      OrderRepoImpl(getIt<OrderRemoteDataSource>()));
+  getIt.registerFactory<CheckoutOrderProduct>(
+      () => CheckoutOrderProduct(getIt<OrderRepo>()));
+  getIt.registerFactoryParam<OrderCubit, CheckoutOrderProduct?, CartBloc>(
+    (p1, p2) => OrderCubit(
+      p1 ?? getIt<CheckoutOrderProduct>(),
+      cartBloc: p2,
+    ),
+  );
 }
