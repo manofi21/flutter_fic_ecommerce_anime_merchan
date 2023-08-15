@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
+import 'package:currency_formatter/currency_formatter.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../product/domain/entities/product_item.dart';
@@ -158,4 +159,22 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void clearCartList() => add(CartCleanProduct());
+
+  String getAllTotalCheckPriceProduct() {
+    final listAllItem = state.map((e) => e.priceAfterCalculated).toList();
+    final reduceValueItem =
+        listAllItem.isEmpty ? 0 : listAllItem.reduce((v, e) => v + e);
+
+    final idrFormatter = CurrencyFormatterSettings(
+      symbol: 'Rp',
+      thousandSeparator: '.',
+      decimalSeparator: ',',
+    );
+    final stringCurrency = CurrencyFormatter.format(
+      reduceValueItem,
+      idrFormatter,
+      decimal: 0,
+    );
+    return stringCurrency;
+  }
 }

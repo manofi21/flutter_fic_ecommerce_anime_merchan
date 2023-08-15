@@ -1,3 +1,4 @@
+import 'package:currency_formatter/currency_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_confirm_dialog.dart';
@@ -19,7 +20,6 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
-    final cartBloc = context.watch<CartBloc>();
     return Scaffold(
       appBar: AppBar(
         title: Title(
@@ -28,8 +28,36 @@ class _CartPageState extends State<CartPage> {
           child: const Text('Cart'),
         ),
       ),
-      bottomNavigationBar:
-          ButtonOrderUserProduct(listCartProduct: cartBloc.state),
+      bottomNavigationBar: BlocBuilder<CartBloc, CartState>(
+        builder: (context, state) {
+          final cartBloc = context.read<CartBloc>();
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: const TextStyle(color: Colors.black, fontSize: 20),
+                    children: [
+                      const TextSpan(
+                        text: 'Total Payment : ',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: cartBloc.getAllTotalCheckPriceProduct(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ButtonOrderUserProduct(listCartProduct: state),
+            ],
+          );
+        },
+      ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           final cartBloc = context.watch<CartBloc>();
@@ -92,8 +120,11 @@ class _CartPageState extends State<CartPage> {
                           cartBloc.incrementProduct(
                             productId: productId,
                             onHitLimitQuality: () {
-                              showErrorDialog(context: context, message: 'Product yang di input tidak bisa lebih banyak lagi karena sudah menyentuh limit');
-                            }
+                              showErrorDialog(
+                                  context: context,
+                                  message:
+                                      'Product yang di input tidak bisa lebih banyak lagi karena sudah menyentuh limit');
+                            },
                           );
                         },
                         onSubtract: () {
