@@ -34,3 +34,6 @@ class OrderFailure extends Failure {
   const OrderFailure(String message) : super(message);
 }
 
+class AddressFailure extends Failure {
+  const AddressFailure(String message) : super(message);
+}
