@@ -26,7 +26,6 @@ class _CheckboxCartState extends State<CheckboxCart> {
       value: currentValue,
       materialTapTargetSize: MaterialTapTargetSize.padded,
       onChanged: (clicked) {
-        print('OnChanged');
         widget.onChanged(clicked ?? false);
         setState(() {
           currentValue = clicked ?? false;

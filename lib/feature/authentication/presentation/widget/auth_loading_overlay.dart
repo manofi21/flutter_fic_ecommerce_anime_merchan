@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/base_widget/wcon_loading_widget.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_confirm_dialog.dart';
 
+import '../../../../core/show_dialog/show_error_dialog.dart';
 import '../../../home/presentation/page/home_page.dart';
 // import '../../../product/presentation/page/product_page.dart';
 import '../bloc/authentication_bloc.dart';
@@ -44,6 +45,13 @@ class _AuthLoadingOverlayState extends State<AuthLoadingOverlay> {
                 ok: () {},
               );
               return;
+            }
+
+            if (state is AuthenticationVerifyTokenError) {
+              await showErrorDialog(
+                context: context,
+                message: state.message,
+              );
             }
           },
         );
