@@ -154,6 +154,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartCleanProduct>((_, emit) => emit([]));
   }
 
+  // Function for trigger event
+
   void addProduct({required ProductItem productItem}) {
     add(CartAddProduct(productItem));
   }
@@ -172,6 +174,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     add(CartDecrementProduct(productId));
   }
 
+  void clearCartList() => add(CartCleanProduct());
+
+  void onChangeCheckValueById(int productId, bool clicked) {
+    add(CartClickCheckbox(productId, clicked));
+  }
+
+  /// Function for access State
+
   bool isProductExit(int productId) {
     return state.any((e) => e.productItem.productId == productId);
   }
@@ -183,11 +193,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         0;
   }
 
-  void clearCartList() => add(CartCleanProduct());
-
   String getAllTotalCheckPriceProduct() {
     final listWhereValueChecked = state.where((e) => e.isChecked).toList();
-    final listAllItem = listWhereValueChecked.map((e) => e.priceAfterCalculated).toList();
+    final listAllItem =
+        listWhereValueChecked.map((e) => e.priceAfterCalculated).toList();
     final reduceValueItem =
         listAllItem.isEmpty ? 0.0 : listAllItem.reduce((v, e) => v + e);
 
@@ -214,7 +223,5 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     return convertToProductItem?.isChecked ?? false;
   }
 
-  void onChangeCheckValueById(int productId, bool clicked) {
-    add(CartClickCheckbox(productId, clicked));
-  }
+  List<CartProduct> checkedList() => state.where((e) => e.isChecked).toList();
 }
