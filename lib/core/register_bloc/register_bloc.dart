@@ -4,6 +4,7 @@ import 'package:flutter_fic_ecommerce_warung_comicon/feature/order/presentation/
 import '../../feature/authentication/presentation/bloc/authentication_bloc.dart';
 import '../../feature/authentication/presentation/page_state_cubit/authentication_page_cubit.dart';
 import '../../feature/cart/presentation/bloc/cart_bloc.dart';
+import '../../feature/checkout/presentation/bloc/address_checkout_bloc.dart';
 import '../../feature/product/presentation/bloc/product_bloc.dart';
 import '../../locator.dart';
 
@@ -24,4 +25,5 @@ final registerBloc = [
       param2: context.read<CartBloc>(),
     ),
   ),
+  BlocProvider<AddressCheckoutBloc>(create: (_) => getIt<AddressCheckoutBloc>())
 ];

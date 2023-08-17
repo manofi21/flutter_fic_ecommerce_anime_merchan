@@ -7,6 +7,10 @@ import 'package:get_it/get_it.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 
 import 'core/http_request/http_request_interceptor.dart';
+import 'feature/address/data/data_source/address_remote_data_source.dart';
+import 'feature/address/data/repos/address_repo_impl.dart';
+import 'feature/address/domain/repos/address_repo.dart';
+import 'feature/address/domain/use_cases/get_list_address_user.dart';
 import 'feature/authentication/data/data_source/auth_local_data_source.dart';
 import 'feature/authentication/data/data_source/auth_remote_data_source.dart';
 import 'feature/authentication/domain/use_cases/login_user_cases.dart';
@@ -14,6 +18,7 @@ import 'feature/authentication/domain/use_cases/registration_user_cases.dart';
 import 'feature/authentication/domain/use_cases/verify_user_token_cases.dart';
 import 'feature/authentication/presentation/bloc/authentication_bloc.dart';
 import 'feature/cart/presentation/bloc/cart_bloc.dart';
+import 'feature/checkout/presentation/bloc/address_checkout_bloc.dart';
 import 'feature/order/data/data_source/order_remote_data_source.dart';
 import 'feature/order/domain/repos/order_repo.dart';
 import 'feature/order/domain/use_cases/checkout_order_product.dart';
@@ -80,4 +85,13 @@ void configureDependencies() {
       cartBloc: p2,
     ),
   );
+
+  // Address DataSource, Repo, and Use Cases
+  getIt.registerSingleton<AddressRemoteDataSource>(
+      AddressRemoteDataSourceImpl(http: getIt<InterceptedHttp>()));
+  getIt.registerSingleton<AddressRepo>(
+      AddressRepoImpl(getIt<AddressRemoteDataSource>()));
+  getIt.registerFactory<GetListAddressUser>(
+      () => GetListAddressUser(getIt<AddressRepo>()));
+  getIt.registerFactory<AddressCheckoutBloc>(() => AddressCheckoutBloc(getIt<GetListAddressUser>()));
 }
