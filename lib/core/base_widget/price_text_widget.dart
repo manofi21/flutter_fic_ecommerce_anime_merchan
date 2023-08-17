@@ -4,7 +4,8 @@ import 'package:sizer/sizer.dart';
 
 class PriceTextWidget extends StatelessWidget {
   final double price;
-  PriceTextWidget({super.key, required this.price});
+  final TextStyle? textStyle;
+  PriceTextWidget({super.key, required this.price, this.textStyle});
 
   final idrFormatter = CurrencyFormatterSettings(
     symbol: 'Rp',
@@ -21,7 +22,7 @@ class PriceTextWidget extends StatelessWidget {
       children: [
         Text(
           stringCurrency,
-          style: TextStyle(
+          style: textStyle ?? TextStyle(
               color: Colors.black,
               fontSize: 12.sp,
               fontWeight: FontWeight.bold),
