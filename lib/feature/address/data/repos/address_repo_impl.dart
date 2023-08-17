@@ -14,14 +14,18 @@ class AddressRepoImpl extends AddressRepo {
       final getAddressFromRemote =
           await addressRemoteDataSource.getListAddress();
       final toListEntities = getAddressFromRemote
-          .map((e) => AddressEntities(
+          .map(
+            (e) => AddressEntities(
               id: e.id,
-              labelAddress: e.attributes.labelAddress,
-              fullAddress: e.attributes.fullAddress,
-              detailAddress: e.attributes.detailAddress,
-              recipientName: e.attributes.recipientName,
-              phoneNumber: e.attributes.phoneNumber,
-              isMainAddress: e.attributes.isMainAddress))
+              labelAddress: e.labelAddress,
+              fullAddress: e.fullAddress,
+              detailAddress: e.detailAddress,
+              recipientName: e.recipientName,
+              phoneNumber: e.phoneNumber,
+              isMainAddress: e.isMainAddress,
+              isChoosedAddress: e.isChoosedAddress,
+            ),
+          )
           .toList();
       return toListEntities;
     } on HttpException catch (e) {

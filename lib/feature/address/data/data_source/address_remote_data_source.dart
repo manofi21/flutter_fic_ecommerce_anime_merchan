@@ -18,7 +18,10 @@ class AddressRemoteDataSourceImpl extends RemoteDataRequest
   Future<List<AddressModel>> getListAddress() async {
     try {
       final addressResult = await getRequest<List<AddressModel>>(
-        '/api/addresshes?populate=*',
+        '/api/addresshes',
+        queryParameters: {
+          'populate':'*'
+        },
         fromMap: (e) {
           final getData = e['data'];
           if (getData is List) {
