@@ -9,6 +9,7 @@ class AddressEntities extends Equatable {
   final String recipientName;
   final String phoneNumber;
   final bool isMainAddress;
+  final bool isChoosedAddress;
 
   const AddressEntities({
     required this.id,
@@ -18,6 +19,7 @@ class AddressEntities extends Equatable {
     required this.recipientName,
     required this.phoneNumber,
     required this.isMainAddress,
+    required this.isChoosedAddress,
   });
 
   @override
@@ -29,5 +31,6 @@ class AddressEntities extends Equatable {
         recipientName,
         phoneNumber,
         isMainAddress,
+        isChoosedAddress,
       ];
 }
