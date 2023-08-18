@@ -41,8 +41,6 @@ class OrderCubit extends Cubit<OrderState> {
         return OrderState.error;
       },
     );
-    print('object : $getOrderState');
-    print('object : $message');
 
     cartBloc?.clearCartList();
 
