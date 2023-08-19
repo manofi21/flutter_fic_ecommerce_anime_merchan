@@ -6,6 +6,7 @@ import '../../../../core/base_widget/price_text_widget.dart';
 import '../../domain/entities/product_item.dart';
 import '../widget/button_add_product_to_cart.dart';
 import '../widget/carousel_image_product_preview.dart';
+import '../widget/sub_item_type_widget.dart';
 
 class DetailProductPage extends StatefulWidget {
   final ProductItem productItem;
@@ -44,7 +45,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
       bottomNavigationBar: SizedBox(
         height: 60,
         child: Row(children: [
-          ButtonAddProductToCart(productItem: productItem, width: size.width / 2),
+          ButtonAddProductToCart(
+              productItem: productItem, width: size.width / 2),
           Container(
             width: size.width / 2,
             color: Colors.orange,
@@ -61,13 +63,12 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: double.infinity,
-                    height: ((size.height * 1) / 2) - 25,
-                    child: CarouselImageProductPreview(
-                      urlImages: widget.productItem.urlImages,
-                      pageController: pageController,
-                    )
-                  ),
+                      width: double.infinity,
+                      height: ((size.height * 1) / 2) - 25,
+                      child: CarouselImageProductPreview(
+                        urlImages: widget.productItem.urlImages,
+                        pageController: pageController,
+                      )),
                   Container(
                     color: Colors.grey[300],
                     height: 14.sp,
@@ -76,10 +77,14 @@ class _DetailProductPageState extends State<DetailProductPage> {
                   PriceTextWidget(price: productItem.productPrice.toDouble()),
                   Text(productItem.description),
                   Text(productItem.distributor),
-                  Text("Source Item : ${productItem.sourceItem}"),
-                  Text(
-                    "Source Item : ${productItem.typeItem}, ${productItem.subTypeItem}",
-                  ),
+                  const SizedBox(height: 10),
+                  SubItemTypeWidget(
+                      subTypeItem: [productItem.sourceItem],
+                      titleItem: "Tag Item"),
+                  SubItemTypeWidget(subTypeItem: [
+                    productItem.typeItem,
+                    productItem.subTypeItem,
+                  ], titleItem: "Jenis Barang"),
                   SizedBox(height: size.height),
                 ],
               ),
