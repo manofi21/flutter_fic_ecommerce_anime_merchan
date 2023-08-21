@@ -35,9 +35,9 @@ class CheckoutOrderRepoImpl implements CheckoutOrderRepo {
       );
       return orderProduct;
     } on HttpException catch (e) {
-      throw OrderFailure(e.message);
+      throw OrderCheckoutFailure(e.message);
     } on UnknownException catch (e) {
-      throw OrderFailure(e.message);
+      throw OrderCheckoutFailure(e.message);
     } catch (e, stackTrace) {
       throw UnknownFailure('Occure in Order Repo : ${e.toString()}', stackTrace);
     }
