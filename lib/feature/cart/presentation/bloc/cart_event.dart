@@ -28,7 +28,7 @@ class CartDiscardProduct extends CartEvent {
   const CartDiscardProduct(this.productId);
 }
 
-class CartCleanProduct extends CartEvent {}
+class CartCleanOrderedProduct extends CartEvent {}
 
 class CartClickCheckbox extends CartEvent {
   final int productId;

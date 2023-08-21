@@ -151,7 +151,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       },
     );
 
-    on<CartCleanProduct>((_, emit) => emit([]));
+    on<CartCleanOrderedProduct>(
+      (_, emit) {
+        final currentState = state;
+        emit([]);
+        final getUpdatedList = _removedWhereCheckedList(currentState);
+        emit(getUpdatedList);
+      },
+    );
   }
 
   // Function for trigger event
@@ -174,7 +181,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     add(CartDecrementProduct(productId));
   }
 
-  void clearCartList() => add(CartCleanProduct());
+  void clearOrderedCartList() => add(CartCleanOrderedProduct());
 
   void onChangeCheckValueById(int productId, bool clicked) {
     add(CartClickCheckbox(productId, clicked));
@@ -224,4 +231,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   List<CartProduct> checkedList() => state.where((e) => e.isChecked).toList();
+
+  List<CartProduct> _removedWhereCheckedList(List<CartProduct> state) {
+    state.removeWhere((e) => e.isChecked);
+    return state;
+  }
 }
