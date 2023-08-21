@@ -18,15 +18,18 @@ class SubItemTypeWidget extends StatelessWidget {
             children: [
               Text("$titleItem : "),
               ...subTypeItem
-                  .map((e) => Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            side: const BorderSide(color: Colors.green)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.5),
-                          child: Text(e),
-                        ),
-                      ))
+                  .map(
+                    (e) => Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: const BorderSide(color: Colors.green),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.5),
+                        child: Text(e),
+                      ),
+                    ),
+                  )
                   .toList(),
             ],
           ),

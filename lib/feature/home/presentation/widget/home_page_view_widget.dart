@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/feature/home/presentation/cubit/home_page_state.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/page/product_page.dart';
 
-import '../cubit/home_page_cubit.dart';
+import '../../../order_history/presentation/page/order_history_page.dart';
 
 class HomePageViweWidget extends StatefulWidget {
   final int pageIndex;
@@ -19,7 +17,7 @@ class _HomePageViweWidgetState extends State<HomePageViweWidget> {
     return Material(
       child: IndexedStack(
         index: widget.pageIndex,
-        children: [const ProductPage(), Container(), Container()],
+        children: [const ProductPage(), Container(), const OrderHistoryPage()],
       ),
     );
   }
