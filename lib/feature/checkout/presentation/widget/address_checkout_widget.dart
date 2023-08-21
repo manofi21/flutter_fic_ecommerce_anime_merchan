@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/address/domain/entities/address_entities.dart';
 
-import '../bloc/address_checkout_bloc.dart';
+import '../bloc/address_checkout/address_checkout_bloc.dart';
+
 
 class AddressCheckoutBlocBuilder extends StatelessWidget {
   const AddressCheckoutBlocBuilder({super.key});

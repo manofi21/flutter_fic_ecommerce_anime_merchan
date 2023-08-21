@@ -22,25 +22,30 @@ class SubtotalCheckoutItemWidget extends StatelessWidget {
           ],
         ),
         children: [
-          for (var i = 0; i < checkedList.length; i++) ...{
-            if ((i + 1) % 2 == 0) const SizedBox(height: 5),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15.0,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Harga (${checkedList[i].productItemCount} Barang)"),
-                  PriceTextWidget(
-                    price: checkedList[i].priceAfterCalculated,
-                    textStyle: const TextStyle(color: Colors.black),
-                  )
-                ],
-              ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Column(
+              children: [
+                for (var i = 0; i < checkedList.length; i++) ...{
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Harga (${checkedList[i].productItemCount} Barang)"),
+                        PriceTextWidget(
+                          price: checkedList[i].priceAfterCalculated,
+                          textStyle: const TextStyle(color: Colors.black),
+                        )
+                      ],
+                    ),
+                  ),
+                }
+              ],
             ),
-            if ((i + 1) % 2 == 0) const SizedBox(height: 5),
-          }
+          ),
         ],
       ),
     );
