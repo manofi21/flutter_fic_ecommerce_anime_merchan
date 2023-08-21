@@ -1,12 +1,12 @@
 
-class OrderRequestModel {
+class CheckoutOrderRequestModel {
     final List<Item> items;
     final int totalPrice;
     final String deliveryAddress;
     final String courierName;
     final int shippingCost;
 
-    OrderRequestModel({
+    CheckoutOrderRequestModel({
         required this.items,
         required this.totalPrice,
         required this.deliveryAddress,
@@ -14,7 +14,7 @@ class OrderRequestModel {
         required this.shippingCost,
     });
 
-    factory OrderRequestModel.fromJson(Map<String, dynamic> json) => OrderRequestModel(
+    factory CheckoutOrderRequestModel.fromJson(Map<String, dynamic> json) => CheckoutOrderRequestModel(
         items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
         totalPrice: json["total_price"],
         deliveryAddress: json["delivery_address"],

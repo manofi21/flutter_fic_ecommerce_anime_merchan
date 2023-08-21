@@ -1,14 +1,14 @@
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
-import '../../domain/entities/order_request_entities.dart';
-import '../../domain/entities/order_result_entities.dart';
-import '../../domain/repos/order_repo.dart';
-import '../data_source/order_remote_data_source.dart';
-import '../model/order_request_model.dart';
+import '../../domain/entities/checkout_order_request_entities.dart';
+import '../../domain/entities/checkout_order_result_entities.dart';
+import '../../domain/repos/checkout_order_repo.dart';
+import '../data_source/checkout_order_remote_data_source.dart';
+import '../model/checkout_order_request_model.dart';
 
-class OrderRepoImpl implements OrderRepo {
-  final OrderRemoteDataSource orderRemoteDataSource;
-  OrderRepoImpl(this.orderRemoteDataSource);
+class CheckoutOrderRepoImpl implements CheckoutOrderRepo {
+  final CheckoutOrderRemoteDataSource checkoutOrderRemoteDataSource;
+  CheckoutOrderRepoImpl(this.checkoutOrderRemoteDataSource);
 
   @override
   Future<OrderResultEntities> orderProduct(
@@ -17,7 +17,7 @@ class OrderRepoImpl implements OrderRepo {
       final listProduct = orderRequest.listCartProduct;
       final totalPriceList =
           listProduct.map((e) => e.priceAfterCalculated).toList();
-      final modelCreateOrder = OrderRequestModel(
+      final modelCreateOrder = CheckoutOrderRequestModel(
         items: listProduct
             .map((e) => Item(
                 id: e.productItem.productId,
@@ -30,7 +30,7 @@ class OrderRepoImpl implements OrderRepo {
         courierName: orderRequest.courierName,
         shippingCost: orderRequest.shippingCost,
       );
-      final orderProduct = await orderRemoteDataSource.createOrder(
+      final orderProduct = await checkoutOrderRemoteDataSource.createOrder(
         modelCreateOrder,
       );
       return orderProduct;

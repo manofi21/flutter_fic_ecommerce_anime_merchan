@@ -1,13 +1,13 @@
-class OrderResultModel {
+class CheckoutOrderResultModel {
     final String token;
     final String redirectUrl;
 
-    OrderResultModel({
+    CheckoutOrderResultModel({
         required this.token,
         required this.redirectUrl,
     });
 
-    static OrderResultModel fromJson(Map<String, dynamic> json) => OrderResultModel(
+    static CheckoutOrderResultModel fromJson(Map<String, dynamic> json) => CheckoutOrderResultModel(
         token: json["token"],
         redirectUrl: json["redirect_url"],
     );
