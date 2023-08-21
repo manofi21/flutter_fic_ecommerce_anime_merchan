@@ -30,8 +30,12 @@ class AuthenticationFailure extends Failure {
   const AuthenticationFailure(String message) : super(message);
 }
 
-class OrderFailure extends Failure {
-  const OrderFailure(String message) : super(message);
+class OrderCheckoutFailure extends Failure {
+  const OrderCheckoutFailure(String message) : super(message);
+}
+
+class OrderHistoryFailure extends Failure {
+  const OrderHistoryFailure(String message) : super(message);
 }
 
 class AddressFailure extends Failure {
