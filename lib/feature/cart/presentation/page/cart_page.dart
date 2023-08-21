@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_confirm_dialog.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_error_dialog.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/feature/order/presentation/widget/button_order_user_product.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/widget/checkbox_cart.dart';
 
 import '../../../../core/base_widget/price_text_widget.dart';
 import '../../../../core/constant/constant.dart';
 import '../bloc/cart_bloc.dart';
 import '../widget/count_product_in_cart_widget.dart';
+import '../widget/to_checkout_button.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -53,7 +53,7 @@ class _CartPageState extends State<CartPage> {
                   ),
                 ),
               ),
-              ButtonOrderUserProduct(listCartProduct: state),
+              const ToCheckoutButton(),
             ],
           );
         },
