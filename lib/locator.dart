@@ -1,6 +1,5 @@
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/data/repos/auth_repo_impl.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/domain/repos/auth_repo.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/feature/order/data/repos/order_repo_impl.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/domain/use_cases/get_product_remote.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -18,11 +17,17 @@ import 'feature/authentication/domain/use_cases/registration_user_cases.dart';
 import 'feature/authentication/domain/use_cases/verify_user_token_cases.dart';
 import 'feature/authentication/presentation/bloc/authentication_bloc.dart';
 import 'feature/cart/presentation/bloc/cart_bloc.dart';
-import 'feature/checkout/presentation/bloc/address_checkout_bloc.dart';
-import 'feature/order/data/data_source/order_remote_data_source.dart';
-import 'feature/order/domain/repos/order_repo.dart';
-import 'feature/order/domain/use_cases/checkout_order_product.dart';
-import 'feature/order/presentation/cubit/order_cubit.dart';
+import 'feature/checkout/data/data_source/checkout_order_remote_data_source.dart';
+import 'feature/checkout/data/repos/checkout_order_repo_impl.dart';
+import 'feature/checkout/domain/repos/checkout_order_repo.dart';
+import 'feature/checkout/domain/use_cases/checkout_order_product.dart';
+import 'feature/checkout/presentation/bloc/address_checkout/address_checkout_bloc.dart';
+import 'feature/checkout/presentation/bloc/order_checkout/order_checkout_cubit.dart';
+import 'feature/order_history/data/data_source/order_history_remote_data_source.dart';
+import 'feature/order_history/data/repos/order_history_repo_impl.dart';
+import 'feature/order_history/domain/repos/order_history_repo.dart';
+import 'feature/order_history/domain/use_cases/get_order_history.dart';
+import 'feature/order_history/presentation/bloc/order_history_bloc.dart';
 import 'feature/product/data/data_source/product_remote_data_source.dart';
 import 'feature/product/data/repos/product_repo_impl.dart';
 import 'feature/product/domain/repos/product_repo.dart';
@@ -73,14 +78,14 @@ void configureDependencies() {
       getIt<LoginUserCases>()));
 
   // Order DataSource, Repo, and Use Cases
-  getIt.registerSingleton<OrderRemoteDataSource>(
-      OrderRemoteDataSourceImpl(http: getIt<InterceptedHttp>()));
-  getIt.registerSingleton<OrderRepo>(
-      OrderRepoImpl(getIt<OrderRemoteDataSource>()));
+  getIt.registerSingleton<CheckoutOrderRemoteDataSource>(
+      CheckoutOrderRemoteDataSourceImpl(http: getIt<InterceptedHttp>()));
+  getIt.registerSingleton<CheckoutOrderRepo>(
+      CheckoutOrderRepoImpl(getIt<CheckoutOrderRemoteDataSource>()));
   getIt.registerFactory<CheckoutOrderProduct>(
-      () => CheckoutOrderProduct(getIt<OrderRepo>()));
-  getIt.registerFactoryParam<OrderCubit, CheckoutOrderProduct?, CartBloc>(
-    (p1, p2) => OrderCubit(
+      () => CheckoutOrderProduct(getIt<CheckoutOrderRepo>()));
+  getIt.registerFactoryParam<OrderCheckoutCubit, CheckoutOrderProduct?, CartBloc>(
+    (p1, p2) => OrderCheckoutCubit(
       p1 ?? getIt<CheckoutOrderProduct>(),
       cartBloc: p2,
     ),
@@ -94,4 +99,13 @@ void configureDependencies() {
   getIt.registerFactory<GetListAddressUser>(
       () => GetListAddressUser(getIt<AddressRepo>()));
   getIt.registerFactory<AddressCheckoutBloc>(() => AddressCheckoutBloc(getIt<GetListAddressUser>()));
+
+  // History Order DataSource, Repo, and Use Cases
+  getIt.registerSingleton<OrderHistoryRemoteDataSource>(
+      OrderHistoryRemoteDataSourceImpl(http: getIt<InterceptedHttp>()));
+  getIt.registerSingleton<OrderHistoryRepo>(
+      OrderHistoryRepoImpl(getIt<OrderHistoryRemoteDataSource>()));
+  getIt.registerFactory<GetOrderHistory>(
+      () => GetOrderHistory(getIt<OrderHistoryRepo>()));
+  getIt.registerFactory<OrderHistoryBloc>(() => OrderHistoryBloc(getIt<GetOrderHistory>()));
 }

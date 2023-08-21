@@ -1,10 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/feature/order/presentation/cubit/order_cubit.dart';
 
 import '../../feature/authentication/presentation/bloc/authentication_bloc.dart';
 import '../../feature/authentication/presentation/page_state_cubit/authentication_page_cubit.dart';
 import '../../feature/cart/presentation/bloc/cart_bloc.dart';
-import '../../feature/checkout/presentation/bloc/address_checkout_bloc.dart';
+import '../../feature/checkout/presentation/bloc/address_checkout/address_checkout_bloc.dart';
+import '../../feature/checkout/presentation/bloc/order_checkout/order_checkout_cubit.dart';
+import '../../feature/order_history/presentation/bloc/order_history_bloc.dart';
 import '../../feature/product/presentation/bloc/product_bloc.dart';
 import '../../locator.dart';
 
@@ -19,11 +20,12 @@ final registerBloc = [
     ),
   ),
   BlocProvider<CartBloc>(create: (_) => CartBloc()),
-  BlocProvider<OrderCubit>(
-    create: (context) => getIt<OrderCubit>(
+  BlocProvider<OrderCheckoutCubit>(
+    create: (context) => getIt<OrderCheckoutCubit>(
       // param1: null,
       param2: context.read<CartBloc>(),
     ),
   ),
-  BlocProvider<AddressCheckoutBloc>(create: (_) => getIt<AddressCheckoutBloc>())
+  BlocProvider<AddressCheckoutBloc>(create: (_) => getIt<AddressCheckoutBloc>()),
+  BlocProvider<OrderHistoryBloc>(create: (_) => getIt<OrderHistoryBloc>())
 ];
