@@ -24,6 +24,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBarHeight = AppBar().preferredSize.height;
+    final statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
       appBar: AppBar(title: const Text("History Order")),
       body: BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
@@ -37,24 +39,29 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
               ),
             );
           }
-    
+
           if (state.isError) {
             return Center(
               child: Text((state as OrderHistoryError).message),
             );
           }
-    
+
           if (state is OrderHistoryLoaded) {
-            return ListView.builder(
-              itemCount: state.listOrderHistory.length,
-              itemBuilder: (context, index) {
-                return OrderHistoryItemWidget(
-                  orderHistoryEntity: state.listOrderHistory[index],
-                );
-              },
+            return SizedBox(
+              height: MediaQuery.of(context).size.height -
+                  (appBarHeight + statusBarHeight),
+              child: ListView.builder(
+                itemCount: state.listOrderHistory.length,
+                itemBuilder: (context, index) {
+                  return OrderHistoryItemWidget(
+                    orderHistoryEntity: state.listOrderHistory[index],
+                    isFirst: index == 0,
+                  );
+                },
+              ),
             );
           }
-    
+
           return Container();
         },
       ),

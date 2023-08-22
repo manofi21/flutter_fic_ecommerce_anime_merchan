@@ -1,3 +1,5 @@
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/order_history/data/extension/order_status_to_entity.dart';
+
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
 import '../../domain/entities/order_history_entity.dart';
@@ -30,7 +32,7 @@ class OrderHistoryRepoImpl implements OrderHistoryRepo {
               deliveryAddress: e.deliveryAddress,
               courierName: e.courierName,
               shippingCost: e.shippingCost,
-              orderStatus: e.orderStatus,
+              orderStatus: e.orderStatus.toOrderStatusEntity,
               urlPayment: e.urlPayment,
             ),
           )
