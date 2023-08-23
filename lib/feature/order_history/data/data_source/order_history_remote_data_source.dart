@@ -20,7 +20,7 @@ class OrderHistoryRemoteDataSourceImpl extends RemoteDataRequest
       final orderResult = await getRequest<List<OrderHistoryUserModel>>(
         '/api/orders',
         fromMap: (result) {
-          final getList = result["data"];;
+          final getList = result["data"];
           if (getList is List) {
             return getList.map((e) => OrderHistoryUserModel.fromJson(e)).toList();
           }

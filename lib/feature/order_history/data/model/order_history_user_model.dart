@@ -69,14 +69,14 @@ class ItemProductHistory {
 
     factory ItemProductHistory.fromJson(Map<String, dynamic> json) => ItemProductHistory(
         id: json["id"],
-        productName: json["productName"],
+        productName: json["product_name"],
         price: json["price"],
         qty: json["qty"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "productName": productName,
+        "product_name": productName,
         "price": price,
         "qty": qty,
     };
