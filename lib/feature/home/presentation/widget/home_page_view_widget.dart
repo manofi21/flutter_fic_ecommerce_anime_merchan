@@ -15,9 +15,11 @@ class _HomePageViweWidgetState extends State<HomePageViweWidget> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: IndexedStack(
-        index: widget.pageIndex,
-        children: [const ProductPage(), Container(), const OrderHistoryPage()],
+      child:  SafeArea(
+        child: IndexedStack(
+          index: widget.pageIndex,
+          children: [const ProductPage(), Container(), const OrderHistoryPage()],
+        ),
       ),
     );
   }
