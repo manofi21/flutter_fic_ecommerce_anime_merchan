@@ -7,7 +7,7 @@ class ProductItem extends Equatable {
   final String description;
   final String distributor;
   final int productPrice;
-  final List<String> urlImages;
+  final List<UrlImageProduct> urlImages;
   final String sourceItem;
   final String subTypeItem;
   final String typeItem;
@@ -26,18 +26,17 @@ class ProductItem extends Equatable {
     required this.quantity,
   });
 
-  ProductItem copyWith({
-    int? productId,
-    String? productName,
-    String? description,
-    String? distributor,
-    int? productPrice,
-    List<String>? urlImages,
-    String? sourceItem,
-    String? subTypeItem,
-    String? typeItem,
-    int? quantity
-  }) {
+  ProductItem copyWith(
+      {int? productId,
+      String? productName,
+      String? description,
+      String? distributor,
+      int? productPrice,
+      List<UrlImageProduct>? urlImages,
+      String? sourceItem,
+      String? subTypeItem,
+      String? typeItem,
+      int? quantity}) {
     return ProductItem(
       productId: productId ?? this.productId,
       productName: productName ?? this.productName,
@@ -65,4 +64,27 @@ class ProductItem extends Equatable {
         urlImages,
         quantity,
       ];
+}
+
+class UrlImageProduct extends Equatable {
+  final String urlImage;
+  final String? urlSmallImage;
+
+  const UrlImageProduct({
+    required this.urlImage,
+    required this.urlSmallImage,
+  });
+
+  UrlImageProduct copyWith({
+    String? urlImage,
+    String? urlSmallImage,
+  }) {
+    return UrlImageProduct(
+      urlImage: urlImage ?? this.urlImage,
+      urlSmallImage: urlSmallImage ?? this.urlSmallImage,
+    );
+  }
+
+  @override
+  List<Object?> get props => [urlImage, urlSmallImage];
 }

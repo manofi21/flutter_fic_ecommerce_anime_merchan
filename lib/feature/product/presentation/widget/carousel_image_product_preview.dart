@@ -5,10 +5,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constant/constant.dart';
+import '../../domain/entities/product_item.dart';
 
 class CarouselImageProductPreview extends StatefulWidget {
   final PageController pageController;
-  final List<String> urlImages;
+  final List<UrlImageProduct> urlImages;
   const CarouselImageProductPreview({
     Key? key,
     required this.pageController,
@@ -59,7 +60,7 @@ class _CarouselImageProductPreviewState
           },
           itemBuilder: (context, index) {
             return Image.network(
-              'http://$baseUrl${widget.urlImages[index % lengthImage]}',
+              'http://$baseUrl${widget.urlImages[index % lengthImage].urlImage}',
               fit: BoxFit.fill,
             );
           },

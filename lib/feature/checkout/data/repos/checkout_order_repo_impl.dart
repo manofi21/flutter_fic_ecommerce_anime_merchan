@@ -18,13 +18,20 @@ class CheckoutOrderRepoImpl implements CheckoutOrderRepo {
       final totalPriceList =
           listProduct.map((e) => e.priceAfterCalculated).toList();
       final modelCreateOrder = CheckoutOrderRequestModel(
-        items: listProduct
-            .map((e) => Item(
-                id: e.productItem.productId,
-                productName: e.productItem.productName,
-                price: e.productItem.productPrice,
-                qty: e.productItemCount))
-            .toList(),
+        items: listProduct.map((e) {
+          final urlImageList = e.productItem.urlImages;
+
+          return Item(
+            id: e.productItem.productId,
+            productName: e.productItem.productName,
+            price: e.productItem.productPrice,
+            qty: e.productItemCount,
+            urlImage: urlImageList.isEmpty
+                ? ""
+                : (urlImageList.first.urlSmallImage ??
+                    urlImageList.first.urlImage),
+          );
+        }).toList(),
         totalPrice: totalPriceList.reduce((v, e) => v + e).toInt(),
         deliveryAddress: orderRequest.deliveryAddress,
         courierName: orderRequest.courierName,
@@ -39,7 +46,8 @@ class CheckoutOrderRepoImpl implements CheckoutOrderRepo {
     } on UnknownException catch (e) {
       throw OrderCheckoutFailure(e.message);
     } catch (e, stackTrace) {
-      throw UnknownFailure('Occure in Order Repo : ${e.toString()}', stackTrace);
+      throw UnknownFailure(
+          'Occure in Order Repo : ${e.toString()}', stackTrace);
     }
   }
 }

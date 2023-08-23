@@ -102,7 +102,7 @@ class _CartPageState extends State<CartPage> {
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: NetworkImage(
-                                    'http://$baseUrl${listItem.first}',
+                                    'http://$baseUrl${listItem.first.urlImage}',
                                   ),
                                 ),
                               ),

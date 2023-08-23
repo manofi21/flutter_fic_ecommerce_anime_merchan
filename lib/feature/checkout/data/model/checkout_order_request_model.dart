@@ -36,25 +36,29 @@ class Item {
     final String productName;
     final int price;
     final int qty;
+    final String urlImage;
 
     Item({
         required this.id,
         required this.productName,
         required this.price,
         required this.qty,
+        required this.urlImage,
     });
 
     factory Item.fromJson(Map<String, dynamic> json) => Item(
         id: json["id"],
-        productName: json["productName"],
+        productName: json["product_name"],
         price: json["price"],
         qty: json["qty"],
+        urlImage: json["url_image"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "productName": productName,
+        "product_name": productName,
         "price": price,
         "qty": qty,
+        "url_image": urlImage,
     };
 }

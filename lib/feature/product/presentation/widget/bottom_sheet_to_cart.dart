@@ -29,7 +29,7 @@ void bottomSheetToCart({
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
                       image: NetworkImage(
-                          'http://$baseUrl${productItem.urlImages.first}'),
+                          'http://$baseUrl${productItem.urlImages.first.urlSmallImage}'),
                     ),
                   ),
                 ),

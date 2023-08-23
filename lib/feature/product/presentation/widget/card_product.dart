@@ -40,7 +40,7 @@ class _CardProductState extends State<CardProduct> {
                       AspectRatio(
                         aspectRatio: 16 / 17,
                         child: Image.network(
-                          'http://$baseUrl${listItem.first}',
+                          'http://$baseUrl${listItem.first.urlImage}',
                           fit: BoxFit.fill,
                           width: double.infinity,
                           height: 20.w,

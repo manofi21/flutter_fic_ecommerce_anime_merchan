@@ -52,7 +52,7 @@ class ListCheckoutItemWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
-                    'http://$baseUrl${listItem.first}',
+                    'http://$baseUrl${listItem.first.urlImage}',
                   ),
                 ),
               ),
