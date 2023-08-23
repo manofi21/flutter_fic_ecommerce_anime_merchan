@@ -28,42 +28,47 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
     final statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
       appBar: AppBar(title: const Text("History Order")),
-      body: BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
-        builder: (context, state) {
-          if (state.isLoading) {
-            return const Center(
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-
-          if (state.isError) {
-            return Center(
-              child: Text((state as OrderHistoryError).message),
-            );
-          }
-
-          if (state is OrderHistoryLoaded) {
-            return SizedBox(
-              height: MediaQuery.of(context).size.height -
-                  (appBarHeight + statusBarHeight),
-              child: ListView.builder(
-                itemCount: state.listOrderHistory.length,
-                itemBuilder: (context, index) {
-                  return OrderHistoryItemWidget(
-                    orderHistoryEntity: state.listOrderHistory[index],
-                    isFirst: index == 0,
-                  );
-                },
-              ),
-            );
-          }
-
-          return Container();
+      body: RefreshIndicator(
+        onRefresh: () async {
+        context.read<OrderHistoryBloc>().add(OrderHistoryLoadData());
         },
+        child: BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const Center(
+                child: SizedBox(
+                  height: 60,
+                  width: 60,
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+      
+            if (state.isError) {
+              return Center(
+                child: Text((state as OrderHistoryError).message),
+              );
+            }
+      
+            if (state is OrderHistoryLoaded) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height -
+                    (appBarHeight + statusBarHeight),
+                child: ListView.builder(
+                  itemCount: state.listOrderHistory.length,
+                  itemBuilder: (context, index) {
+                    return OrderHistoryItemWidget(
+                      orderHistoryEntity: state.listOrderHistory[index],
+                      isFirst: index == 0,
+                    );
+                  },
+                ),
+              );
+            }
+      
+            return Container();
+          },
+        ),
       ),
     );
   }
