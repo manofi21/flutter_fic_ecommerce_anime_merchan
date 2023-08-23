@@ -23,6 +23,7 @@ class OrderHistoryRepoImpl implements OrderHistoryRepo {
                   .map(
                     (e) => Item(
                       productName: e.productName,
+                      urlImage: e.urlImage,
                       price: e.price,
                       qty: e.qty,
                     ),

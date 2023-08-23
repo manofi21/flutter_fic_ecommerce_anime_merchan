@@ -43,22 +43,26 @@ class OrderHistoryEntity {
 
 class Item {
     final String productName;
+    final String urlImage;
     final int price;
     final int qty;
 
     Item({
         required this.productName,
+        required this.urlImage,
         required this.price,
         required this.qty,
     });
 
     Item copyWith({
         String? productName,
+        String? urlImage, 
         int? price,
         int? qty,
     }) => 
         Item(
             productName: productName ?? this.productName,
+            urlImage: urlImage ?? this.urlImage,
             price: price ?? this.price,
             qty: qty ?? this.qty,
         );
