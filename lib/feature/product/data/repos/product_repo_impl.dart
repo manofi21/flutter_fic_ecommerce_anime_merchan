@@ -16,7 +16,7 @@ class ProductRepoImpl implements ProductRepo {
       final getValue = getProductList
           .map(
             (e) => ProductItem(
-              productId: e.id, 
+              productId: e.id,
               description: e.attributes.description,
               productName: e.attributes.productName,
               productPrice: e.attributes.price,
@@ -26,19 +26,25 @@ class ProductRepoImpl implements ProductRepo {
               typeItem: e.attributes.subItemType.itemType,
               quantity: e.attributes.quantity,
               urlImages: e.attributes.images.data.reversed
-                  .map((e) => e.attributes.url)
+                  .map(
+                    (e) => UrlImageProduct(
+                      urlImage: e.attributes.url,
+                      urlSmallImage: e.attributes.formats.small?.url,
+                    ),
+                  )
                   .toList(),
             ),
           )
           .toList();
       return getValue;
-    } on HttpException catch (e) { 
+    } on HttpException catch (e) {
       throw ProductFailure(e.message);
-    } on UnknownException catch (e) { 
+    } on UnknownException catch (e) {
       // throw UnknownFailure(e.message, stackTrace);
       throw ProductFailure(e.message);
-    } catch (e, stackTrace) { 
-      throw UnknownFailure('Occure in Product Repo : ${e.toString()}', stackTrace);
+    } catch (e, stackTrace) {
+      throw UnknownFailure(
+          'Occure in Product Repo : ${e.toString()}', stackTrace);
     }
   }
 }
