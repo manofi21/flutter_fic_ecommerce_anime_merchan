@@ -16,8 +16,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
     super.didChangeDependencies();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-        final addressCheckoutBloc = context.read<OrderHistoryBloc>();
-        addressCheckoutBloc.add(OrderHistoryLoadData());
+        // final addressCheckoutBloc = context.read<OrderHistoryBloc>();
+        // addressCheckoutBloc.add(OrderHistoryLoadData());
       },
     );
   }

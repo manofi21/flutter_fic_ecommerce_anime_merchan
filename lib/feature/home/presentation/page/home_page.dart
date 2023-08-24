@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/home/presentation/widget/home_navigator_bar_widget.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/home/presentation/widget/home_page_view_widget.dart';
 
+import '../../../order_history/presentation/bloc/order_history_bloc.dart';
 import '../cubit/home_page_cubit.dart';
 import '../cubit/home_page_state.dart';
 
@@ -12,7 +13,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HomePageCubit>(
-      create: (_) => HomePageCubit(),
+      create: (context) => HomePageCubit(
+        context.read<OrderHistoryBloc>(),
+      ),
       child: const HomeChild(),
     );
   }
@@ -26,7 +29,6 @@ class HomeChild extends StatefulWidget {
 }
 
 class _HomeChildState extends State<HomeChild> {
-
   @override
   void dispose() {
     context.read<HomePageCubit>().close();
