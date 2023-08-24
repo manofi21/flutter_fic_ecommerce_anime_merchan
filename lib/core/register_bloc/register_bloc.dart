@@ -20,12 +20,13 @@ final registerBloc = [
     ),
   ),
   BlocProvider<CartBloc>(create: (_) => CartBloc()),
+  BlocProvider<AddressCheckoutBloc>(
+      create: (_) => getIt<AddressCheckoutBloc>()),
   BlocProvider<OrderCheckoutCubit>(
     create: (context) => getIt<OrderCheckoutCubit>(
-      // param1: null,
-      param2: context.read<CartBloc>(),
+      param1: context.read<CartBloc>(),
+      param2: context.read<AddressCheckoutBloc>(),
     ),
   ),
-  BlocProvider<AddressCheckoutBloc>(create: (_) => getIt<AddressCheckoutBloc>()),
   BlocProvider<OrderHistoryBloc>(create: (_) => getIt<OrderHistoryBloc>())
 ];

@@ -84,10 +84,11 @@ void configureDependencies() {
       CheckoutOrderRepoImpl(getIt<CheckoutOrderRemoteDataSource>()));
   getIt.registerFactory<CheckoutOrderProduct>(
       () => CheckoutOrderProduct(getIt<CheckoutOrderRepo>()));
-  getIt.registerFactoryParam<OrderCheckoutCubit, CheckoutOrderProduct?, CartBloc>(
+  getIt.registerFactoryParam<OrderCheckoutCubit, CartBloc?, AddressCheckoutBloc?>(
     (p1, p2) => OrderCheckoutCubit(
-      p1 ?? getIt<CheckoutOrderProduct>(),
-      cartBloc: p2,
+      getIt<CheckoutOrderProduct>(),
+      cartBloc: p1,
+      addressCheckoutBloc: p2
     ),
   );
 
