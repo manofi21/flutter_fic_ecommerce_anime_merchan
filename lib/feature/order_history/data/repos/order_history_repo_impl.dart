@@ -34,7 +34,7 @@ class OrderHistoryRepoImpl implements OrderHistoryRepo {
               deliveryAddress: e.deliveryAddress,
               courierName: e.courierName,
               shippingCost: e.shippingCost,
-              orderStatus: e.orderStatus.toOrderStatusEntity,
+              orderStatus: e.orderStatus,
               urlPayment: e.urlPayment,
               createdOrderAt: DateFormat("dd MMMM yyyy, HH:mm", 'id_ID').format(e.createdAt.toLocal())
             ),
