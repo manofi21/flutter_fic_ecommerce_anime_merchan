@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/bloc/product_bloc.dart';
 
-import '../../../cart/presentation/widget/cart_badges.dart';
+// import '../../../cart/presentation/widget/cart_badges.dart';
 import '../widget/grid_product_view.dart';
 
 class ProductPage extends StatefulWidget {
@@ -25,22 +25,22 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: const [
-          CartBadges(
-            badgesEnd: 10,
-            child: SizedBox(
-              width: 60,
-              child: Icon(Icons.shopping_cart_rounded),
-            ),
-          ),
-        ],
-        title: Title(
-          color: Colors.blue,
-          title: 'Product',
-          child: const Text('Product'),
-        ),
-      ),
+      // appBar: AppBar(
+      //   actions: const [
+      //     CartBadges(
+      //       badgesEnd: 10,
+      //       child: SizedBox(
+      //         width: 60,
+      //         child: Icon(Icons.shopping_cart_rounded),
+      //       ),
+      //     ),
+      //   ],
+      //   title: Title(
+      //     color: Colors.blue,
+      //     title: 'Product',
+      //     child: const Text('Product'),
+      //   ),
+      // ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           if (state is ProductStateLoaded) {
