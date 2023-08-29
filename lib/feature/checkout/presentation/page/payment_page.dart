@@ -3,7 +3,9 @@ import 'package:flutter_fic_ecommerce_warung_comicon/feature/checkout/presentati
 
 class PaymentPage extends StatelessWidget {
   final String paymentUrl;
-  const PaymentPage({super.key, required this.paymentUrl});
+  final bool isDoublePop;
+  const PaymentPage(
+      {super.key, required this.paymentUrl, this.isDoublePop = true});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,13 @@ class PaymentPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_sharp),
           onPressed: () {
-            for (int i = 0; i < 2; i++) {
+            if (isDoublePop) {
+              for (int i = 0; i < 2; i++) {
+                Navigator.pop(context);
+              }
+            }
+
+            if (!isDoublePop) {
               Navigator.pop(context);
             }
           },

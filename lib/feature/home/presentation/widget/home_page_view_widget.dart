@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/page/product_page.dart';
+// import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/page/product_page.dart';
 
+import '../../../dashboard/presentation/page/dashboard_page.dart';
 import '../../../order_history/presentation/page/order_history_page.dart';
 
 class HomePageViweWidget extends StatefulWidget {
@@ -18,7 +19,7 @@ class _HomePageViweWidgetState extends State<HomePageViweWidget> {
       child:  SafeArea(
         child: IndexedStack(
           index: widget.pageIndex,
-          children: [const ProductPage(), Container(), const OrderHistoryPage()],
+          children: [const DashboardPage(), Container(), const OrderHistoryPage()],
         ),
       ),
     );
