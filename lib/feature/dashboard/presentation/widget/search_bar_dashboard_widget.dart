@@ -14,17 +14,19 @@ class SearchBarDashboardWidget extends StatefulWidget {
 class _SearchBarDashboardWidgetState extends State<SearchBarDashboardWidget> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const SearchPage()));
-      },
-      child: Container(
-        color: Colors.lightGreen,
-        padding: const EdgeInsets.all(15),
-        child: Row(
-          children: [
-            Expanded(
+    return Container(
+      color: Colors.lightGreen,
+      padding: const EdgeInsets.all(15),
+      child: Row(
+        children: [
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SearchPage()),
+                );
+              },
               child: Hero(
                 tag: "onClickTextField",
                 child: Material(
@@ -53,27 +55,27 @@ class _SearchBarDashboardWidgetState extends State<SearchBarDashboardWidget> {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0),
-              child: Icon(Icons.mail, size: 23),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4.0),
+            child: Icon(Icons.mail, size: 23),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4.0),
+            child: Icon(Icons.notifications, size: 23),
+          ),
+          const CartBadges(
+            badgesEnd: 10,
+            child: SizedBox(
+              width: 23,
+              child: Icon(Icons.shopping_cart_rounded),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0),
-              child: Icon(Icons.notifications, size: 23),
-            ),
-            const CartBadges(
-              badgesEnd: 10,
-              child: SizedBox(
-                width: 23,
-                child: Icon(Icons.shopping_cart_rounded),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0),
-              child: Icon(Icons.menu, size: 23),
-            )
-          ],
-        ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4.0),
+            child: Icon(Icons.menu, size: 23),
+          )
+        ],
       ),
     );
   }
