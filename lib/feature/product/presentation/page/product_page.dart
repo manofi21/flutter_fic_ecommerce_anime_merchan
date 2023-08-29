@@ -25,54 +25,51 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: const [
-            CartBadges(
-              badgesEnd: 10,
-              child: SizedBox(
-                width: 60,
-                child: Icon(Icons.shopping_cart_rounded),
-              ),
+      appBar: AppBar(
+        actions: const [
+          CartBadges(
+            badgesEnd: 10,
+            child: SizedBox(
+              width: 60,
+              child: Icon(Icons.shopping_cart_rounded),
             ),
-          ],
-          title: Title(
-            color: Colors.blue,
-            title: 'Product',
-            child: const Text('Product'),
           ),
+        ],
+        title: Title(
+          color: Colors.blue,
+          title: 'Product',
+          child: const Text('Product'),
         ),
-        body: SizedBox(
-          height: MediaQuery.of(context).size.height - 125,
-          child: BlocBuilder<ProductBloc, ProductState>(
-            builder: (context, state) {
-              if (state is ProductStateLoaded) {
-                final listProduct = state.listProduct;
-                return gridProductPage(
-                  context,
-                  listProduct: listProduct,
-                );
-              }
+      ),
+      body: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is ProductStateLoaded) {
+            final listProduct = state.listProduct;
+            return gridProductPage(
+              context,
+              listProduct: listProduct,
+            );
+          }
 
-              if (state is ProductStateLoading) {
-                return const Center(
-                  child: SizedBox(
-                    height: 60,
-                    width: 60,
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }
+          if (state is ProductStateLoading) {
+            return const Center(
+              child: SizedBox(
+                height: 60,
+                width: 60,
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
 
-              if (state is ProductStateError) {
-                return Center(
-                  child: Text(state.message),
-                );
-              }
+          if (state is ProductStateError) {
+            return Center(
+              child: Text(state.message),
+            );
+          }
 
-              return Container();
-            },
-          ),
-        ),
+          return Container();
+        },
+      ),
     );
   }
 }
