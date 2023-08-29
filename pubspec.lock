@@ -221,10 +221,10 @@ packages:
     dependency: "direct main"
     description:
       name: currency_formatter
-      sha256: "8fc2b612e465a4e886f5d8d3a7cec03cc3cabab617ef96bf54c70886c907f2c3"
+      sha256: "24034a969f21a55071b1cf835655c1fb1fd94e3acd498a77283e945002591fb6"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.0"
   dart_style:
     dependency: transitive
     description:
@@ -310,6 +310,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -449,13 +454,13 @@ packages:
     source: hosted
     version: "4.0.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
-      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
       url: "https://pub.dev"
     source: hosted
-    version: "0.18.1"
+    version: "0.17.0"
   io:
     dependency: transitive
     description:

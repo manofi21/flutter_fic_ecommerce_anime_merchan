@@ -45,5 +45,7 @@ app.*.map.json
 /*.txt
 
 .mitrands_email
-lib/core/constant/constant.dart
+.running_command
+analysis_options.yaml
+# lib\core\constant\constant.dart
 config.json
