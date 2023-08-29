@@ -1,4 +1,5 @@
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/order_history/data/extension/order_status_to_entity.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
@@ -35,6 +36,7 @@ class OrderHistoryRepoImpl implements OrderHistoryRepo {
               shippingCost: e.shippingCost,
               orderStatus: e.orderStatus.toOrderStatusEntity,
               urlPayment: e.urlPayment,
+              createdOrderAt: DateFormat("dd MMMM yyyy, HH:mm", 'id_ID').format(e.createdAt.toLocal())
             ),
           )
           .toList();

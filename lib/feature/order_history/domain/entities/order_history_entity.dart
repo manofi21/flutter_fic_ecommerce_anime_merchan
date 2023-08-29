@@ -7,6 +7,7 @@ class OrderHistoryEntity {
     final int shippingCost;
     final String orderStatus;
     final String urlPayment;
+    final String createdOrderAt;
 
     OrderHistoryEntity({
         required this.id,
@@ -17,6 +18,7 @@ class OrderHistoryEntity {
         required this.shippingCost,
         required this.orderStatus,
         required this.urlPayment,
+        required this.createdOrderAt,
     });
 
     OrderHistoryEntity copyWith({
@@ -28,6 +30,7 @@ class OrderHistoryEntity {
         int? shippingCost,
         String? orderStatus,
         String? urlPayment,
+        String? createdOrderAt,
     }) => 
         OrderHistoryEntity(
             id: id ?? this.id,
@@ -38,6 +41,7 @@ class OrderHistoryEntity {
             shippingCost: shippingCost ?? this.shippingCost,
             orderStatus: orderStatus ?? this.orderStatus,
             urlPayment: urlPayment ?? this.urlPayment,
+            createdOrderAt: createdOrderAt ?? this.createdOrderAt,
         );
 }
 

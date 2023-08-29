@@ -49,3 +49,4 @@ app.*.map.json
 analysis_options.yaml
 # lib\core\constant\constant.dart
 config.json
+lib/core/constant/constant.dart
