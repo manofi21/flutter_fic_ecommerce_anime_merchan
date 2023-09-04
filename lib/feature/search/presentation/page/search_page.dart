@@ -1,4 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/search/presentation/widget/search_text_field.dart';
+
+import '../../../../locator.dart';
+import '../bloc/search_product_bloc.dart';
+
+class SearchPageBloc extends StatelessWidget {
+  const SearchPageBloc({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<SearchProductBloc>(
+      create: (_) => getIt<SearchProductBloc>(),
+      child: const SearchPage(),
+    );
+  }
+}
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -8,6 +25,12 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  @override
+  void dispose() {
+    context.read<SearchProductBloc>().close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,47 +50,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: Hero(
                   tag: "onClickTextField",
                   child: Material(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1.0,
-                          color: Colors.grey[900]!,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Row(
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 6.0),
-                                  child: Icon(Icons.search, size: 20),
-                                ),
-                                Expanded(
-                                  child: TextFormField(
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                    decoration: const InputDecoration.collapsed(
-                                      // constraints: BoxConstraints.tightFor(height: 15),
-                                      hintText: "Pencarian",
-                                      border: InputBorder.none,
-                                    ).copyWith(
-                                      contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 5,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Icon(Icons.mic, size: 20),
-                        ],
-                      ),
-                    ),
+                    child: SearchTextField()
                   ),
                 ),
               )
