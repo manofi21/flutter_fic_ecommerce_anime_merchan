@@ -5,7 +5,7 @@ import '../../../../core/http_request/remote_data_request.dart';
 import '../modal/product_model.dart';
 
 abstract class ProductRemoteDataSource {
-  Future<List<ProductModelDatum>> getProducts();
+  Future<List<ProductModelDatum>> getProducts({String? searchNameProduct});
 }
 
 class ProductRemoteDataSourceImpl extends RemoteDataRequest
@@ -15,7 +15,7 @@ class ProductRemoteDataSourceImpl extends RemoteDataRequest
   }) : super(http: http);
 
   @override
-  Future<List<ProductModelDatum>> getProducts() async {
+  Future<List<ProductModelDatum>> getProducts({String? searchNameProduct}) async {
     try {
       final getProductResult = await getRequest<List<ProductModelDatum>>(
         '/api/products',
@@ -23,6 +23,7 @@ class ProductRemoteDataSourceImpl extends RemoteDataRequest
           'populate[sub_item_type][populate]': '*',
           'populate[source_item]': '*',
           'populate[images]': '*',
+          if (searchNameProduct != null) 'filters[product_name][\$contains]': searchNameProduct
         },
         fromMap: (e) {
           final getData = e['data'];
