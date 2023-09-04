@@ -32,6 +32,8 @@ import 'feature/product/data/data_source/product_remote_data_source.dart';
 import 'feature/product/data/repos/product_repo_impl.dart';
 import 'feature/product/domain/repos/product_repo.dart';
 import 'feature/product/presentation/bloc/product_bloc.dart';
+import 'feature/search/domain/use_cases/get_searched_product.dart';
+import 'feature/search/presentation/bloc/search_product_bloc.dart';
 
 final getIt = GetIt.I;
 void configureDependencies() {
@@ -61,6 +63,11 @@ void configureDependencies() {
   getIt.registerFactory<ProductBloc>(
       () => ProductBloc(getIt<GetProductRemote>()));
 
+  getIt.registerFactory<GetSearchedProduct>(
+      () => GetSearchedProduct(getIt<ProductRepo>()));
+  getIt.registerFactory<SearchProductBloc>(
+      () => SearchProductBloc(getIt<GetSearchedProduct>()));
+
   // Registring Auth DataSource, Repo, and Use Cases
   getIt.registerSingleton<AuthRemoteDataSource>(
       AuthRemoteDataSourceImpl(http: getIt<InterceptedHttp>()));
@@ -84,12 +91,10 @@ void configureDependencies() {
       CheckoutOrderRepoImpl(getIt<CheckoutOrderRemoteDataSource>()));
   getIt.registerFactory<CheckoutOrderProduct>(
       () => CheckoutOrderProduct(getIt<CheckoutOrderRepo>()));
-  getIt.registerFactoryParam<OrderCheckoutCubit, CartBloc?, AddressCheckoutBloc?>(
-    (p1, p2) => OrderCheckoutCubit(
-      getIt<CheckoutOrderProduct>(),
-      cartBloc: p1,
-      addressCheckoutBloc: p2
-    ),
+  getIt.registerFactoryParam<OrderCheckoutCubit, CartBloc?,
+      AddressCheckoutBloc?>(
+    (p1, p2) => OrderCheckoutCubit(getIt<CheckoutOrderProduct>(),
+        cartBloc: p1, addressCheckoutBloc: p2),
   );
 
   // Address DataSource, Repo, and Use Cases
@@ -99,7 +104,8 @@ void configureDependencies() {
       AddressRepoImpl(getIt<AddressRemoteDataSource>()));
   getIt.registerFactory<GetListAddressUser>(
       () => GetListAddressUser(getIt<AddressRepo>()));
-  getIt.registerFactory<AddressCheckoutBloc>(() => AddressCheckoutBloc(getIt<GetListAddressUser>()));
+  getIt.registerFactory<AddressCheckoutBloc>(
+      () => AddressCheckoutBloc(getIt<GetListAddressUser>()));
 
   // History Order DataSource, Repo, and Use Cases
   getIt.registerSingleton<OrderHistoryRemoteDataSource>(
@@ -108,5 +114,6 @@ void configureDependencies() {
       OrderHistoryRepoImpl(getIt<OrderHistoryRemoteDataSource>()));
   getIt.registerFactory<GetOrderHistory>(
       () => GetOrderHistory(getIt<OrderHistoryRepo>()));
-  getIt.registerFactory<OrderHistoryBloc>(() => OrderHistoryBloc(getIt<GetOrderHistory>()));
+  getIt.registerFactory<OrderHistoryBloc>(
+      () => OrderHistoryBloc(getIt<GetOrderHistory>()));
 }
