@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/feature/cart/presentation/page/cart_page.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/widget/icon_detail_bar.dart';
 
 import '../../../cart/presentation/widget/cart_badges.dart';
+import '../../../search/presentation/page/search_page.dart';
 import 'button_to_search_page.dart';
 
 class SearchBarDetailPage extends StatefulWidget {
@@ -17,6 +17,8 @@ class SearchBarDetailPage extends StatefulWidget {
 
 class _SearchBarDetailPageState extends State<SearchBarDetailPage>
     with SingleTickerProviderStateMixin {
+  final tagHero = "hero_from_detail_page";
+
   late ScrollController scrollController;
   late Timer timer;
   var _opacity = 0.0;
@@ -73,8 +75,24 @@ class _SearchBarDetailPageState extends State<SearchBarDetailPage>
             },
           ),
           Expanded(
-            child: buttonToSearchPage(
-                opacity: _opacity, currentIndex: currentIndex, texts: texts),
+            child: InkWell(
+              onTap: () {
+                if (_opacity > 0) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SearchPageBloc(tagHero: tagHero),
+                    ),
+                  );
+                }
+              },
+              child: buttonToSearchPage(
+                opacity: _opacity,
+                currentIndex: currentIndex,
+                texts: texts,
+                tagHero: tagHero,
+              ),
+            ),
           ),
           Row(
             children: [

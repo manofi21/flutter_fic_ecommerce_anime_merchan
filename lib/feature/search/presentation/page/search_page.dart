@@ -8,19 +8,21 @@ import '../../../../locator.dart';
 import '../bloc/search_product_bloc.dart';
 
 class SearchPageBloc extends StatelessWidget {
-  const SearchPageBloc({super.key});
+  final String tagHero;
+  const SearchPageBloc({super.key, required this.tagHero});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SearchProductBloc>(
       create: (_) => getIt<SearchProductBloc>(),
-      child: const SearchPage(),
+      child: SearchPage(tagHero: tagHero),
     );
   }
 }
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+  final String tagHero;
+  const SearchPage({super.key, required this.tagHero});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -62,10 +64,10 @@ class _SearchPageState extends State<SearchPage> {
                     child: const Icon(Icons.arrow_back),
                   ),
                   const SizedBox(width: 5),
-                  const Expanded(
+                  Expanded(
                     child: Hero(
-                      tag: "onClickTextField",
-                      child: Material(
+                      tag: widget.tagHero,
+                      child: const Material(
                         child: SearchTextField(),
                       ),
                     ),

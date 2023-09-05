@@ -12,6 +12,8 @@ class SearchBarDashboardWidget extends StatefulWidget {
 }
 
 class _SearchBarDashboardWidgetState extends State<SearchBarDashboardWidget> {
+  final tagHero = "hero_from_dashboard";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,12 +27,12 @@ class _SearchBarDashboardWidgetState extends State<SearchBarDashboardWidget> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const SearchPageBloc(),
+                    builder: (_) => SearchPageBloc(tagHero: tagHero),
                   ),
                 );
               },
               child: Hero(
-                tag: "onClickTextField",
+                tag: tagHero,
                 child: Material(
                   child: Container(
                     width: double.infinity,
