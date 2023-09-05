@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/widget/icon_detail_bar.dart';
+ import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/presentation/widget/icon_detail_bar.dart';
 
 import '../../../cart/presentation/widget/cart_badges.dart';
 import '../../../search/presentation/page/search_page.dart';

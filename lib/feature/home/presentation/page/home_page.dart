@@ -4,6 +4,7 @@ import 'package:flutter_fic_ecommerce_warung_comicon/feature/home/presentation/w
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/home/presentation/widget/home_page_view_widget.dart';
 
 import '../../../order_history/presentation/bloc/order_history_bloc.dart';
+import '../../../product/presentation/bloc/product_bloc.dart';
 import '../cubit/home_page_cubit.dart';
 import '../cubit/home_page_state.dart';
 
@@ -15,6 +16,7 @@ class HomePage extends StatelessWidget {
     return BlocProvider<HomePageCubit>(
       create: (context) => HomePageCubit(
         context.read<OrderHistoryBloc>(),
+        context.read<ProductBloc>(),
       ),
       child: const HomeChild(),
     );
