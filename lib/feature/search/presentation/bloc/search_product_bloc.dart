@@ -14,6 +14,11 @@ class SearchProductBloc extends Bloc<SearchProductEvent, SearchProductState> {
       (event, emit) async {
         emit(SearchProductLoading());
 
+        if (event.searchValue.isEmpty) {
+          emit(SearchProductInitial());
+          return;
+        }
+
         final searchedProductUseCases =
             await getSearchedProduct(event.searchValue);
         final searchedProduct = searchedProductUseCases.when(

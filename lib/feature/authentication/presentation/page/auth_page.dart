@@ -130,8 +130,8 @@ class _AuthPageState extends State<AuthPage> {
                     : 'To Register',
                 onPressed: () {
                   context.read<AuthenticationPageCubit>().onChangeState(
-                    onBeforeChange: onClear,
-                  );
+                        onBeforeChange: onClear,
+                      );
                 },
                 isEnable: state is! AuthenticationRegistrationLoading ||
                     state is! AuthenticationLoginLoading,
@@ -151,14 +151,14 @@ class _AuthPageState extends State<AuthPage> {
               : 'Login',
           onPressed: () {
             context.read<AuthenticationPageCubit>().onPressed(
-              nameController.text,
-              usernameController.text,
-              passController.text,
-              emailController.text,
-              usernameOrEmailController.text,
-              context,
-              onAfterClick: onClear,
-            );
+                  nameController.text,
+                  usernameController.text,
+                  passController.text,
+                  emailController.text,
+                  usernameOrEmailController.text,
+                  context,
+                  onAfterClick: onClear,
+                );
           },
         );
       },
@@ -169,7 +169,10 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registration Page'),
+        title: const Text(
+          'Registration Page',
+          // style: TextStyle(fontFamily: "PoppinsBlack", fontStyle: FontStyle.italic, decoration: TextDecoration.underline),
+        ),
       ),
       body: Padding(
           padding: const EdgeInsets.only(top: 8.0),
