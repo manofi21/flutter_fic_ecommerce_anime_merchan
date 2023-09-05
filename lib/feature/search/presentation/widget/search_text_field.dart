@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/search_product_bloc.dart';
 
 class SearchTextField extends StatefulWidget {
   const SearchTextField({super.key});
@@ -8,6 +13,21 @@ class SearchTextField extends StatefulWidget {
 }
 
 class _SearchTextFieldState extends State<SearchTextField> {
+  Timer? _debounce;
+
+  void _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      context.read<SearchProductBloc>().onSearchProduct(query);
+    });
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,6 +50,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
                 ),
                 Expanded(
                   child: TextFormField(
+                    onChanged: _onSearchChanged,
                     style: const TextStyle(
                       fontSize: 18,
                     ),
