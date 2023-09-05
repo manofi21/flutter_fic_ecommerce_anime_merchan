@@ -24,7 +24,9 @@ class _SearchBarDashboardWidgetState extends State<SearchBarDashboardWidget> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const SearchPage()),
+                  MaterialPageRoute(
+                    builder: (_) => const SearchPageBloc(),
+                  ),
                 );
               },
               child: Hero(
