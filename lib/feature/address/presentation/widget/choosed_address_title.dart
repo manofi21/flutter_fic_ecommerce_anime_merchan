@@ -16,13 +16,14 @@ class ChoosedAddressTitle extends StatelessWidget {
         }
 
         if (state.isSuccess) {
+          final shortAddress = context.read<ChoosedAddressCubit>().getShortChoosedAddress?.address;
           return InkWell(
             onTap: () {},
             child: Row(
               children: [
                 Expanded(
                   child: Text(
-                    "Alamat Penerima : ${state.successValue?.address}",
+                    "Alamat Penerima : $shortAddress",
                   ),
                 ),
                 const SizedBox(width: 3),

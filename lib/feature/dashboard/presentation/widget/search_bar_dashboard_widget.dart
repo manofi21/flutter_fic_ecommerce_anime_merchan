@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../address/presentation/cubit/choosed_address/choosed_address_cubit.dart';
-import '../../../address/presentation/cubit/choosed_address/choosed_address_state.dart';
 import '../../../address/presentation/widget/choosed_address_title.dart';
 import '../../../cart/presentation/widget/cart_badges.dart';
 import '../../../search/presentation/page/search_page.dart';
