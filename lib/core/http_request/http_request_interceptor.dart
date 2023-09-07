@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/http_request/is_message_use_from_mobile.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/http_request/is_token_expired.dart';
@@ -40,51 +41,59 @@ class HttpRequestInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
-    final useMessageFromMobile = isMessageUseFromMobile(data.statusCode);
-    final isExpired = isTokenExpired(data.statusCode);
+    try {
+      final useMessageFromMobile = isMessageUseFromMobile(data.statusCode);
+      final isExpired = isTokenExpired(data.statusCode);
 
-    if (!useMessageFromMobile) {
-      final response = data.body != null ? jsonDecode(data.body!) : {};
-      final errorMessage = response['error'];
+      if (!useMessageFromMobile) {
+        final response = data.body != null ? jsonDecode(data.body!) : {};
+        final errorMessage = response['error'];
 
-      if (errorMessage != null && !isExpired) {
-        var resultError = errorMessage['message'];
+        if (errorMessage != null && !isExpired) {
+          var resultError = errorMessage['message'];
 
-        /// If "details" == null set "errors" Empty
-        errorMessage["details"] ??= {"errors": []};
-        final getDetailErros = errorMessage["details"]["errors"];
-        if (getDetailErros is List && getDetailErros.isNotEmpty) {
-          for (Map msg in getDetailErros) {
-            resultError += '\n - ${msg["message"]}';
+          /// If "details" == null set "errors" Empty
+          errorMessage["details"] ??= {"errors": []};
+          final getDetailErros = errorMessage["details"]["errors"];
+          if (getDetailErros is List && getDetailErros.isNotEmpty) {
+            for (Map msg in getDetailErros) {
+              resultError += '\n - ${msg["message"]}';
+            }
           }
+
+          throw resultError;
         }
-
-        throw resultError;
       }
+
+      final exception = statusCodeHandler(data.statusCode);
+
+      if (isExpired && exception != null) {
+        final context = navigatorKey.currentContext!;
+        await showErrorDialog(context: context, message: exception.message)
+            .then(
+          (value) {
+            authStorage.clearToken();
+
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const AuthPage(),
+              ),
+            );
+          },
+        );
+      }
+
+      if (exception != null) {
+        throw exception;
+      }
+
+      return data;
+    } catch (e, stackTacker) {
+      if (kDebugMode) {
+        print(stackTacker);
+      }
+      rethrow;
     }
-
-    final exception = statusCodeHandler(data.statusCode);
-
-    if (isExpired && exception != null) {
-      final context = navigatorKey.currentContext!;
-      await showErrorDialog(context: context, message: exception.message).then(
-        (value) {
-          authStorage.clearToken();
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (_) => const AuthPage(),
-            ),
-          );
-        },
-      );
-    }
-
-    if (exception != null) {
-      throw exception;
-    }
-
-    return data;
   }
 }
