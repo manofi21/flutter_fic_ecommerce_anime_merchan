@@ -23,6 +23,7 @@ class AuthRemoteDataSourceImpl extends RemoteDataRequest
     try {
       final authResult = await postRequest<AuthModel>(
         '/api/auth/local',
+        useEncode: true,
         fromMap: AuthModel.fromJson,
         bodyParameter: loginRequest.toJson(),
       );
@@ -62,6 +63,7 @@ class AuthRemoteDataSourceImpl extends RemoteDataRequest
       final verifyResult = await postRequest<AuthModel>(
           '/api/auth/local/register',
           fromMap: AuthModel.fromJson,
+          useEncode: true,
           bodyParameter: registRequest.toJson());
       return verifyResult;
     } on HttpException {
