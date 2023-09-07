@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../feature/address/presentation/cubit/choosed_address/choosed_address_cubit.dart';
 import '../../feature/authentication/presentation/bloc/authentication_bloc.dart';
 import '../../feature/authentication/presentation/page_state_cubit/authentication_page_cubit.dart';
 import '../../feature/cart/presentation/bloc/cart_bloc.dart';
@@ -28,5 +29,6 @@ final registerBloc = [
       param2: context.read<AddressCheckoutBloc>(),
     ),
   ),
-  BlocProvider<OrderHistoryBloc>(create: (_) => getIt<OrderHistoryBloc>())
+  BlocProvider<OrderHistoryBloc>(create: (_) => getIt<OrderHistoryBloc>()),
+  BlocProvider<ChoosedAddressCubit>(create: (_) => getIt<ChoosedAddressCubit>())
 ];
