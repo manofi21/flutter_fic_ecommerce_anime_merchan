@@ -3,6 +3,7 @@ import 'package:flutter_fic_ecommerce_warung_comicon/feature/address/domain/repo
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
+import '../../domain/entities/choosed_address_entities.dart';
 import '../data_source/address_remote_data_source.dart';
 
 class AddressRepoImpl extends AddressRepo {
@@ -34,7 +35,31 @@ class AddressRepoImpl extends AddressRepo {
       throw AddressFailure(e.message);
     } catch (e, stackTrace) {
       throw UnknownFailure(
-          'Occure in Address Repo : ${e.toString()}', stackTrace);
+          'Occure in Address Repo getListAddressUser : ${e.toString()}',
+          stackTrace);
+    }
+  }
+
+  @override
+  Future<ChoosedAddressEntities?> getChoosedAddressUser() async {
+    try {
+      final getAddressFromRemote =
+          await addressRemoteDataSource.getChoosedAddress();
+      if (getAddressFromRemote != null) {
+        return ChoosedAddressEntities(
+          id: getAddressFromRemote.id,
+          address: getAddressFromRemote.address,
+        );
+      }
+      return null;
+    } on HttpException catch (e) {
+      throw AddressFailure(e.message);
+    } on UnknownException catch (e) {
+      throw AddressFailure(e.message);
+    } catch (e, stackTrace) {
+      throw UnknownFailure(
+          'Occure in Address Repo getChoosedAddressUser : ${e.toString()}',
+          stackTrace);
     }
   }
 }
