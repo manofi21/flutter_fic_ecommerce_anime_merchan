@@ -2,7 +2,7 @@ class AddressModel {
     final int id;
     final String labelAddress;
     final String fullAddress;
-    final String detailAddress;
+    final String? detailAddress;
     final String recipientName;
     final String phoneNumber;
     final DateTime createdAt;
