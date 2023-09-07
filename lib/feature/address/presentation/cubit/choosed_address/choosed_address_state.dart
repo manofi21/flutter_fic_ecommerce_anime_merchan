@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import '../../../domain/entities/choosed_address_entities.dart';
+import '../../../domain/entities/address_entities.dart';
 
 class ChoosedAddressState {
-  final ChoosedAddressEntities? successValue;
+  final AddressEntities? successValue;
   final String msgError;
   final bool isLoading;
   final bool isError;
@@ -18,7 +18,7 @@ class ChoosedAddressState {
     this.isInit = true,
   });
 
-  static ChoosedAddressState onSuccess(ChoosedAddressEntities successValue) {
+  static ChoosedAddressState onSuccess(AddressEntities successValue) {
     return ChoosedAddressState(
       isLoading: false,
       isError: false,

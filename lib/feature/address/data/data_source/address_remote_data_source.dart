@@ -3,11 +3,10 @@ import 'package:http_interceptor/http/intercepted_http.dart';
 
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/http_request/remote_data_request.dart';
-import '../model/choosed_address_model.dart';
 
 abstract class AddressRemoteDataSource {
   Future<List<AddressModel>> getListAddress();
-  Future<ChoosedAddressModel?> getChoosedAddress();
+  Future<AddressModel?> getChoosedAddress();
 }
 
 class AddressRemoteDataSourceImpl extends RemoteDataRequest
@@ -45,14 +44,14 @@ class AddressRemoteDataSourceImpl extends RemoteDataRequest
   }
   
   @override
-  Future<ChoosedAddressModel?> getChoosedAddress() async {
+  Future<AddressModel?> getChoosedAddress() async {
     try {
-      final addressResult = await getRequest<ChoosedAddressModel?>(
+      final addressResult = await getRequest<AddressModel?>(
         '/api/addresshes/choosed-address',
         fromMap: (e) {
           final result = e["data"];
           if (result is List && result.isNotEmpty) {
-            final listResut = ChoosedAddressModel.fromJson(result.first);
+            final listResut = AddressModel.fromJson(result.first);
             return listResut;
           }
           return null;

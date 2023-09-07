@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/result_handler/no_params.dart';
 
+import '../../../domain/entities/choosed_address_entities.dart';
 import '../../../domain/use_cases/get_choosed_address_user.dart';
 import 'choosed_address_state.dart';
 
@@ -22,11 +23,20 @@ class ChoosedAddressCubit extends Cubit<ChoosedAddressState> {
         return ChoosedAddressState.onError("Data yang diterima ternyata Null, Perika kembali");
       },
       err: (err) {
-        print(err.message);
         return ChoosedAddressState.onError(err.message);
       },
     );
 
     emit(getChoosedAddressState);
+  }
+
+  ChoosedAddressEntities? get getShortChoosedAddress {
+    final choosedStateEntity = state.successValue;
+    if (choosedStateEntity != null) {
+      final title = choosedStateEntity.labelAddress;
+      final address = choosedStateEntity.fullAddress;
+      return ChoosedAddressEntities(id: choosedStateEntity.id, address: "$title($address)");
+    }
+    return null;
   }
 }

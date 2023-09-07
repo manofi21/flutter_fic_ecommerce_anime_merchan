@@ -2,15 +2,15 @@ import '../../../../core/errors/failure.dart';
 import '../../../../core/result_handler/no_params.dart';
 import '../../../../core/result_handler/result.dart';
 import '../../../../core/use_cases/future_result_use_case.dart';
-import '../entities/choosed_address_entities.dart';
+import '../entities/address_entities.dart';
 import '../repos/address_repo.dart';
 
-class GetChoosedAddressUser extends FutureResultUseCase<ChoosedAddressEntities?, NoParams> {
+class GetChoosedAddressUser extends FutureResultUseCase<AddressEntities?, NoParams> {
   final AddressRepo productRepo;
   GetChoosedAddressUser(this.productRepo);
 
   @override
-  Future<Result<ChoosedAddressEntities?, Failure>> processCall(NoParams params) async {
+  Future<Result<AddressEntities?, Failure>> processCall(NoParams params) async {
     try {
       final getListAddress = await productRepo.getChoosedAddressUser();
       return Ok(getListAddress);

@@ -41,15 +41,22 @@ class AddressRepoImpl extends AddressRepo {
   }
 
   @override
-  Future<ChoosedAddressEntities?> getChoosedAddressUser() async {
+  Future<AddressEntities?> getChoosedAddressUser() async {
     try {
       final getAddressFromRemote =
           await addressRemoteDataSource.getChoosedAddress();
       if (getAddressFromRemote != null) {
-        return ChoosedAddressEntities(
-          id: getAddressFromRemote.id,
-          address: getAddressFromRemote.address,
-        );
+        final e = getAddressFromRemote;
+        return AddressEntities(
+              id: e.id,
+              labelAddress: e.labelAddress,
+              fullAddress: e.fullAddress,
+              detailAddress: e.detailAddress,
+              recipientName: e.recipientName,
+              phoneNumber: e.phoneNumber,
+              isMainAddress: e.isMainAddress,
+              isChoosedAddress: e.isChoosedAddress,
+            );
       }
       return null;
     } on HttpException catch (e) {
