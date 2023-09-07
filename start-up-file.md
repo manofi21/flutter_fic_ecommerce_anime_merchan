@@ -254,3 +254,112 @@ async function midtransCoreFunction(serverKey, clienKey, midtransClient, result)
 [ ] Pilih `Authenticated` dan di bagian `Permissions` pilih `Order`
 
 [ ] Centang pada `Create` dan save
+
+### Generating API
+#### 1.  Dengan Membuat API Baru
+[ ] run `yarn strapi generate` di folder strapi api
+
+[ ] Tunggu sampai folder routes, controller, dan services selesai
+
+[ ] Buka folder strapi di VS Code, dan pindah Pindah ke routes/choosed-address.js.
+Isikan file sesuai code berikut:
+```javascript
+module.exports = {
+  routes: [
+    {
+     method: 'GET',
+     path: '/choosed-address',
+     handler: 'choosed-address.find',
+     config: {
+       policies: [],
+       middlewares: [],
+     },
+    },
+  ],
+};
+```
+
+[ ] Lalu pindah lagi ke controllers/choosed-address.js dan isi file sebagai 
+berikut:
+```javascript
+module.exports = {
+  find: async (ctx, next) => {
+    let userId = ctx.state.user["id"];
+    const entries = await strapi.db.query('api::addressh.addressh').findMany({
+        where: {
+            is_choosed_address: true,
+            address_user: {
+                id: userId,
+            }
+        }
+    });
+    console.log(entries);
+    return { 'data' : entries };
+  }
+};
+```
+
+[ ] Save dan jalankan lagi strapi, maka akan ada tampilan Choosed-address di Roles -> Authentication
+
+![image](https://user-images.githubusercontent.com/54527045/266254500-ff82a7ea-deab-47fd-8d52-21cafa018963.png)
+
+[ ] Jangan lupa untuk mengatur permission dengan menekan centang pada find (nama title disesuaikan dengan handler, dan nama link-nya di sesuaikan dari path pada route yang sudah di deklarasi)
+
+#### 2.  Dengan Hanya menambahkan Path Baru di API yang sudah ada
+[ ] Buat file baru denga nama `routes\01-custom-addressh.js` untuk menunjukan file tersebtu diekseuksi sebelum `routes\addressh.js`
+
+[ ] Isikan file sebagai berikut:
+```javascript
+module.exports = {
+    routes: [
+        {
+            method: 'GET',
+            path: '/addresshes/choosed-address',
+            handler: 'addressh.choosed',
+        },
+    ]
+}
+```
+
+[ ] Pindah ke `controllers\addressh.js` dan tambahkan code setelah `async create(ctx) {..}`
+```javascript
+    async choosed(ctx) {
+        function setNewValue(value) {
+            let title = value["label_address"];
+            let fullAddress = value["full_address"];
+            return {
+                "id": value["id"],
+                "address": title + '(' + fullAddress + ')',
+            };
+          }
+
+        let userId = ctx.state.user["id"];
+        const entries = await strapi.db.query('api::addressh.addressh').findMany({
+            where: {
+                is_choosed_address: true,
+                address_user: {
+                    id: userId,
+                }
+            }
+        });
+        console.log(entries);
+        return { 'data' : entries.map(setNewValue) };
+    },
+```
+
+[ ] Lalu reset kemabli strapi
+
+[ ] Kembali ke Settings -> Roles -> Authenticated, pada bagian addressh pasti sudah ada `choosed`. Centang dan save
+![image](https://user-images.githubusercontent.com/54527045/266258935-4eec6474-8715-44b4-b679-668eda77a370.png)
+
+[ ] Untuk bentuk json akan seperti ini:
+```JSON
+{
+    "data": [
+        {
+            "id": 7,
+            "address": "Rumah Saya(Jln.Cempedak Raya RT.004 RW.013)"
+        }
+    ]
+}
+```
