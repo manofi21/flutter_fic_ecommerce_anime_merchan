@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_error_dialog.dart';
 
-import '../../../product/presentation/page/product_page.dart';
+import '../../../home/presentation/page/home_page.dart';
 import '../bloc/authentication_bloc.dart';
 
 part 'authentication_page_state.dart';
@@ -70,7 +70,7 @@ class AuthenticationPageCubit extends Cubit<AuthPageStateEntitiy> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => const ProductPage(),
+              builder: (_) => const HomePage(),
             ),
           );
         },
