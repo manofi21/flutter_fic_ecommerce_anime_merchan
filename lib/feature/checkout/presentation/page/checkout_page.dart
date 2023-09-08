@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/checkout/presentation/widget/list_checkout_item_widget.dart';
-import '../bloc/address_checkout/address_checkout_bloc.dart';
+import '../../../address/presentation/cubit/choosed_address/choosed_address_cubit.dart';
 import '../widget/address_checkout_widget.dart';
 import '../widget/checkout_order_button.dart';
 import '../widget/subtotal_checkout_item_widget.dart';
@@ -20,8 +20,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-        final addressCheckoutBloc = context.read<AddressCheckoutBloc>();
-        addressCheckoutBloc.add(AddressGetCheckoutEvent());
+        final choosedAddressCubit = context.read<ChoosedAddressCubit>();
+        choosedAddressCubit.onGetChoosedAddress();
       },
     );
   }

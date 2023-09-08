@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/address/domain/entities/address_entities.dart';
 
-import '../bloc/address_checkout/address_checkout_bloc.dart';
+import '../../../address/presentation/cubit/choosed_address/choosed_address_cubit.dart';
+import '../../../address/presentation/cubit/choosed_address/choosed_address_state.dart';
 
 
 class AddressCheckoutBlocBuilder extends StatelessWidget {
@@ -10,19 +11,18 @@ class AddressCheckoutBlocBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddressCheckoutBloc, AddressCheckoutState>(
+    return BlocBuilder<ChoosedAddressCubit, ChoosedAddressState>(
       builder: (context, state) {
-        final addressCheckoutBloc = context.read<AddressCheckoutBloc>();
         return Column(
           children: [
-            if (state is AddressCheckoutLoading) ...{
+            if (state.isLoading) ...{
               const CircularProgressIndicator()
-            } else if (state is AddressCheckoutLoaded) ...{
+            } else if (state.isSuccess) ...{
               AddressCheckoutWidget(
-                addressEntities: addressCheckoutBloc.getSelectedAddress(),
+                addressEntities: state.successValue,
               ),
-            } else if (state is AddressCheckoutError) ...{
-              Text(state.message)
+            } else if (state.isError) ...{
+              Text(state.msgError)
             }
           ],
         );
