@@ -4,7 +4,6 @@ import '../../feature/address/presentation/cubit/choosed_address/choosed_address
 import '../../feature/authentication/presentation/bloc/authentication_bloc.dart';
 import '../../feature/authentication/presentation/page_state_cubit/authentication_page_cubit.dart';
 import '../../feature/cart/presentation/bloc/cart_bloc.dart';
-import '../../feature/checkout/presentation/bloc/address_checkout/address_checkout_bloc.dart';
 import '../../feature/checkout/presentation/bloc/order_checkout/order_checkout_cubit.dart';
 import '../../feature/order_history/presentation/bloc/order_history_bloc.dart';
 import '../../feature/product/presentation/bloc/product_bloc.dart';
@@ -21,12 +20,10 @@ final registerBloc = [
     ),
   ),
   BlocProvider<CartBloc>(create: (_) => CartBloc()),
-  BlocProvider<AddressCheckoutBloc>(
-      create: (_) => getIt<AddressCheckoutBloc>()),
   BlocProvider<OrderCheckoutCubit>(
     create: (context) => getIt<OrderCheckoutCubit>(
       param1: context.read<CartBloc>(),
-      param2: context.read<AddressCheckoutBloc>(),
+      param2: context.read<ChoosedAddressCubit>(),
     ),
   ),
   BlocProvider<OrderHistoryBloc>(create: (_) => getIt<OrderHistoryBloc>()),

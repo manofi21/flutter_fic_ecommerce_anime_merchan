@@ -1,3 +1,4 @@
+import 'package:flutter_fic_ecommerce_warung_comicon/core/result_handler/no_params.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/data/repos/auth_repo_impl.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/authentication/domain/repos/auth_repo.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/product/domain/use_cases/get_product_remote.dart';
@@ -12,6 +13,7 @@ import 'feature/address/domain/repos/address_repo.dart';
 import 'feature/address/domain/use_cases/get_choosed_address_user.dart';
 import 'feature/address/domain/use_cases/get_list_address_user.dart';
 import 'feature/address/presentation/cubit/choosed_address/choosed_address_cubit.dart';
+import 'feature/address/presentation/cubit/list_address/list_address_cubit.dart';
 import 'feature/authentication/data/data_source/auth_local_data_source.dart';
 import 'feature/authentication/data/data_source/auth_remote_data_source.dart';
 import 'feature/authentication/domain/use_cases/login_user_cases.dart';
@@ -23,7 +25,6 @@ import 'feature/checkout/data/data_source/checkout_order_remote_data_source.dart
 import 'feature/checkout/data/repos/checkout_order_repo_impl.dart';
 import 'feature/checkout/domain/repos/checkout_order_repo.dart';
 import 'feature/checkout/domain/use_cases/checkout_order_product.dart';
-import 'feature/checkout/presentation/bloc/address_checkout/address_checkout_bloc.dart';
 import 'feature/checkout/presentation/bloc/order_checkout/order_checkout_cubit.dart';
 import 'feature/order_history/data/data_source/order_history_remote_data_source.dart';
 import 'feature/order_history/data/repos/order_history_repo_impl.dart';
@@ -94,9 +95,9 @@ void configureDependencies() {
   getIt.registerFactory<CheckoutOrderProduct>(
       () => CheckoutOrderProduct(getIt<CheckoutOrderRepo>()));
   getIt.registerFactoryParam<OrderCheckoutCubit, CartBloc?,
-      AddressCheckoutBloc?>(
+      ChoosedAddressCubit?>(
     (p1, p2) => OrderCheckoutCubit(getIt<CheckoutOrderProduct>(),
-        cartBloc: p1, addressCheckoutBloc: p2),
+        cartBloc: p1, choosedAddressCubit: p2),
   );
 
   // Address DataSource, Repo, and Use Cases
@@ -106,12 +107,12 @@ void configureDependencies() {
       AddressRepoImpl(getIt<AddressRemoteDataSource>()));
   getIt.registerFactory<GetListAddressUser>(
       () => GetListAddressUser(getIt<AddressRepo>()));
-  getIt.registerFactory<AddressCheckoutBloc>(
-      () => AddressCheckoutBloc(getIt<GetListAddressUser>()));
   getIt.registerFactory<GetChoosedAddressUser>(
-    () => GetChoosedAddressUser(getIt<AddressRepo>()));
+      () => GetChoosedAddressUser(getIt<AddressRepo>()));
   getIt.registerFactory<ChoosedAddressCubit>(
       () => ChoosedAddressCubit(getIt<GetChoosedAddressUser>()));
+  getIt.registerFactoryParam<ListAddressCubit, ChoosedAddressCubit?, NoParams?>(
+      (p1, p2) => ListAddressCubit(getIt<GetListAddressUser>(), p1));
 
   // History Order DataSource, Repo, and Use Cases
   getIt.registerSingleton<OrderHistoryRemoteDataSource>(
