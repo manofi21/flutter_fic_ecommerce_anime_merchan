@@ -80,7 +80,7 @@ class AddressRepoImpl extends AddressRepo {
             fullAddress: addAddress.fullAddress,
             detailAddress: addAddress.detailAddress,
             recipientName: addAddress.recipientName,
-            phoneNumber: addAddress.phoneNumber,
+            phoneNumber: int.parse(addAddress.phoneNumber),
             isMainAddress: addAddress.isMainAddress,
             isChoosedAddress: addAddress.isChoosedAddress),
       );
