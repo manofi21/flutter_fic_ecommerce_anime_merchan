@@ -10,8 +10,10 @@ import 'core/http_request/http_request_interceptor.dart';
 import 'feature/address/data/data_source/address_remote_data_source.dart';
 import 'feature/address/data/repos/address_repo_impl.dart';
 import 'feature/address/domain/repos/address_repo.dart';
+import 'feature/address/domain/use_cases/add_address_user.dart';
 import 'feature/address/domain/use_cases/get_choosed_address_user.dart';
 import 'feature/address/domain/use_cases/get_list_address_user.dart';
+import 'feature/address/presentation/cubit/add_address/add_address_cubit.dart';
 import 'feature/address/presentation/cubit/choosed_address/choosed_address_cubit.dart';
 import 'feature/address/presentation/cubit/list_address/list_address_cubit.dart';
 import 'feature/authentication/data/data_source/auth_local_data_source.dart';
@@ -109,6 +111,10 @@ void configureDependencies() {
       () => GetListAddressUser(getIt<AddressRepo>()));
   getIt.registerFactory<GetChoosedAddressUser>(
       () => GetChoosedAddressUser(getIt<AddressRepo>()));
+  getIt.registerFactory<AddAddressUser>(
+      () => AddAddressUser(getIt<AddressRepo>()));
+  getIt.registerFactory<AddAddressCubit>(
+      () => AddAddressCubit(getIt<AddAddressUser>()));
   getIt.registerFactory<ChoosedAddressCubit>(
       () => ChoosedAddressCubit(getIt<GetChoosedAddressUser>()));
   getIt.registerFactoryParam<ListAddressCubit, ChoosedAddressCubit?, NoParams?>(
