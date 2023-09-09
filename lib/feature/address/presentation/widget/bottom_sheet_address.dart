@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/address/presentation/page/form_add_address.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/locator.dart';
 
 import '../../../../core/bottom_sheet/bottom_sheet.dart';
@@ -82,20 +83,30 @@ class _ListAddressBlocWidgetState extends State<ListAddressBlocWidget> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         if (index == listValue.length) {
-                          return Container(
-                            height: size.height * (1 / 3),
-                            width: (size.width * (3 / 4)) - 40,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(12.0),
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const FormAddAddressCubit(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: size.height * (1 / 3),
+                              width: (size.width * (3 / 4)) - 40,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(12.0),
+                                ),
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: Colors.grey[900]!,
+                                ),
                               ),
-                              border: Border.all(
-                                width: 1.0,
-                                color: Colors.grey[900]!,
+                              child: const Center(
+                                child: Text("+ Tambah"),
                               ),
-                            ),
-                            child: const Center(
-                              child: Text("+ Tambah"),
                             ),
                           );
                         }
@@ -103,7 +114,9 @@ class _ListAddressBlocWidgetState extends State<ListAddressBlocWidget> {
                         final addressValue = listValue[index];
                         return InkWell(
                           onTap: () {
-                            context.read<ListAddressCubit>().onUpdateSelectedId(addressValue.id);
+                            context
+                                .read<ListAddressCubit>()
+                                .onUpdateSelectedId(addressValue.id);
                           },
                           child: Container(
                             width: (size.width * (3 / 4)) - 40,
@@ -112,20 +125,27 @@ class _ListAddressBlocWidgetState extends State<ListAddressBlocWidget> {
                                 Radius.circular(12.0),
                               ),
                               border: Border.all(
-                                width: addressValue.id == state.idSelectedAddress ? 5.0 : 1.0,
-                                color: addressValue.id == state.idSelectedAddress
-                                    ? const Color(0xff7CFC00)
-                                    : const Color(0xFF000000),
+                                width:
+                                    addressValue.id == state.idSelectedAddress
+                                        ? 5.0
+                                        : 1.0,
+                                color:
+                                    addressValue.id == state.idSelectedAddress
+                                        ? const Color(0xff7CFC00)
+                                        : const Color(0xFF000000),
                               ),
                             ),
-                            padding: EdgeInsets.all(addressValue.id == state.idSelectedAddress ? 10 : 14),
+                            padding: EdgeInsets.all(
+                                addressValue.id == state.idSelectedAddress
+                                    ? 10
+                                    : 14),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 // Text(("${addressValue.id} == ${state.idSelectedAddress}").toString()),
                                 Text(addressValue.labelAddress),
                                 Text(addressValue.recipientName),
-                                Text(addressValue.phoneNumber),
+                                Text(addressValue.phoneNumber.toString()),
                                 Expanded(
                                     child: Text(addressValue.fullAddress,
                                         maxLines: 2)),
