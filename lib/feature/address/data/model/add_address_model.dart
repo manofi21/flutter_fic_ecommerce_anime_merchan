@@ -19,7 +19,7 @@ class AddAddressDataModel {
     String fullAddress;
     String detailAddress;
     String recipientName;
-    String phoneNumber;
+    int phoneNumber;
     bool isMainAddress;
     bool isChoosedAddress;
 

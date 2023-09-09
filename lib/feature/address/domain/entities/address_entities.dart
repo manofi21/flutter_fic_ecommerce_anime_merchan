@@ -7,7 +7,7 @@ class AddressEntities extends Equatable {
   final String fullAddress;
   final String? detailAddress;
   final String recipientName;
-  final String phoneNumber;
+  final int phoneNumber;
   final bool isMainAddress;
   final bool isChoosedAddress;
 
