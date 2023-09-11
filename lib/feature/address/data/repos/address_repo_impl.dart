@@ -96,4 +96,21 @@ class AddressRepoImpl extends AddressRepo {
           stackTrace);
     }
   }
+  
+  @override
+  Future<bool> updateChoosedAddressUserSelect(int addressId) async {
+    try {
+      final getAddressFromRemote = await addressRemoteDataSource.updateChoosedAddress(addressId);
+      return getAddressFromRemote != null;
+    } on HttpException catch (e) {
+      throw AddressFailure(e.message);
+    } on UnknownException catch (e) {
+      throw AddressFailure(e.message);
+    } catch (e, stackTrace) {
+      throw UnknownFailure(
+          'Occure in Address Repo updateChoosedAddressUserSelect : ${e.toString()}',
+          stackTrace);
+    }
+  }
+  
 }

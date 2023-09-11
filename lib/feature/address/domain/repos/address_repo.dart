@@ -5,4 +5,5 @@ abstract class AddressRepo {
   Future<List<AddressEntities>> getListAddressUser();
   Future<AddressEntities?> getChoosedAddressUser();
   Future<bool> addAddressUserInput(AddAddressEntities addAddress);
+  Future<bool> updateChoosedAddressUserSelect(int addressId);
 }
