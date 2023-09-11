@@ -12,15 +12,17 @@ class ChoosedAddressTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChoosedAddressCubit, ChoosedAddressState>(
       builder: (context, state) {
+        final choosedAddressCubit = context.read<ChoosedAddressCubit>();
         if (state.isLoading) {
-          return const Text('Mengambil data');
+          return const Text('Mengambil alamat email');
         }
 
         if (state.isSuccess) {
-          final shortAddress = context.read<ChoosedAddressCubit>().getShortChoosedAddress?.address;
+          final shortAddress = choosedAddressCubit.getShortChoosedAddress?.address;
           return InkWell(
-            onTap: () {
-              showListAddressBottomSheet(context);
+            onTap: () async {
+              await showListAddressBottomSheet(context);
+              await choosedAddressCubit.onGetChoosedAddress();
             },
             child: Row(
               children: [
