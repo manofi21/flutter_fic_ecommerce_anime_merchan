@@ -30,6 +30,25 @@ abstract class RemoteDataRequest {
     }
   }
 
+  Future<T> putRequest<T>(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    required T Function(Map<String, dynamic> map) fromMap,
+  }) async {
+    try {
+      final urlRequest = baseUri(path);
+      final response = await http.put(urlRequest, params: queryParameters);
+      final resultDecode = jsonDecode(response.body);
+      final mapValue = fromMap(resultDecode);
+      return mapValue;
+    } on BaseExceptions {
+      rethrow;
+    } catch (e) {
+      throw HttpException(
+          'Occure in Remote Date Requst(Put) : ${e.toString()}');
+    }
+  }
+
   Future<T> postRequest<T>(
     String path, {
     bool useEncode = false,

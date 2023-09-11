@@ -30,6 +30,7 @@ class HttpRequestInterceptor implements InterceptorContract {
     }
 
     if (data.method == Method.GET ||
+        data.method == Method.PUT ||
         (data.method == Method.POST &&
             !apiWithoutCheckAPI.any((e) => currentRequest.contains(e)))) {
       data.headers[HttpHeaders.authorizationHeader] = "Bearer $getToken";
