@@ -9,6 +9,7 @@ abstract class AddressRemoteDataSource {
   Future<List<AddressModel>> getListAddress();
   Future<AddressModel?> getChoosedAddress();
   Future<AddressModel?> addAddress(AddAddressModel addressRequest);
+  Future<AddressModel?> updateChoosedAddress(int idAddress);
 }
 
 class AddressRemoteDataSourceImpl extends RemoteDataRequest
@@ -76,7 +77,10 @@ class AddressRemoteDataSourceImpl extends RemoteDataRequest
         bodyParameter: addressRequest.toJson(),
         useEncode: true,
         fromMap: (e) {
-          final getData = e['data'];
+          final getData = e['data'] as Map;
+          final jsonAttributes = getData["attributes"] as Map;
+          getData.addAll(jsonAttributes);
+          getData.remove("attributes");
           final listResut = AddressModel.fromJson(getData);
           return listResut;
         },
@@ -87,6 +91,31 @@ class AddressRemoteDataSourceImpl extends RemoteDataRequest
     } catch (e, stackTrace) {
       throw UnknownException(
         'Occure in Address Remote Data Source(getListAddress) : ${e.toString()}',
+        stackTrace,
+      );
+    }
+  }
+  
+  @override
+  Future<AddressModel?> updateChoosedAddress(int idAddress) async {
+    try {
+      final addressResult = await putRequest<AddressModel?>(
+        '/api/addresshes/choosed-address/$idAddress',
+        fromMap: (e) {
+          final result = e["data"];
+          if (result != null) {
+            final listResut = AddressModel.fromJson(result);
+            return listResut;
+          }
+          return null;
+        },
+      );
+      return addressResult;
+    } on HttpException {
+      rethrow;
+    } catch (e, stackTrace) {
+      throw UnknownException(
+        'Occure in Address Remote Data Source(updateChoosedAddress) : ${e.toString()}',
         stackTrace,
       );
     }
