@@ -20,10 +20,12 @@ import 'feature/address/presentation/cubit/list_address/list_address_cubit.dart'
 import 'feature/address/presentation/cubit/update_choosed_address/update_choosed_address_cubit.dart';
 import 'feature/authentication/data/data_source/auth_local_data_source.dart';
 import 'feature/authentication/data/data_source/auth_remote_data_source.dart';
+import 'feature/authentication/domain/use_cases/log_out_user.dart';
 import 'feature/authentication/domain/use_cases/login_user_cases.dart';
 import 'feature/authentication/domain/use_cases/registration_user_cases.dart';
 import 'feature/authentication/domain/use_cases/verify_user_token_cases.dart';
 import 'feature/authentication/presentation/bloc/authentication_bloc.dart';
+import 'feature/authentication/presentation/bloc/logout_cubit/logout_cubit.dart';
 import 'feature/cart/presentation/bloc/cart_bloc.dart';
 import 'feature/checkout/data/data_source/checkout_order_remote_data_source.dart';
 import 'feature/checkout/data/repos/checkout_order_repo_impl.dart';
@@ -90,6 +92,8 @@ void configureDependencies() {
       getIt<VerifyUserTokenCases>(),
       getIt<RegistrationUserCases>(),
       getIt<LoginUserCases>()));
+  getIt.registerFactory<LogOutUserCases>(() => LogOutUserCases(getIt<AuthRepo>()));
+  getIt.registerFactory<LogoutCubit>(() => LogoutCubit(getIt<LogOutUserCases>()));
 
   // Order DataSource, Repo, and Use Cases
   getIt.registerSingleton<CheckoutOrderRemoteDataSource>(

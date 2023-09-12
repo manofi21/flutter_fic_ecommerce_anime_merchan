@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/address/presentation/cubit/choosed_address/choosed_address_cubit.dart';
 import '../../feature/authentication/presentation/bloc/authentication_bloc.dart';
+import '../../feature/authentication/presentation/bloc/logout_cubit/logout_cubit.dart';
 import '../../feature/authentication/presentation/page_state_cubit/authentication_page_cubit.dart';
 import '../../feature/cart/presentation/bloc/cart_bloc.dart';
 import '../../feature/checkout/presentation/bloc/order_checkout/order_checkout_cubit.dart';
@@ -20,6 +21,7 @@ final registerBloc = [
     ),
   ),
   BlocProvider<CartBloc>(create: (_) => CartBloc()),
+  BlocProvider<ChoosedAddressCubit>(create: (_) => getIt<ChoosedAddressCubit>()),
   BlocProvider<OrderCheckoutCubit>(
     create: (context) => getIt<OrderCheckoutCubit>(
       param1: context.read<CartBloc>(),
@@ -27,5 +29,5 @@ final registerBloc = [
     ),
   ),
   BlocProvider<OrderHistoryBloc>(create: (_) => getIt<OrderHistoryBloc>()),
-  BlocProvider<ChoosedAddressCubit>(create: (_) => getIt<ChoosedAddressCubit>())
+  BlocProvider<LogoutCubit>(create: (_) => getIt<LogoutCubit>())
 ];

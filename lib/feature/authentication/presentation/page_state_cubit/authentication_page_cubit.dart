@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_fic_ecommerce_warung_comicon/core/show_dialog/show_error_dialog.dart';
 
+import '../../../../core/show_dialog/show_confirm_dialog.dart';
 import '../../../home/presentation/page/home_page.dart';
 import '../bloc/authentication_bloc.dart';
 
@@ -37,15 +37,9 @@ class AuthenticationPageCubit extends Cubit<AuthPageStateEntitiy> {
     }
   }
 
-  void onPressed(
-    String name,
-    String username,
-    String password,
-    String email,
-    String usernameOrEmail,
-    BuildContext context,
-    {required void Function() onAfterClick}
-  ) {
+  void onPressed(String name, String username, String password, String email,
+      String usernameOrEmail, BuildContext context,
+      {required void Function() onAfterClick}) {
     if (state.pageState == AuthenticationPageState.register) {
       authBloc.onRegisting(
         name: name,
@@ -54,7 +48,12 @@ class AuthenticationPageCubit extends Cubit<AuthPageStateEntitiy> {
         password: password,
         onSuccess: () async {
           onAfterClick();
-          await showErrorDialog(context: context, message: 'Silahkan Melakukan Login kembali!');
+          await showConfirmDialog(
+            context: context,
+            message: 'Silahkan Melakukan Login kembali!',
+            ok: () {},
+            trueFalseOption: false,
+          );
           _changeStateToLogin();
         },
       );
