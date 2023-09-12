@@ -175,7 +175,7 @@ class _ListAddressBlocWidgetState extends State<ListAddressBlocWidget> {
                       if (successCheck) {
                         showConfirmDialog(
                           context: context,
-                          message: "Address Sukses dibuat",
+                          message: "Address dipilih",
                           trueFalseOption: false,
                           ok: () {
                             Navigator.of(context).pop();

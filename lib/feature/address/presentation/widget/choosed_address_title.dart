@@ -14,7 +14,7 @@ class ChoosedAddressTitle extends StatelessWidget {
       builder: (context, state) {
         final choosedAddressCubit = context.read<ChoosedAddressCubit>();
         if (state.isLoading) {
-          return const Text('Mengambil alamat email');
+          return const Text('Mengambil data alamat rumah....');
         }
 
         if (state.isSuccess) {
@@ -28,7 +28,7 @@ class ChoosedAddressTitle extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Alamat Penerima : $shortAddress",
+                    shortAddress != null ? "Alamat Penerima : $shortAddress" : "Tolong isi alamat terlebih dahulu",
                   ),
                 ),
                 const SizedBox(width: 3),
