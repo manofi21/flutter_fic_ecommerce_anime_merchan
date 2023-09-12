@@ -29,7 +29,11 @@ class AddressRepoImpl extends AddressRepo {
             ),
           )
           .toList();
-      return toListEntities;
+      final sortByisChoosedAddressTrue = [
+        ...toListEntities.where((e) => e.isChoosedAddress).toList(),
+        ...toListEntities.where((e) => !e.isChoosedAddress).toList(),
+      ];
+      return sortByisChoosedAddressTrue;
     } on HttpException catch (e) {
       throw AddressFailure(e.message);
     } on UnknownException catch (e) {
