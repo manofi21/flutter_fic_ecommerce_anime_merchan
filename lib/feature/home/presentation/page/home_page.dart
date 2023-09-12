@@ -31,9 +31,17 @@ class HomeChild extends StatefulWidget {
 }
 
 class _HomeChildState extends State<HomeChild> {
+  late HomePageCubit homePageCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    homePageCubit = context.read<HomePageCubit>();
+  }
+
   @override
   void dispose() {
-    context.read<HomePageCubit>().close();
+    homePageCubit.close();
     super.dispose();
   }
 
