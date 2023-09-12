@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/core/base_widget/wcon_loading_widget.dart';
@@ -17,15 +19,21 @@ class AuthLoadingOverlay extends StatefulWidget {
 }
 
 class _AuthLoadingOverlayState extends State<AuthLoadingOverlay> {
-  late Stream<AuthenticationState> authStream;
+  late StreamSubscription<AuthenticationState> authStream;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
+        if (!mounted) return;
+
         final authBloc = context.read<AuthenticationBloc>();
-        authStream = authBloc.stream;
-        authStream.listen(
+        authStream = authBloc.stream.listen(
           (state) async {
             if (state is AuthenticationVerifyTokenComplete) {
               Navigator.pushReplacement(
@@ -38,12 +46,18 @@ class _AuthLoadingOverlayState extends State<AuthLoadingOverlay> {
             }
 
             if (state is AuthenticationNoTokenSaved) {
-              await showConfirmDialog(
-                context: context,
-                message: "Silahkan Melakukan Login/Registrasi terlebih dahulu",
-                trueFalseOption: false,
-                ok: () {},
-              );
+              if (mounted) {
+                await showConfirmDialog(
+                  context: context,
+                  message:
+                      "Silahkan Melakukan Login/Registrasi terlebih dahulu",
+                  trueFalseOption: false,
+                  ok: () {
+                    authStream.cancel();
+                  },
+                );
+              }
+
               return;
             }
 
@@ -61,7 +75,6 @@ class _AuthLoadingOverlayState extends State<AuthLoadingOverlay> {
     );
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
