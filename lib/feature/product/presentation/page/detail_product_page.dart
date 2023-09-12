@@ -46,12 +46,12 @@ class _DetailProductPageState extends State<DetailProductPage> {
         height: 60,
         child: Row(children: [
           ButtonAddProductToCart(
-              productItem: productItem, width: size.width / 2),
-          Container(
-            width: size.width / 2,
-            color: Colors.orange,
-            child: const Center(child: Text('Langsung Beli')),
-          ),
+              productItem: productItem, width: size.width),
+          // Container(
+          //   width: size.width / 2,
+          //   color: Colors.orange,
+          //   child: const Center(child: Text('Langsung Beli')),
+          // ),
         ]),
       ),
       body: SafeArea(
