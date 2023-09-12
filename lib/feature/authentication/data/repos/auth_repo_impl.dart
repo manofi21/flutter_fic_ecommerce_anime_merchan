@@ -79,4 +79,15 @@ class AuthRepoImpl implements AuthRepo {
       throw UnknownFailure('Occure in Auth Repo : ${e.toString()}', stackTrace);
     }
   }
+
+  @override
+  Future<void> logOutUser() async {
+    try {
+      await authLocalDataSource.clearToken();
+    } on UnknownException catch (e, stackTrace) {
+      throw UnknownFailure(e.message, stackTrace);
+    } catch (e, stackTrace) {
+      throw UnknownFailure('Occure in Auth logOutUser : ${e.toString()}', stackTrace);
+    }
+  }
 }

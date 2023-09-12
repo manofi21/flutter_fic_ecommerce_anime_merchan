@@ -6,4 +6,5 @@ abstract class AuthRepo {
   Future<LoginResultUser> userLogin(LoginRequestUser userRequest);
   Future<LoginResultUser> verifyUserTokenCases();
   Future<bool> registrationUser(RegisterRequestUser registerRequest);
+  Future<void> logOutUser();
 }
