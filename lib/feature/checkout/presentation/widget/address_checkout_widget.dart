@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_fic_ecommerce_warung_comicon/feature/address/domain/entities/address_entities.dart';
+import 'package:flutter_fic_ecommerce_warung_comicon/feature/address/presentation/widget/bottom_sheet_address.dart';
 
 import '../../../address/presentation/cubit/choosed_address/choosed_address_cubit.dart';
 import '../../../address/presentation/cubit/choosed_address/choosed_address_state.dart';
-
 
 class AddressCheckoutBlocBuilder extends StatelessWidget {
   const AddressCheckoutBlocBuilder({super.key});
@@ -13,6 +13,7 @@ class AddressCheckoutBlocBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChoosedAddressCubit, ChoosedAddressState>(
       builder: (context, state) {
+        final choosedAddress = context.read<ChoosedAddressCubit>();
         return Column(
           children: [
             if (state.isLoading) ...{
@@ -20,6 +21,10 @@ class AddressCheckoutBlocBuilder extends StatelessWidget {
             } else if (state.isSuccess) ...{
               AddressCheckoutWidget(
                 addressEntities: state.successValue,
+                onChangeAddress: () async {
+                  await showListAddressBottomSheet(context);
+                  await choosedAddress.onGetChoosedAddress();
+                },
               ),
             } else if (state.isError) ...{
               Text(state.msgError)
@@ -32,8 +37,12 @@ class AddressCheckoutBlocBuilder extends StatelessWidget {
 }
 
 class AddressCheckoutWidget extends StatelessWidget {
+  final Future<void> Function() onChangeAddress;
   final AddressEntities? addressEntities;
-  const AddressCheckoutWidget({super.key, required this.addressEntities});
+  const AddressCheckoutWidget(
+      {super.key,
+      required this.addressEntities,
+      required this.onChangeAddress});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +57,7 @@ class AddressCheckoutWidget extends StatelessWidget {
               children: [
                 const Text('Alamat Pengiriman'),
                 InkWell(
-                  onTap: () {},
+                  onTap: onChangeAddress,
                   child: const Text('Pilih Alamat'),
                 ),
               ],
