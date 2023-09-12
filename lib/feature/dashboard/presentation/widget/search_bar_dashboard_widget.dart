@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../address/presentation/cubit/choosed_address/choosed_address_cubit.dart';
 import '../../../address/presentation/widget/choosed_address_title.dart';
+import '../../../authentication/presentation/widget/button_logout.dart';
 import '../../../cart/presentation/widget/cart_badges.dart';
 import '../../../search/presentation/page/search_page.dart';
 
@@ -26,7 +27,7 @@ class _SearchBarDashboardWidgetState extends State<SearchBarDashboardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.lightGreen,
+      color: Theme.of(context).primaryColor,
       padding: const EdgeInsets.all(15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +63,7 @@ class _SearchBarDashboardWidgetState extends State<SearchBarDashboardWidget> {
                             Padding(
                               padding: EdgeInsets.only(left: 2.0),
                               child: Text(
-                                "Cari di Tokopedia",
+                                "Cari di Warung Comicon",
                                 style: TextStyle(fontSize: 17.5),
                               ),
                             )
@@ -73,14 +74,15 @@ class _SearchBarDashboardWidgetState extends State<SearchBarDashboardWidget> {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.0),
-                child: Icon(Icons.mail, size: 23),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.0),
-                child: Icon(Icons.notifications, size: 23),
-              ),
+              // const Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 4.0),
+              //   child: Icon(Icons.mail, size: 23),
+              // ),
+              // const Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 4.0),
+              //   child: Icon(Icons.notifications, size: 23),
+              // ),
+              const SizedBox(width: 25),
               const CartBadges(
                 badgesEnd: 10,
                 child: SizedBox(
@@ -88,10 +90,8 @@ class _SearchBarDashboardWidgetState extends State<SearchBarDashboardWidget> {
                   child: Icon(Icons.shopping_cart_rounded),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.0),
-                child: Icon(Icons.menu, size: 23),
-              )
+              const SizedBox(width: 10),
+              const ButtonLogOut(),
             ],
           ),
           const SizedBox(height: 10),
