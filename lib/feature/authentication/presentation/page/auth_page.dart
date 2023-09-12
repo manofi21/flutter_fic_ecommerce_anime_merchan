@@ -169,9 +169,12 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Registration Page',
-          // style: TextStyle(fontFamily: "PoppinsBlack", fontStyle: FontStyle.italic, decoration: TextDecoration.underline),
+        title: BlocBuilder<AuthenticationPageCubit, AuthPageStateEntitiy>(
+          builder: (context, state) {
+            return Text(
+              state.pageState == AuthenticationPageState.register ? 'Registration Page' : "Login Page",
+            );
+          },
         ),
       ),
       body: Padding(
