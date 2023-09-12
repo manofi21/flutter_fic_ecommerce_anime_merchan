@@ -27,7 +27,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
     final appBarHeight = AppBar().preferredSize.height;
     final statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
-      appBar: AppBar(title: const Text("History Order")),
+      appBar: AppBar(title: const Text("History Order"), leading: Container()),
       body: RefreshIndicator(
         onRefresh: () async {
         context.read<OrderHistoryBloc>().add(OrderHistoryLoadData());
