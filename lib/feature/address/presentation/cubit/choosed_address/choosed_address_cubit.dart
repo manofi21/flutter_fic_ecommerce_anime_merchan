@@ -20,7 +20,7 @@ class ChoosedAddressCubit extends Cubit<ChoosedAddressState> {
           return ChoosedAddressState.onSuccess(ok);
         }
 
-        return ChoosedAddressState.onError("Data yang diterima ternyata Null, Perika kembali");
+        return ChoosedAddressState.onSuccessEmpty();
       },
       err: (err) {
         return ChoosedAddressState.onError(err.message);

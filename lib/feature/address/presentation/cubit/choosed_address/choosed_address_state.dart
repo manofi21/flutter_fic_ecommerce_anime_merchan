@@ -28,6 +28,16 @@ class ChoosedAddressState {
     );
   }
 
+  static ChoosedAddressState onSuccessEmpty() {
+    return ChoosedAddressState(
+      isLoading: false,
+      isError: false,
+      isInit: false,
+      isSuccess: true,
+      successValue: null,
+    );
+  }
+
   static ChoosedAddressState onError(String msgError) {
     return ChoosedAddressState(
       isLoading: false,
